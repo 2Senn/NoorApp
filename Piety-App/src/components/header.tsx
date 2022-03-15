@@ -15,17 +15,17 @@ const MainHeader = ({ title, image, children}: Props) => {
         position="absolute"
         left={0} 
         bottom={0}
-        top={200}
+        top={150}
         w="full" 
-        h="500px" 
+        h="400px" 
         resizeMode="cover" 
         source={image} 
         alt="MainHeader image"
-        opacity={0.2}
+        opacity={0.3}
       />
       {children}
-      <Box flex={1} />
-      <Heading color={useColorModeValue('black', 'yellow.900')} p={6} size="xl">
+      <Box flex={1}/>
+      <Heading color={useColorModeValue('black', 'rose.400')} p={4} size="xl" bottom={50}>
         {title}
       </Heading>
 
