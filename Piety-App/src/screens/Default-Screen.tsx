@@ -1,20 +1,38 @@
 import * as React from 'react'
-import { Text, Box, Center, VStack, HStack, themeTools, useTheme, useColorMode, useColorModeValue } from 'native-base'
+import { 
+  Text, Box, Center, VStack, HStack, 
+  themeTools, useTheme, useColorMode, useColorModeValue } from 'native-base'
 import ToggleTheme from '../components/toggle-theme'
+import FetchPrayer from '../components/prayer-api'
+import { View, Image, ImageBackground } from 'react-native'
+import AnimatedColorBox from '../components/animate-theme-shift'
+import MainHeader from '../components/header'
+
 
 export default function DefaultScreen(){
+  
   return (
-    <Center 
-    _dark={{bg: 'blueGray.900'}} 
-    _light={{bg: 'blueGray.50'}}
-    px={4}
-    flex={1}>
-      <VStack space={4} alignItems="center">
-        <Box p={10} bg={useColorModeValue('green.900', 'red.300')}>
-          <Text>Alhamdulilah</Text>
-        </Box>
-        <ToggleTheme />
-      </VStack>
-    </Center>
+    
+      <AnimatedColorBox
+        flex={1}
+        bg = {useColorModeValue('warmGray.50', 'blueGray.900')}
+        width="full" 
+      >
+        <MainHeader 
+          title="Al Salamu Alaikum"
+          image={require('../assets/header.png')} 
+        >
+      </MainHeader>
+        <VStack 
+        space={5} 
+        alignItems="center" 
+        width="full" >
+          <ToggleTheme />
+          <Center>
+            <FetchPrayer />
+          </Center>
+        </VStack>
+        </AnimatedColorBox>
+    
   )
 }
