@@ -15,7 +15,7 @@ const App = () => {
     screenOptions={{
     headerShown: false,
     drawerType: 'back',
-    overlayColor: '#0000000'}}>
+    drawerActiveBackgroundColor: "#FEDBD0"}}>
       <Drawer.Screen name="Home" component={DefaultScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
     </Drawer.Navigator>

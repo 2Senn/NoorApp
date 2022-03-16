@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { HStack, IconButton } from 'native-base'
+import { HStack, IconButton, useColorModeValue } from 'native-base'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
@@ -23,9 +23,8 @@ const BarNav = () => {
         _icon={{
         as:Feather,
         name: 'menu',
-        size: 6,
-        color: 'white',
-        }} 
+        size: 6,}}
+        color={useColorModeValue('#442C2E', '#FEDBD0')}
       />
     </HStack>
   )

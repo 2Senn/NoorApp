@@ -12,10 +12,9 @@ import BarNav from '../components/navbar'
 export default function DefaultScreen(){
   
   return (
-    
       <AnimatedColorBox
         flex={1}
-        bg = {useColorModeValue('warmGray.50', 'blueGray.900')}
+        bg = {useColorModeValue('#FEEAE6', 'black')}
         width="full" 
       >
         <MainHeader 
@@ -23,17 +22,22 @@ export default function DefaultScreen(){
           image={require('../assets/header.png')} 
         >
         <BarNav />
-      </MainHeader>
+        </MainHeader>
         <VStack 
-        space={5} 
-        alignItems="center" 
-        width="full" >
-          <ToggleTheme />
-          <Center>
-            <FetchPrayer />
-          </Center>
+        space={5}
+        bg={useColorModeValue('#FEDBD0', 'blueGray.900')}
+        mt="-250px"
+        height="full"
+        borderTopLeftRadius="30px" 
+        borderTopRightRadius="30px"
+        borderBottomRadius="30px"
+        shadow="6"
+        pt="40px" >
+        <ToggleTheme />
+        <FetchPrayer />
         </VStack>
         </AnimatedColorBox>
+    
     
   )
 }

@@ -2,16 +2,7 @@ import {View, StyleSheet, Platform, TouchableOpacity, Pressable, ListView, FlatL
 import React, { useState } from "react";
 import { Box, HStack, VStack, Text, useColorModeValue } from 'native-base'
 
-
-const getColors = () => {
-  return(
-    useColorModeValue('red.900', 'white')
-  )
-}
-
 export default class FetchPrayer extends React.Component {
-
-  
 
   state = {
     loading: true,
@@ -35,9 +26,9 @@ export default class FetchPrayer extends React.Component {
     return(
 
       <View style={styles.container}>
-      <FlatList
+      <FlatList 
         data={[
-          {key:  <Text isTruncated maxW="300" w="80%">Fajr   {this.state.prayer.Fajr}</Text>},
+          {key:  <Text isTruncated maxW="100" w="80%">Fajr   {this.state.prayer.Fajr}</Text>},
           {key:  <Text>Sunrise  {this.state.prayer.Sunrise}</Text>},
           {key:  <Text>Dhuhr    {this.state.prayer.Dhuhr}</Text>},
           {key:  <Text>Asr    {this.state.prayer.Asr}</Text>},
@@ -60,9 +51,8 @@ const styles = StyleSheet.create({
    alignItems: "center" 
   },
   item: {
-    padding: 5,
-    fontSize: 24,
-    height: 35, 
+    fontSize: 20,
+    height: 40, 
   },
 });
   
