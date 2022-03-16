@@ -8,7 +8,12 @@ export default function ToggleTheme(){
       <Text>Night</Text>
       <Switch 
         isChecked={colorMode==='light'} 
-        onToggle={toggleColorMode}>
+        onToggle={toggleColorMode}
+        onTrackColor={"#442C2E"}
+        offTrackColor={"blue.800"}
+        onThumbColor={"black"}
+        offThumbColor={"black"}
+      >
       </Switch>
       <Text>Day</Text>
 

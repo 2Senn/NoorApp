@@ -30,7 +30,6 @@ export default function DefaultScreen(){
         height="full"
         borderTopLeftRadius="30px" 
         borderTopRightRadius="30px"
-        borderBottomRadius="30px"
         shadow="6"
         pt="40px" >
         <ToggleTheme />
