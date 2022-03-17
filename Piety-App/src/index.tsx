@@ -3,9 +3,9 @@ import React from 'react'
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer'
 import DefaultScreen from './screens/Default-Screen'
 import AboutScreen from './screens/about'
-import {useColorModeValue} from 'native-base'
-import ToggleTheme from './components/toggle-theme'
+import TaskScreen from  './screens/to-do'
 import Sidebar from './components/sidebar'
+import QuranScreen from './screens/quran-screen'
 
 const Drawer = createDrawerNavigator()
 
@@ -21,6 +21,8 @@ const App = () => {
       }}>
       <Drawer.Screen name="Pray" component={DefaultScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
+      <Drawer.Screen name="Tasks" component={TaskScreen} />
+      <Drawer.Screen name="Quran" component={QuranScreen} />
     </Drawer.Navigator>
   )
 }

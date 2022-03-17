@@ -5,7 +5,7 @@ const config = {
   initialColorMode: 'light'
 }
 
-const redColors = {
+const colors = {
 
   100: "#FCDCCC",
   200: "#F9B39A",
@@ -18,4 +18,4 @@ const redColors = {
   900: "#610122",
 }
 
-export default extendTheme({ config, redColors})
+export default extendTheme({ config, colors})

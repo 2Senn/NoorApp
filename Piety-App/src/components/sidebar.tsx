@@ -5,7 +5,6 @@ import AnimatedColorBox from './animate-theme-shift'
 import ToggleTheme from './toggle-theme'
 import { Feather } from '@expo/vector-icons'
 import MenuButton from './menu-btn' 
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Sidebar = (props: DrawerContentComponentProps) =>{
   const { state, navigation } = props
@@ -19,6 +18,12 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
   }, [navigation])
   const handlePressMenuAbout = useCallback(() => {
     navigation.navigate('About')
+  }, [navigation])
+  const handlePressMenuTask = useCallback(() => {
+    navigation.navigate('Tasks')
+  }, [navigation])
+  const handlePressMenuQuran = useCallback(() => {
+    navigation.navigate('Quran')
   }, [navigation])
 
 
@@ -53,17 +58,36 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
       <MenuButton 
         active={currRoute === "Pray"} 
         onPress={handlePressMenuMain}
-        icon="cloud"  
+        icon="cloud"
+        borderRadius="20"
       >
         Prayers
+      </MenuButton>
+      <MenuButton
+        active={currRoute === "Quran"}
+        onPress={handlePressMenuQuran}
+        icon="book-open"
+        borderRadius={20}
+      >
+        Quran
+      </MenuButton> 
+      <MenuButton
+        active={currRoute === "Tasks"}
+        onPress={handlePressMenuTask}
+        icon="feather"
+        borderRadius="20"  
+      >
+        Tasks
       </MenuButton>
       <MenuButton
         active={currRoute === "About"}
         onPress={handlePressMenuAbout}
         icon="info"
+        borderRadius={20}
       >
         About
-      </MenuButton>
+      </MenuButton> 
+      <ToggleTheme />
       </VStack>
     </AnimatedColorBox>
   )

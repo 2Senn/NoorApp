@@ -1,14 +1,13 @@
 import React from 'react'
-import Container from './src/components/container';
-import DefaultScreen from './src/screens/Default-Screen';
+import AppContainer from './src/components/app-container';
 import Navigator from './src/'
 
 export default function App() {
   return (
-    <Container>
+    <AppContainer>
       <Navigator />
 
-    </Container>
+    </AppContainer>
 
   );
 }
