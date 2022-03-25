@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon, useColorModeValue, IButtonProps } from 'native-base'
+import { Button, Icon, useColorModeValue, IButtonProps, useColorMode } from 'native-base'
 import { Feather } from "@expo/vector-icons"
 
 interface Props extends IButtonProps {
@@ -12,12 +12,13 @@ const MenuButton = ({ active, icon, children, ...props}: Props) => {
   const colorScheme = useColorModeValue("#FEDBD0", "darkBlue")
   const inactiveTextColor = useColorModeValue("#FEEAE6", "white")
   const pressedBgColor = useColorModeValue("#442C2E", "blueGray.700")
+  const activeColor = useColorModeValue("#442C2E", "blue.700")
 
   return(
     <Button 
       size="lg" 
       colorScheme={colorScheme} 
-      bg={active ? "#442C2E" : "black"}
+      bg={active ? activeColor : "black"}
       _pressed={{
         bg: pressedBgColor
       }}

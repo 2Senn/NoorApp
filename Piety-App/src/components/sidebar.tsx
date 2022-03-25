@@ -25,6 +25,12 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
   const handlePressMenuQuran = useCallback(() => {
     navigation.navigate('Quran')
   }, [navigation])
+  const handlePressMenuHadithCheck = useCallback(() => {
+    navigation.navigate('Hadith Checker')
+  }, [navigation])
+  const handlePressMenuLibrary = useCallback(() => {
+    navigation.navigate('Library')
+  }, [navigation])
 
 
   return(
@@ -86,7 +92,23 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         borderRadius={20}
       >
         About
-      </MenuButton> 
+      </MenuButton>
+      <MenuButton
+        active={currRoute === "Hadith Checker"}
+        onPress={handlePressMenuHadithCheck}
+        icon="check-circle"
+        borderRadius={20}  
+      >
+        Hadith Checker
+      </MenuButton>
+      <MenuButton
+        active={currRoute === "Library"}
+        onPress={handlePressMenuLibrary}
+        icon="coffee"
+        borderRadius={20}
+        >
+        Library
+      </MenuButton>
       <ToggleTheme />
       </VStack>
     </AnimatedColorBox>

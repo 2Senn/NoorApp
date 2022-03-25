@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 1,
     shadowOffset: {
-      width: 10,
-      height: 10,
+      width: 5,
+      height: 5,
     },
     shadowRadius: 10,
-    elevation: 15,
+    elevation: 10,
   },
   timeContainer: {
     borderWidth: 2,

@@ -6,6 +6,8 @@ import AboutScreen from './screens/about'
 import TaskScreen from  './screens/to-do'
 import Sidebar from './components/sidebar'
 import QuranScreen from './screens/quran-screen'
+import HadithCheck from './screens/hadith-check'
+import Library from './screens/Library'
 
 const Drawer = createDrawerNavigator()
 
@@ -23,6 +25,8 @@ const App = () => {
       <Drawer.Screen name="About" component={AboutScreen} />
       <Drawer.Screen name="Tasks" component={TaskScreen} />
       <Drawer.Screen name="Quran" component={QuranScreen} />
+      <Drawer.Screen name="Hadith Checker" component={HadithCheck} />
+      <Drawer.Screen name="Library" component={Library} />
     </Drawer.Navigator>
   )
 }

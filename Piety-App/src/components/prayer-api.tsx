@@ -1,7 +1,6 @@
 import {View, StyleSheet, Platform, TouchableOpacity, Pressable, ListView, FlatList, Dimensions} from 'react-native'
 import React, { memo, useState } from "react";
 import { Box, HStack, VStack, Text, useColorModeValue } from 'native-base'
-import Task from './tasks';
 
 
 export default class FetchPrayer extends React.Component {
@@ -12,7 +11,7 @@ export default class FetchPrayer extends React.Component {
   };
 
   async componentDidMount() {
-    const url = "https://api.aladhan.com/v1/timingsByCity?city=plymouth&country=United%20Kingdom&method=2";
+    const url = "https://api.aladhan.com/v1/timingsByCity?city=Amman&country=Jordan&method=3";
     const response = await fetch(url);
     const pData = await response.json();
     console.log(JSON.stringify(pData.data.timings))
