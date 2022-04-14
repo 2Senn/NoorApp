@@ -38,7 +38,7 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
       <VStack flex={1} space={2}>
         <HStack justifyContent="flex-end">
           <IconButton 
-            onPress={handlePressBackBtn}
+            onPress={handlePressBackBtn} 
             borderRadius={100}
             variant="outline"
             borderColor={useColorModeValue("#442C2E", "blue.700")}
