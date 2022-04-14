@@ -28,6 +28,7 @@ const App = () => {
       <Drawer.Screen name="Quran" component={QuranScreen} />
       <Drawer.Screen name="Hadith Checker" component={HadithCheck} />
       <Drawer.Screen name="Library" component={Library} />
+      <Drawer.Screen name="Detail" component={DetailScreen} />
     </Drawer.Navigator>
   )
 }
