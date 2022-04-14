@@ -8,14 +8,16 @@ const config = {
 const colors = {
 
   100: "#FCDCCC",
-  200: "#F9B39A",
+  150: "#FEDBD0",
+  200: "#442C2E",
+  250: "#442C2E",
   300: "#EF7D66",
   400: "#DF4D3F",
   500: "#CB0909",
   600: "#AE0615",
   700: "#92041D",
   800: "#750220",
-  900: "#610122",
+  900: "#263238",
 }
 
 export default extendTheme({ config, colors})

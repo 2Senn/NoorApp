@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler'
+import 'react-native-gesture-handler'   
 import React from 'react' 
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer'
 import DefaultScreen from './screens/Default-Screen'
@@ -8,6 +8,7 @@ import Sidebar from './components/sidebar'
 import QuranScreen from './screens/quran-screen'
 import HadithCheck from './screens/hadith-check'
 import Library from './screens/Library'
+import DetailScreen from './screens/detail-screen'
 
 const Drawer = createDrawerNavigator()
 
