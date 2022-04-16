@@ -9,7 +9,7 @@ import AnimatedColorBox from "../components/animate-theme-shift"
 import theme from "../theme"
 import MainHeader from '../components/header'
 import BarNav from '../components/navbar'
-import { useRoute } from "@react-navigation/native"
+
 
 interface QuranScreenProps {
   navigation: any
@@ -20,7 +20,8 @@ const ICON_SIZE = 35
 const CARD_SIZE = 52 + SPACING * 3
 const {width, height} = Dimensions.get('screen')
 
-const QuranScreen = (props: QuranScreenProps) => {
+
+const QuranChapters = (props: QuranScreenProps) => {
   const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void] = useState([])
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const QuranScreen = (props: QuranScreenProps) => {
       width="full"
     >
       <BarNav />
+
       <Animated.FlatList 
         data={listOfSurah}
         keyExtractor={s => `${s.surah_id}`}
@@ -56,8 +58,7 @@ const QuranScreen = (props: QuranScreenProps) => {
         renderItem={({item, index}) => {
 
           const pressed = () => {
-            props.navigation.navigate('Detail', {surahNumber: index})
-            console.log(item.surah_id) 
+            props.navigation.navigate('Detail', {surahNumber: item.surah_id})
           }
           
           const inputRange = [
@@ -152,14 +153,5 @@ const ItemSurah = (props: SurahProps) => {
   )
 
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
 
-
-
-export default QuranScreen
+export default QuranChapters
