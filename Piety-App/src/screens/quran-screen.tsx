@@ -13,7 +13,10 @@ import { useRoute } from "@react-navigation/native"
 
 interface QuranScreenProps {
   navigation: any
+  refreshing: boolean
+  route: any
 }
+
 
 const SPACING = 5
 const ICON_SIZE = 35
@@ -21,13 +24,13 @@ const CARD_SIZE = 52 + SPACING * 3
 const {width, height} = Dimensions.get('screen')
 
 const QuranScreen = (props: QuranScreenProps) => {
-  const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void] = useState([])
+  const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void,] = useState([])
 
   useEffect(() => {
-    fetchData()
+    getData()
   }, []) 
 
-  const fetchData = async () => {
+  const getData = async () => {
     const quran = new QuranKemenag()
     const data = await quran.getListSurah()
     setListOfSurah(data)
@@ -51,13 +54,12 @@ const QuranScreen = (props: QuranScreenProps) => {
         )}
         contentContainerStyle={{
           paddingTop: StatusBar.currentHeight || 42,
-           
         }}
         renderItem={({item, index}) => {
-
+          const surahNumber = item.surah_id
           const pressed = () => {
-            props.navigation.navigate('Detail', {surahNumber: index})
-            console.log(item.surah_id) 
+            props.navigation.navigate('Detail', { surahNumber })
+            
           }
           
           const inputRange = [

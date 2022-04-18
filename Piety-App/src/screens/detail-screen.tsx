@@ -1,4 +1,4 @@
-import { Button, HStack, Icon, IconButton, Row, Text, useColorModeValue } from "native-base"
+import { Button, FlatList, HStack, Icon, IconButton, Row, Text, useColorModeValue } from "native-base"
 import React, { createRef, useCallback, useEffect, useRef, useState } from "react" 
 import { BackHandler, Dimensions, ListView, RefreshControl, StyleSheet, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -7,34 +7,40 @@ import ToggleTheme from "../components/toggle-theme"
 import AnimatedColorBox from "../components/animate-theme-shift"
 import { Col, Padder, ScaledText, Box } from "urip-rn-kit"
 import QuranKemenag from "quran-kemenag"
+import App from "../../App"
+import RNRestart from 'react-native-restart'
+import { Verse } from "quran-kemenag/dist/intefaces"
 
 interface DetailScreenProps {
-  route: any
   navigation: any
+  route: any
 }
 
 const DetailScreen = (props: DetailScreenProps) => {
 
-  const [surah, setSurah]: [surah: any, setSurah: any] = useState(null)
+  const [surah, setSurah]: [surah: any, setSurah: any] = useState({})
   const [verses, setVerses]: [verses: any[], setVerses: any] = useState(
     [],
   )
- 
+
+  
+  const {surahNumber} = props.route.params
+
   useEffect(() => {
     const {surahNumber} = props.route.params
-    console.log(surahNumber)
-    getQuran(surahNumber)
-  }, [])
+    getData()
+  }, [surahNumber])
 
-  const getQuran = async (surah_id: number) => {
+  const getData = async () => {
     const quran = new QuranKemenag()
-    const data = await quran.getSurah(surah_id)
+    const data = await quran.getSurah(surahNumber)
+    console.log(surahNumber)
     setSurah(data)
     setVerses(data.verses || [])
   }
   
   const SPACING = 10
-  const Indicator = () => {
+  const Indicator = () => { 
     return(
       <View
         style={styles.indicator}
@@ -43,6 +49,11 @@ const DetailScreen = (props: DetailScreenProps) => {
       </View>
     )
   }
+
+  const goToMushaf= () => {
+    props.navigation.navigate('Mushaf')
+  }
+
   const Tabs = () => {
     return(
       <View style={{ position: 'absolute', top: 50, width: 200, alignSelf: 'center' }}>
@@ -56,6 +67,7 @@ const DetailScreen = (props: DetailScreenProps) => {
             borderBottomColor={useColorModeValue("#442C2E", "white")} 
             leftIcon={<Icon as={Feather} name="book" size="sm" />}
             _pressed={{bg: "#FEEAE6", opacity: 0.4}}
+            onPress={goToMushaf}
             
           >
             <Text style={styles.tabber} color={useColorModeValue('#442C2E', 'white')}>go to Arabic Mushaf</Text>
@@ -65,7 +77,7 @@ const DetailScreen = (props: DetailScreenProps) => {
     )
   }
   const handleBackbutton = useCallback(() => {
-    props.navigation.navigate('Quran')
+    props.navigation.navigate("Quran")
   }, [props.navigation])
   return (
     <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#FEDBD0', 'blueGray.800')}>
@@ -83,6 +95,7 @@ const DetailScreen = (props: DetailScreenProps) => {
               size: 4,
               color: useColorModeValue('#442C2E', 'darkBlue.700')
               }}
+            
             />
         </Col>
         <Col size={3} justifyCenter >
@@ -108,9 +121,37 @@ const DetailScreen = (props: DetailScreenProps) => {
       <View >
           <Box fullWidth fullHeight backgroundImage={require('../assets/sakuraa.png')} opacity={0.2} /> 
       </View>
+      <FlatList
+        data={verses}
+        keyExtractor={v => v.verse_id}
+        renderItem={({item, index}) => {
+
+          return <VerseItem key={index} data={item} />
+
+
+          }
+        }
+
+      >
+
+      </FlatList>
     </AnimatedColorBox>
   )
 }
+
+interface VerseItemProps {
+  data: Verse
+}
+
+const VerseItem =(props: VerseItemProps) => {
+  return (
+    <Col>
+      <Row></Row>
+      <Row><ScaledText>{props.data.verse_arabic}</ScaledText></Row>
+    </Col>
+  )
+}
+
 
 const styles = StyleSheet.create({
   tabber: {

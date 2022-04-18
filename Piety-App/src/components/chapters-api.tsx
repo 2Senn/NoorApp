@@ -1,34 +1,77 @@
-import { Box, HStack, Text, useColorMode, useColorModeValue, View, VStack, Image } from "native-base"
-import React, {useState, useEffect, useRef} from "react" 
-import { Animated, FlatList, ListView, StatusBar, StyleSheet, TouchableOpacity, Dimensions, PlatformColor, ScrollView } from "react-native"
-import { SafeAreaView} from "react-native-safe-area-context"
-import QuranKemenag from 'quran-kemenag'
-import { Surah } from "quran-kemenag/dist/intefaces"
-import {ScaledText, Col, Row, Line} from 'urip-rn-kit'
-import AnimatedColorBox from "../components/animate-theme-shift"
-import theme from "../theme"
-import MainHeader from '../components/header'
-import BarNav from '../components/navbar'
+import React, {useState, useEffect} from 'react'
+import { StyleSheet } from 'react-native'
+import { Text, FlatList, View, VStack } from 'native-base'
+
+export default function FetchQuran() {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  //constants
+  const url = "https://api.quran.com/api/v3/chapters?language=en"
+  const bg = "../assets/sakuraa.png"
 
 
-interface QuranScreenProps {
-  navigation: any
+  useEffect(() => {
+    fetch(url)
+    .then((response) => response.json())
+    .then((json) => setData(json))
+    .catch((error) => console.error(error))
+    .finally(() => setLoading(false))
+  }, [])
+
+  return(
+    <View style={styles.container}>
+      {loading ? (<Text>loading ...</Text>) : (
+        data.chapters.map((post) => (
+          <View> 
+            <FlatList 
+              data={data.chapters}
+              keyExtractor={(item, index) => String(index)}
+              renderItem={({item}) => 
+              <View>
+                <Text>{item.name_arabic}</Text>
+              </View>
+                }
+            />
+          </View>
+
+        ))
+      )}
+    </View>
+  )
+
 }
+
+  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    padding: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  }
+})
+
+
+/*
 
 const SPACING = 5
 const ICON_SIZE = 35
 const CARD_SIZE = 52 + SPACING * 3
 const {width, height} = Dimensions.get('screen')
 
-
-const QuranChapters = (props: QuranScreenProps) => {
-  const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void] = useState([])
+const QuranScreen = (props: QuranScreenProps) => {
+  const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void,] = useState([])
 
   useEffect(() => {
-    fetchData()
+    getData()
   }, []) 
 
-  const fetchData = async () => {
+  const getData = async () => {
     const quran = new QuranKemenag()
     const data = await quran.getListSurah()
     setListOfSurah(data)
@@ -42,8 +85,7 @@ const QuranChapters = (props: QuranScreenProps) => {
       bg={useColorModeValue('#FEEAE6', 'blueGray.800')}
       width="full"
     >
-      <BarNav />
-
+      <BarNav /> 
       <Animated.FlatList 
         data={listOfSurah}
         keyExtractor={s => `${s.surah_id}`}
@@ -53,12 +95,12 @@ const QuranChapters = (props: QuranScreenProps) => {
         )}
         contentContainerStyle={{
           paddingTop: StatusBar.currentHeight || 42,
-           
         }}
         renderItem={({item, index}) => {
-
+          const surahNumber = item.surah_id
           const pressed = () => {
-            props.navigation.navigate('Detail', {surahNumber: item.surah_id})
+            props.navigation.navigate('Detail', { surahNumber })
+            
           }
           
           const inputRange = [
@@ -153,5 +195,17 @@ const ItemSurah = (props: SurahProps) => {
   )
 
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
 
-export default QuranChapters
+
+
+export default QuranScreen
+
+
+ */
