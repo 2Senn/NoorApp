@@ -1,16 +1,30 @@
 import { Box, HStack, Text, useColorMode, useColorModeValue, View, VStack, Image } from "native-base"
-import React, {useState, useEffect, useRef} from "react" 
-import { Animated, FlatList, ListView, StatusBar, StyleSheet, TouchableOpacity, Dimensions, PlatformColor, ScrollView } from "react-native"
-import { SafeAreaView} from "react-native-safe-area-context"
-import QuranKemenag from 'quran-kemenag'
-import { Surah } from "quran-kemenag/dist/intefaces"
-import {ScaledText, Col, Row, Line} from 'urip-rn-kit'
+import React from "react"
+import { StyleSheet } from "react-native"
 import AnimatedColorBox from "../components/animate-theme-shift"
-import theme from "../theme"
-import MainHeader from '../components/header'
 import BarNav from '../components/navbar'
-import { useRoute } from "@react-navigation/native"
+import FetchQuran from "../components/chapters-api"
+import ToggleTheme from "../components/toggle-theme"
 
+const QuranScreen = () => {
+  return(
+    <AnimatedColorBox
+      flex={1}
+      bg={useColorModeValue("#FEDBD0", "darkBlue.800")}
+    >
+      <View zIndex={1} >
+        <BarNav />
+        <ToggleTheme />
+      </View>
+      <View zIndex={1}>
+        <FetchQuran />
+      </View>
+      <Image source={require("../assets/sakuraa.png")} style={StyleSheet.absoluteFillObject} opacity={0.4} blurRadius={5}/>
+    </AnimatedColorBox>
+  )
+}
+
+/*
 interface QuranScreenProps {
   navigation: any
   refreshing: boolean
@@ -44,7 +58,7 @@ const QuranScreen = (props: QuranScreenProps) => {
       bg={useColorModeValue('#FEEAE6', 'blueGray.800')}
       width="full"
     >
-      <BarNav />
+      <BarNav /> 
       <Animated.FlatList 
         data={listOfSurah}
         keyExtractor={s => `${s.surah_id}`}
@@ -162,6 +176,6 @@ const styles = StyleSheet.create({
   },
 })
 
-
+*/
 
 export default QuranScreen

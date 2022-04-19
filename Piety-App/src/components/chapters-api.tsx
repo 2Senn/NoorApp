@@ -1,15 +1,28 @@
-import React, {useState, useEffect} from 'react'
-import { StyleSheet } from 'react-native'
-import { Text, FlatList, View, VStack } from 'native-base'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
+import { ScrollView, StyleSheet, Animated, TouchableOpacity} from 'react-native'
+import { FlatList, Text, List, VStack, useColorModeValue, Image, View } from 'native-base'
+import AnimatedColorBox from './animate-theme-shift'
+import { Col } from 'urip-rn-kit'
+import { DrawerContentComponentProps } from '@react-navigation/drawer'
+import DetailScreen from '../screens/detail-screen'
+import { useNavigation } from '@react-navigation/native'
+
+interface QuranProps{
+  navigation: any
+  route: any,
+}
 
 export default function FetchQuran() {
+
+  const navigation = useNavigation()
+
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
-
-  //constants
   const url = "https://api.quran.com/api/v3/chapters?language=en"
-  const bg = "../assets/sakuraa.png"
-
+  const PADDING = 5
+  const scrollY = useRef(new Animated.Value(0)).current
+  const ICON_SIZE = 30
+  const ITEM_SIZE = 7 + ICON_SIZE + PADDING * 12 
 
   useEffect(() => {
     fetch(url)
@@ -20,192 +33,99 @@ export default function FetchQuran() {
   }, [])
 
   return(
-    <View style={styles.container}>
-      {loading ? (<Text>loading ...</Text>) : (
-        data.chapters.map((post) => (
-          <View> 
-            <FlatList 
-              data={data.chapters}
-              keyExtractor={(item, index) => String(index)}
-              renderItem={({item}) => 
-              <View>
-                <Text>{item.name_arabic}</Text>
-              </View>
-                }
-            />
-          </View>
-
-        ))
-      )}
-    </View>
-  )
-
-}
-
-  
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  item: {
-    padding: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  }
-})
-
-
-/*
-
-const SPACING = 5
-const ICON_SIZE = 35
-const CARD_SIZE = 52 + SPACING * 3
-const {width, height} = Dimensions.get('screen')
-
-const QuranScreen = (props: QuranScreenProps) => {
-  const [listOfSurah, setListOfSurah]: [listOfSurah: Surah[], setListOfSurah: (value: any) => void,] = useState([])
-
-  useEffect(() => {
-    getData()
-  }, []) 
-
-  const getData = async () => {
-    const quran = new QuranKemenag()
-    const data = await quran.getListSurah()
-    setListOfSurah(data)
-    
-  }
-  const scrollY = useRef(new Animated.Value(0)).current
-
-  return (
-    <AnimatedColorBox 
-      flex={1}
-      bg={useColorModeValue('#FEEAE6', 'blueGray.800')}
-      width="full"
-    >
-      <BarNav /> 
       <Animated.FlatList 
-        data={listOfSurah}
-        keyExtractor={s => `${s.surah_id}`}
+        data={data.chapters}
         onScroll={Animated.event(
           [{ nativeEvent: {contentOffset: {y: scrollY}}}],
           { useNativeDriver: true }
-        )}
-        contentContainerStyle={{
-          paddingTop: StatusBar.currentHeight || 42,
-        }}
-        renderItem={({item, index}) => {
-          const surahNumber = item.surah_id
-          const pressed = () => {
-            props.navigation.navigate('Detail', { surahNumber })
-            
-          }
-          
+      )}
+        renderItem={({ item, index }) => {
           const inputRange = [
             -1,
             0,
-            CARD_SIZE * index,
-            CARD_SIZE * (index + 2)
+            ITEM_SIZE * index,
+            ITEM_SIZE * (index + 2),
           ]
- 
           const opacityInputRange = [
             -1,
             0,
-            CARD_SIZE * index,
-            CARD_SIZE * (index + 1)
+            ITEM_SIZE * index,
+            ITEM_SIZE * (index + 0.5)
           ]
 
           const scale = scrollY.interpolate({
             inputRange,
-            outputRange: [1, 1, 1, 0]
+            outputRange: [1, 1, 1, 0],
           })
-
           const opacity = scrollY.interpolate({
-            inputRange: opacityInputRange,
+            inputRange,
             outputRange: [1, 1, 1, 0]
           })
+         
+          const chapterNumber = item.id 
+          const handleSelect = () => {
 
-          return (
-            <Animated.View style={{
-              opacity,
-              transform: [{scale}]
-            }}>
-              <ItemSurah key={index} data={item} onPress={pressed}/>    
-            </Animated.View>      
-          )
+            navigation.navigate("Detail", {chapterNumber})
+        }
 
-        }}
-        />
-    </AnimatedColorBox>
-  )
-}
-
-interface SurahProps {
-  data: Surah
-  onPress: () => void
-}
-
-
-const ItemSurah = (props: SurahProps) => {
-  return(
-    <TouchableOpacity onPress={props.onPress}>
-    <View
-      style={{
-        overflow: 'hidden',
-        borderRadius: 60,
-        padding: SPACING,
-        marginBottom: SPACING,
-        flexDirection: 'row',
-      }}
-      >
-          <View 
-            style={{ 
-              padding: SPACING, 
-              marginBottom: SPACING, 
-              marginRight: SPACING / 2,
-             
+        return(
+          <TouchableOpacity onPress={handleSelect}>
+            <Animated.View 
+              style={{ 
+                flex: 1, 
+                flexDirection: "row", 
+                padding: PADDING,
+                borderColor: "black",
+                borderBottomWidth: 1,
+                borderRadius: 50,
+                opacity,
+                transform: [{scale}]
             }}
-          >
-            <Col justifyCenter>
-              <Image source={require('../assets/icon2.png')} size={ICON_SIZE} flex={1} alt="." />
-            </Col>
-          </View>
-          <View style={{padding: SPACING, marginBottom: SPACING, marginRight: SPACING}}>
-            <Col size={2} justifyCenter>
-              <ScaledText color={useColorModeValue('#442C2E', 'white')}>
-                {props.data.surah_id}
-              </ScaledText>
-            </Col>
-          </View>
-          <Col size={4}  justifyCenter>
-            <ScaledText size={20} color={useColorModeValue('#442C2E', 'white')} bold>
-              {props.data.surah_name}</ScaledText>
-            <ScaledText color={useColorModeValue('#442C2E', 'white')}>
-              {`${props.data.surah_verse_count} verses`}</ScaledText>
-          </Col>
-          <Col size={4} justifyCenter alignEnd >
-            <ScaledText size={25} color={useColorModeValue('#442C2E', 'white')} bold>
-              {props.data.surah_name_arabic}</ScaledText>
-          </Col> 
-        </View>
-        <Line color="000" size={1}/>
-      </TouchableOpacity>
+               
+            >
+              <Image source={require("../assets/icon2.png")} size={ICON_SIZE} alignSelf="center" alt="icon2" />
+              <Text style={styles.item}>{item.id}</Text>
+              <Text style={styles.item} >{item.name_arabic}</Text>
+              <VStack alignSelf={"flex-end"}>
+                <Text style={styles.item}>{item.name_complex}</Text>
+                <Text style={styles.verse_count}>{item.verses_count} Verses</Text>
+              </VStack>
+            </Animated.View>
+          </TouchableOpacity>
+        )
+        }}
+        keyExtractor={(item) => item.id}
+      />
   )
-
 }
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 50
   },
+  item: {
+    padding: 20,
+    fontSize: 20,
+    marginTop: 5,
+    alignSelf: "center"
+  },
+  verse_count: {
+    fontSize: 15,
+    alignSelf: "center"
+  },
+  shadow: {
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 25,
+    elevation: 4
+
+  }
+
 })
-
-
-
-export default QuranScreen
-
-
- */
