@@ -1,15 +1,9 @@
-import { Button, FlatList, HStack, Icon, IconButton, Row, Text, useColorModeValue } from "native-base"
+import { Button, FlatList, HStack, Icon, IconButton, Row, Text, useColorModeValue, VStack, View, Image} from "native-base"
 import React, { createRef, useCallback, useEffect, useRef, useState } from "react" 
-import { BackHandler, Dimensions, ListView, RefreshControl, StyleSheet, View } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { BackHandler, Dimensions, ListView, RefreshControl, StyleSheet,} from "react-native"
 import { Feather } from '@expo/vector-icons'
 import ToggleTheme from "../components/toggle-theme"
 import AnimatedColorBox from "../components/animate-theme-shift"
-import { Col, Padder, ScaledText, Box } from "urip-rn-kit"
-import QuranKemenag from "quran-kemenag"
-import App from "../../App"
-import RNRestart from 'react-native-restart'
-import { Verse } from "quran-kemenag/dist/intefaces"
 
 interface DetailScreenProps {
   navigation: any
@@ -22,7 +16,7 @@ const DetailScreen = (props: DetailScreenProps) => {
   const [loading, setLoading] = useState(true)
   
   const {chapterNumber} = props.route.params
-  const url = `http://api.quran.com/api/v3/chapters/${chapterNumber}/verses?recitation=1&translations=21&language=ar&text_type=words` 
+  const url = `http://api.quran.com/api/v3/chapters/${chapterNumber}/verses?recitation=1&translations=21&language=ar&text_type=image` 
 
   useEffect(() => {
     const {chapterNumber} = props.route.params
@@ -43,74 +37,80 @@ const DetailScreen = (props: DetailScreenProps) => {
   }
   */
   
-  const SPACING = 10
-
-  const goToMushaf= () => {
-    props.navigation.navigate('Mushaf')
-  }
-
-  const Tabs = () => {
-    return(
-      <View style={{ position: 'absolute', top: 50, width: 200, alignSelf: 'center' }}>
-        <View style={styles.tabber}>
-          <Button 
-            opacity={1} 
-            bg={useColorModeValue('#FEDBD0', 'blueGray.800')}
-            borderTopWidth={1}
-            borderTopColor={useColorModeValue("#442C2E", "white")} 
-            borderBottomWidth={1}
-            borderBottomColor={useColorModeValue("#442C2E", "white")} 
-            leftIcon={<Icon as={Feather} name="book" size="sm" />}
-            _pressed={{bg: "#FEEAE6", opacity: 0.4}}
-            onPress={goToMushaf}
-            
-          >
-            <Text style={styles.tabber} color={useColorModeValue('#442C2E', 'white')}>go to Arabic Mushaf</Text>
-          </Button>
-        </View>
-      </View>
-    )
-  }
+  const PADDING = 10
+ 
   const handleBackbutton = useCallback(() => {
     props.navigation.navigate("Quran")
   }, [props.navigation])
   return (
-    <View>
-      <Tabs />
+    <View flex={1} padding={PADDING}>
+      <IconButton 
+        width="10"
+        onPress={handleBackbutton}
+        alignSelf="flex-start"
+        borderRadius={150}
+        variant="outline"
+        borderColor={useColorModeValue("#442C2E", "blue.700")}
+        _icon={{
+          as: Feather,
+          name: 'chevron-left',
+          size: 4,
+          color: useColorModeValue('#442C2E', 'darkBlue.700')
+          }}
+      /> 
     </View>
+
+
   )
-  
-}
-
-interface VerseItemProps {
-  data: Verse
-}
-
-const VerseItem =(props: VerseItemProps) => {
-  return (
-    <Col>
-      <Row></Row>
-      <Row><ScaledText>{props.data.verse_arabic}</ScaledText></Row>
-    </Col>
+    /*
+    <AnimatedColorBox
+      width="full"
+      flex= {1}
+      bg="#FEEBD0"
+    >
+    <FlatList 
+      data={data.verses}
+      renderItem={({item, index}) => {
+      const _image = `http:${item.image.url}`  
+        return(
+              <View>
+                <Image source={{uri: _image}} style={{width: 400, height: 40}}/>
+              </View>
+        )
+      }}
+      />
+    </AnimatedColorBox>
   )
+  */
 }
-
 
 const styles = StyleSheet.create({
-  tabber: {
-    fontSize: 19,
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    padding: 50
   },
-  indicator: {
-    position: 'absolute',
-    height: 1,
-    flex: 1,
-    alignSelf: 'flex-start',
-    width: 75,
-    backgroundColor: 'black',
+  item: {
+    padding: 20,
+    fontSize: 20,
+    marginTop: 5,
+    alignSelf: "center"
+  },
+  verse_count: {
+    fontSize: 15,
+    alignSelf: "center"
+  },
+  shadow: {
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 25,
+    elevation: 4
+
   }
+
 })
 
 export default DetailScreen
