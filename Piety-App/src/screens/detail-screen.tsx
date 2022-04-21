@@ -4,6 +4,7 @@ import { BackHandler, Dimensions, ListView, RefreshControl, StyleSheet,} from "r
 import { Feather } from '@expo/vector-icons'
 import ToggleTheme from "../components/toggle-theme"
 import AnimatedColorBox from "../components/animate-theme-shift"
+import DisplayMushaf from "../components/display-mushaf"
 
 interface DetailScreenProps {
   navigation: any
@@ -42,6 +43,10 @@ const DetailScreen = (props: DetailScreenProps) => {
   const handleBackbutton = useCallback(() => {
     props.navigation.navigate("Quran")
   }, [props.navigation])
+
+  const handleMushaf = useCallback(() => {
+    props.navigation.navigate("Mushaf")
+  }, [props.navigation])
   return (
     <View flex={1} padding={PADDING}>
       <IconButton 
@@ -57,7 +62,10 @@ const DetailScreen = (props: DetailScreenProps) => {
           size: 4,
           color: useColorModeValue('#442C2E', 'darkBlue.700')
           }}
-      /> 
+      />
+      <Button onPress={handleMushaf}>
+        <Text>Mushaf</Text>  
+      </Button>
     </View>
 
 

@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { 
   Text, Box, Center, VStack, HStack, 
-  themeTools, useTheme, useColorMode, useColorModeValue } from 'native-base'
+  themeTools, useTheme, useColorMode, useColorModeValue, View, Image } from 'native-base'
 import FetchPrayer from '../components/prayer-api'
-import { View, Image, ImageBackground, StyleSheet, Dimensions } from 'react-native'
+import { ImageBackground, StyleSheet, Dimensions } from 'react-native'
 import AnimatedColorBox from '../components/animate-theme-shift'
 import MainHeader from '../components/header'
 import BarNav from '../components/navbar'
@@ -31,12 +31,14 @@ export default function DefaultScreen(){
         bg = {useColorModeValue('#FEEAE6', 'black')}
         width="full" 
       >
-        <MainHeader 
-          title="Al Salamu Alaikum"
-          image={require('../assets/header.png')} 
-        >
-        <BarNav />
-        </MainHeader>
+        <View>
+          <MainHeader 
+            title="Al Salamu Alaikum"
+            image={require('../assets/header.png')} 
+          >
+          <BarNav />
+          </MainHeader>
+        </View>
         <VStack 
         space={5}
         bg={useColorModeValue('#FEDBD0', 'blueGray.900')}

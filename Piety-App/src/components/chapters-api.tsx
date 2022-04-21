@@ -65,11 +65,11 @@ export default function FetchQuran() {
           const chapterNumber = item.id 
           const handleSelect = () => {
 
-            navigation.navigate("Detail", {chapterNumber})
+            navigation.navigate("Mushaf", {chapterNumber})
         }
 
         return(
-          <TouchableOpacity onPress={handleSelect}>
+          <TouchableOpacity onPress={handleSelect}> 
             <Animated.View 
               style={{ 
                 flex: 1, 
