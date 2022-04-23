@@ -11,6 +11,7 @@ import Library from './screens/Library'
 import DetailScreen from './screens/detail-screen'
 import MushafScreen from './screens/mushaf-screen'
 import TestScreen from './screens/test-screen'
+import HadithScreen from './screens/hadith-results'
 
 const Drawer = createDrawerNavigator()
 
@@ -33,6 +34,7 @@ const App = () => {
       <Drawer.Screen name="Detail" component={DetailScreen} />
       <Drawer.Screen name="Mushaf" component={MushafScreen} />
       <Drawer.Screen name="Test" component={TestScreen} />
+      <Drawer.Screen name="Hadith" component={HadithScreen} />
     </Drawer.Navigator>
   )
 }
