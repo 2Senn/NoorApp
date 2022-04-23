@@ -10,22 +10,19 @@ interface Props{
 
 const MainHeader = ({ title, image, children}: Props) => {
   return (  
-    <VStack h="300px" alignContent="center"  >
+    <VStack h="100px" alignContent="center"   >
       <Image 
         position="absolute"
-        left={0} 
-        bottom={100}
-        top={0}
-        h="400"
+        h="200"
         w="full"  
         resizeMode="contain" 
         source={image}
         alt="MainHeader image"
-        opacity={1}
+        opacity={0.2}
       />
       {children}
       <Box flex={1}/>
-      <Heading zIndex={1} color={useColorModeValue('black', 'rose.400')} p={4} size="2xl" bottom={0} alignSelf="center">
+      <Heading zIndex={1} color={useColorModeValue('black', 'white')} p={1} size="xl" alignSelf="center">
         {title}
       </Heading>
 
