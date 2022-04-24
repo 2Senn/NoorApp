@@ -34,7 +34,7 @@ export default function DefaultScreen(props: navProps){
         width="full" 
       >
         <View>
-          <Image source={require("../assets/icon2.png")} resizeMode="contain" size="250" alignSelf="center"/>
+          <Image alt="icon2" source={require("../assets/icon2.png")} resizeMode="contain" size="250" alignSelf="center"/>
           <View position="absolute">
             <BarNav />
           </View>
@@ -49,7 +49,7 @@ export default function DefaultScreen(props: navProps){
         borderTopRightRadius="30px"
         pt="40px"
         >
-          <Image source={require("../assets/masjid2.png")} opacity={0.4} resizeMode="contain" alignSelf="center" justifyContent="center" position="absolute" />
+          <Image alt="masjid" source={require("../assets/masjid2.png")} opacity={0.4} resizeMode="contain" alignSelf="center" justifyContent="center" position="absolute" />
 
           <View position="absolute" pt={10}>
             <PrayTimes />

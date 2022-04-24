@@ -26,7 +26,7 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
     navigation.navigate('Quran')
   }, [navigation])
   const handlePressMenuHadithCheck = useCallback(() => {
-    navigation.navigate('Hadith Checker')
+    navigation.navigate('Search')
   }, [navigation])
   const handlePressMenuLibrary = useCallback(() => {
     navigation.navigate('Library')
