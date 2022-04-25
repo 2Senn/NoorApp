@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, VStack, useColorModeValue, StatusBar, Image } from 'native-base'
+import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button } from 'native-base'
 import { Dimensions, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import AnimatedColorBox from '../components/animate-theme-shift'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { position } from 'native-base/lib/typescript/theme/styled-system'
 import { faker } from '@faker-js/faker'
+import { Feather } from '@expo/vector-icons' 
 
 const {width, height} = Dimensions.get('screen')
 const ITEM_HEIGHT = height * 0.18
@@ -18,18 +19,11 @@ interface screenProps{
 export default function HadithScreen(){
 
   const [hadithJSON, setHadithJSON] = useState([])
-  const [hadith, setHadith] = useState("")
-  const [narrator, setNarrator] = useState([])
-  const [grade, setGrade] = useState()  
-  const [source, setSource] = useState([])
-  const [number, setNumber] = useState([])
-  const [mohadeth, setMohadeth] = useState([])
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState("انما الأعمال بالنيات ")
 
   const sb = useColorModeValue("rgba(0,0,0,0.6)", "darkBlue.800")
-  const i_search = "نيات "
-  const url = `https://dorar-hadith-api.herokuapp.com/api/search?value=${i_search}`
-
+  const url = `https://dorar-hadith-api.herokuapp.com/api/search?value=${search}`
 
 
 
@@ -38,20 +32,20 @@ export default function HadithScreen(){
       let response = await fetch(url)
       let json = await response.json()
       setHadithJSON(json)
-      setHadith(json.hadith)
       console.log(hadithJSON)
     } catch(error){
         console.log(error)
     }  
     setLoading(false)
-  }, [])
+  }, [search])
 
 
   
   useEffect(() => {
     getHadith()
-    console.log(hadith)
-  }, [])
+  }, [getHadith])
+
+
 
   //islamic icons created by Freepik - Flaticon
 
@@ -59,96 +53,68 @@ export default function HadithScreen(){
     { 
       key: faker.random.uuid(),
       hadiths: hadithJSON[0],
-      image: require('../assets/quran.png'),
-
     },
     {  
       key: faker.random.uuid(),
       hadiths: hadithJSON[1],
-      image: require('../assets/kaaba.png')
     },
     
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[2],
-      image: require('../assets/carpet.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[3],
-      
-      image: require('../assets/lantern.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[4],
-      
-      
-      image: require('../assets/praying.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[5],
-      
-      
-      image: require('../assets/tayammum.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[6],
-      
-      
-      image: require('../assets/woman.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[7],
-      
-      
-      image: require('../assets/dates.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[8],
-      
-      
-      image: require('../assets/alms.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[9],
-      
-      
-      image: require('../assets/ablution.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[10],
-      image: require('../assets/pork.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[11],
-      image: require('../assets/miswak.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[12],
-      image: require('../assets/man.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[13],  
-      image: require('../assets/prayer.png')
     },
     {
       key: faker.random.uuid(),
       hadiths: hadithJSON[14],
-      image: require('../assets/window.png')
     }
     
   ]
 
+  
 
   const checkBack = (item: string) => {
     if(item.indexOf("صحيح") !== -1 ){
@@ -166,6 +132,8 @@ export default function HadithScreen(){
   }
 
 
+  const inverse = useColorModeValue("white", "black")
+  const sbg = useColorModeValue("rgba(0,0,0,0.8)", "darkBlue.700")
 
   const forImage = (item: string) => {
     if(checkBack(item) == "#698E71"){
@@ -179,7 +147,24 @@ export default function HadithScreen(){
     }
   }
 
-  if(loading) return <Text fontSize={30}>LOADING</Text>
+  const hasData = (item) => {
+    if(item != null){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  const noResultView = () => {
+    return(
+      <View flex={1} alignSelf="center" justifyContent="center">
+        <Text>
+          NO RESULTS... PLEASE MODIFY SEARCH 
+        </Text>
+      </View>
+    )
+  }
 
   return(
     
@@ -187,10 +172,33 @@ export default function HadithScreen(){
       flex={1}
       width="full"
       height={height}
-      bg={useColorModeValue("#FEDBD0", "darkBlue.700")}
+      bg={useColorModeValue("#FEDBD0", "blueGray.900")}
     >
       <SafeAreaView style={{flex: 1}}>
       <StatusBar hidden />
+      <View pt={5} flex={1} flexDir="row" width={width} height={100} position="absolute">
+        <Input 
+            placeholder="Search"
+            variant="filled" 
+            backgroundColor={sbg}
+            width={width}
+            height={50}
+            borderRadius="10" 
+            color={sbg}
+            onSubmitEditing={(text) => 
+              {
+                setSearch(text.nativeEvent.text)
+                setLoading(true)
+              }}
+            py="1" 
+            px="2" 
+            placeholderTextColor={inverse}
+            borderWidth="0" 
+            InputLeftElement={<Icon ml="2" size="4" color={inverse} as={ Feather } name="cloud" />} 
+            />
+      </View>
+      <View flex={1} pt={SPACING}>
+      {(loading) ? <Text fontSize={30}>no results...</Text> : (
       <FlatList 
         data={data}
         keyExtractor={item => item.key}
@@ -199,18 +207,33 @@ export default function HadithScreen(){
           return(
             <TouchableOpacity style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} onPress={() => {}}>
               <View flex={1} p={SPACING}>
-                <View style={[StyleSheet.absoluteFillObject ]} borderRadius={16} backgroundColor={checkBack(item.hadiths.grade)} />
+                <View 
+                      style={[StyleSheet.absoluteFillObject ]} 
+                      borderRadius={16} 
+                      backgroundColor={hasData(item.hadiths) ? checkBack(item.hadiths.grade) : null} 
+                      />
                   <View style={{height: ITEM_HEIGHT, width: ITEM_HEIGHT * 1.5, position: 'absolute', flex: 1, flexShrink: 0.2}}>
-                    <Text margin={2} style={styles.hadith} adjustsFontSizeToFit>{item.hadiths.hadith}</Text>
+                    <Text 
+                      margin={2} 
+                      style={styles.hadith} 
+                      adjustsFontSizeToFit>{hasData(item.hadiths) ? item.hadiths.hadith : noResultView()}
+                    </Text>
                   </View>
-                  <Text margin={5} style={styles.grade} >{item.hadiths.grade}</Text>
-                <Image alt="i passed it..." source={forImage(item.hadiths.grade)} style={styles.image}/>
+                  <Text 
+                    margin={5} 
+                    style={styles.grade}
+                  >
+                    {hasData(item.hadiths) ? item.hadiths.grade : noResultView()}
+                  </Text>
+                <Image alt="i passed it..." source={hasData(item.hadiths) ? forImage(item.hadiths.grade) : null} style={styles.image}/>
               </View>
             </TouchableOpacity>
             
           )
         }}
         />
+      )}
+      </View>
       </SafeAreaView>
     </AnimatedColorBox>
   )
