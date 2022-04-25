@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button } from 'native-base'
+import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button, useColorMode } from 'native-base'
 import { Dimensions, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import AnimatedColorBox from '../components/animate-theme-shift'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,18 +7,18 @@ import { position } from 'native-base/lib/typescript/theme/styled-system'
 import { faker } from '@faker-js/faker'
 import { Feather } from '@expo/vector-icons' 
 
-const {width, height} = Dimensions.get('screen')
-const ITEM_HEIGHT = height * 0.18
-const SPACING = 20
+export const {width, height} = Dimensions.get('screen')
+export const ITEM_HEIGHT = height * 0.18
+export const SPACING = 20
 
 interface screenProps{
   navigation: any,
   route: any,
 }
 
-export default function HadithScreen(){
+export default function HadithScreen(props: screenProps){
 
-  const [hadithJSON, setHadithJSON] = useState([])
+  const [hadithJSON, setHadithJSON] = useState<any>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState("انما الأعمال بالنيات ")
 
@@ -53,63 +53,78 @@ export default function HadithScreen(){
     { 
       key: faker.random.uuid(),
       hadiths: hadithJSON[0],
+      image: require('../assets/man.png')
     },
     {  
       key: faker.random.uuid(),
       hadiths: hadithJSON[1],
+      image: require('../assets/woman.png')
     },
     
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[2],
+      image: require('../assets/arab.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[3],
+      image: require('../assets/arab2.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[4],
+      image: require('../assets/united-arab-emirates.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[5],
+      image: require('../assets/arab-man.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[6],
+      image: require('../assets/muslim.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[7],
+      image: require('../assets/dates.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[8],
+      image: require('../assets/window.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[9],
+      image: require('../assets/prayer.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[10],
+      image: require('../assets/lantern.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[11],
+      image: require('../assets/kaaba.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[12],
+      image: require('../assets/dates.png')
     },
     {   
       key: faker.random.uuid(),
       hadiths: hadithJSON[13],  
+      image: require('../assets/carpet.png')
     },
     {
       key: faker.random.uuid(),
       hadiths: hadithJSON[14],
+      image: require('../assets/tayammum.png')
     }
     
   ]
@@ -147,7 +162,7 @@ export default function HadithScreen(){
     }
   }
 
-  const hasData = (item) => {
+  const hasData = (item: any) => {
     if(item != null){
       return true
     }
@@ -155,6 +170,9 @@ export default function HadithScreen(){
       return false
     }
   }
+
+
+  
 
   const noResultView = () => {
     return(
@@ -168,12 +186,16 @@ export default function HadithScreen(){
 
   return(
     
-    <AnimatedColorBox
+    <View
       flex={1}
       width="full"
       height={height}
-      bg={useColorModeValue("#FEDBD0", "blueGray.900")}
     >
+      <AnimatedColorBox width={"full"} bg={useColorModeValue('#FEDBD0', 'blueGray.900')} flex={1}>
+      <Image 
+        source={require('../assets/sakuraa.png')}
+        style={StyleSheet.absoluteFillObject} blurRadius={10}
+          />
       <SafeAreaView style={{flex: 1}}>
       <StatusBar hidden />
       <View pt={5} flex={1} flexDir="row" width={width} height={100} position="absolute">
@@ -198,14 +220,18 @@ export default function HadithScreen(){
             />
       </View>
       <View flex={1} pt={SPACING}>
-      {(loading) ? <Text fontSize={30}>no results...</Text> : (
+      {(loading) ? <Text  fontSize={30}>Hmmm...</Text> : (
       <FlatList 
         data={data}
         keyExtractor={item => item.key}
         contentContainerStyle={{ padding: SPACING}}
         renderItem={({item, index}) =>  {
           return(
-            <TouchableOpacity style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} onPress={() => {}}>
+            <TouchableOpacity 
+                      style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} 
+                      onPress={() => {
+                        props.navigation.navigate("HDetail", {item})
+                      }}>
               <View flex={1} p={SPACING}>
                 <View 
                       style={[StyleSheet.absoluteFillObject ]} 
@@ -233,9 +259,11 @@ export default function HadithScreen(){
         }}
         />
       )}
+      <View style={styles.bg}/>
       </View>
       </SafeAreaView>
-    </AnimatedColorBox>
+      </AnimatedColorBox>
+    </View>
   )
 }
 
@@ -264,7 +292,17 @@ const styles = StyleSheet.create({
     padding: SPACING,
     color: "white",
     overflow: "hidden"
-  },
+  }, 
+  bg: {
+    position: 'absolute',
+    width,
+    height,
+    backgroundColor: 'red',
+    transform: [{ translateY: height }],
+    borderRadius: 32
+  }
+
+
 })
 
 

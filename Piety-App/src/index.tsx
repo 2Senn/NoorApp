@@ -6,7 +6,6 @@ import AboutScreen from './screens/about'
 import TaskScreen from  './screens/to-do'
 import Sidebar from './components/sidebar'
 import QuranScreen from './screens/quran-screen'
-import HadithCheck from './screens/hadith-check'
 import Library from './screens/Library'
 import DetailScreen from './screens/detail-screen'
 import MushafScreen from './screens/mushaf-screen'
@@ -34,7 +33,6 @@ const App = () => {
       <Drawer.Screen name="Detail" component={DetailScreen} />
       <Drawer.Screen name="Mushaf" component={MushafScreen} />
       <Drawer.Screen name="Test" component={TestScreen} />
-      <Drawer.Screen name="Search" component={HadithCheck} />
       <Drawer.Screen name="Hadith" component={HadithScreen} />
       <Drawer.Screen name="HDetail" component={HadithDetail} />
     </Drawer.Navigator>

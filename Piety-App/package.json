@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.1.1",
+    "@georstat/react-native-image-cache": "^2.0.1",
     "@react-native-async-storage/async-storage": "^1.16.2",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/drawer": "^6.1.8",

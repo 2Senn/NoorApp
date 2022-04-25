@@ -1,4 +1,4 @@
-import { Box, useColorMode, HStack, VStack, Center, Avatar, Heading, IconButton, useColorModeValue, Image } from 'native-base'
+import { Box, useColorMode, HStack, VStack, Center, Avatar, Heading, IconButton, useColorModeValue, Image, View } from 'native-base'
 import React, { useCallback } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
 import AnimatedColorBox from './animate-theme-shift'
@@ -26,7 +26,7 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
     navigation.navigate('Quran')
   }, [navigation])
   const handlePressMenuHadithCheck = useCallback(() => {
-    navigation.navigate('Search')
+    navigation.navigate('Hadith')
   }, [navigation])
   const handlePressMenuLibrary = useCallback(() => {
     navigation.navigate('Library')
@@ -36,32 +36,35 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
   return(
     <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#FEDBD0', 'darkBlue.800')} p={7}>
       <VStack flex={1} space={2}>
-        <HStack justifyContent="flex-end">
+        <HStack flex={1} flexDir="row">
+          <Heading mb={4} size="xl">
+            استعن بالله ولا تعجز
+          </Heading>
           <IconButton 
             onPress={handlePressBackBtn} 
-            borderRadius={100}
-            variant="outline"
-            borderColor={useColorModeValue("#442C2E", "blue.700")}
+            variant="ghost"
             _icon={{
               as: Feather,
-              name: 'chevron-left',
-              size: 6,
+              name: 'arrow-left-circle',
+              strokeWidth: 10,
+              size: 7,
               color: useColorModeValue('#442C2E', 'darkBlue.700')
             }}
             />
         </HStack>
-        
-        <Image
-          source={require("../assets/sakuraa.png")}
-          alt="sakura"
-          position="relative"
-          height="200px"
-          resizeMode="cover"
-          opacity="0.5"/>
-      <Heading mb={4} size="xl">
-        استعن بالله ولا تعجز
-      </Heading>
-      <MenuButton 
+        <View flex={1} height={500} width={500} >
+          <Image
+            source={require("../assets/olive.png")}
+            alt="olive tree"
+            resizeMode="cover"
+            position="absolute"
+            flex={1}
+            opacity="0.6"
+            width={500}
+            height={500}
+            />
+        </View>
+     <MenuButton 
         active={currRoute === "Pray"} 
         onPress={handlePressMenuMain}
         icon="cloud"
@@ -94,12 +97,12 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         About
       </MenuButton>
       <MenuButton
-        active={currRoute === "Hadith Checker"}
+        active={currRoute === "Hadith"}
         onPress={handlePressMenuHadithCheck}
         icon="check-circle"
         borderRadius={20}  
       >
-        Hadith Checker
+        Hadith Authenticator
       </MenuButton>
       <MenuButton
         active={currRoute === "Library"}
@@ -110,6 +113,9 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         Library
       </MenuButton>
       <ToggleTheme />
+      <View flex={1}>
+        <Image source={require("../assets/fig-sm.png")} alt="fig tree" resizeMode="contain" height={150} width={100} opacity={0.5} />
+      </View>
       </VStack>
     </AnimatedColorBox>
   )

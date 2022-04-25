@@ -1,11 +1,11 @@
 import React from 'react'
-import { Text, HStack, Switch, useColorMode} from 'native-base'
+import { Text, HStack, Switch, useColorMode, Image} from 'native-base'
 
 export default function ToggleTheme(){
   const { colorMode, toggleColorMode } = useColorMode()
   return (
     <HStack space={2} alignItems="center">
-      <Text>Night</Text>
+      <Image resizeMode={'contain'} width={25} height={25}  source={require("../assets/moon.png")} />
       <Switch 
         isChecked={colorMode==='light'} 
         onToggle={toggleColorMode}
@@ -15,7 +15,7 @@ export default function ToggleTheme(){
         offThumbColor={"black"}
       >
       </Switch>
-      <Text>Day</Text>
+      <Image resizeMode={"contain"} width={25} height={25} source={require("../assets/sun.png")}/>
 
   </HStack>
   )
