@@ -15,12 +15,13 @@ $PROJECT_ROOT
 └── src
     ├── screens    # Screen components
     ├── components # UI components
-    ├── utilities  # Custom hooks and helpers
+    ├── utils  # Custom hooks and helpers
     └── assets     # Image files
 ```
 
 ## Credits
 
+- [FlatIcons](https://www.flaticon.com/) Islam icons created by Freepik - Flaticon
 
 ## How to dev
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ImageSourcePropType } from 'react-native'
-import { Box, VStack, Heading, Image } from 'native-base'
+import { Box, VStack, Heading, Image, useColorModeValue } from 'native-base'
 
 interface Props {
   title: string
@@ -20,7 +20,7 @@ const Masthead = ({ title, image, children }: Props) => {
         h="300px"
         resizeMode="cover"
         source={image}
-        alt="masthead image"
+        alt="header icon"
       />
       {children}
       <Box flex={1} />

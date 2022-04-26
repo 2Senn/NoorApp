@@ -11,24 +11,24 @@ import Animated, {
 const AnimatedBox = Animated.createAnimatedComponent(Box)
 
 const AnimatedColorBox = ({ bg, ...props }: any) => {
-  const hexBg = useToken('colors', bg)
-  const prevHexBg = usePrevious(hexBg)
-  const progress = useSharedValue(0)
+  const bgHex = useToken('colors', bg)
+  const prevHexBg = usePrevious(bgHex)
+  const transition = useSharedValue(0)
 
   useEffect(() => {
-    progress.value = 0
-  }, [hexBg])
+    transition.value = 0
+  }, [bgHex])
 
   const animatedStyles = useAnimatedStyle(() => {
-    progress.value = withTiming(1, { duration: 200 })
+    transition.value = withTiming(1, { duration: 200 })
     return {
       backgroundColor: interpolateColor(
-        progress.value,
+        transition.value,
         [0, 1],
-        [prevHexBg || hexBg, hexBg]
+        [prevHexBg || bgHex, bgHex]
       )
     }
-  }, [hexBg])
+  }, [bgHex])
   return <AnimatedBox {...props} style={animatedStyles} />
 }
 

@@ -26,7 +26,7 @@ export default function DefaultScreen(props: navProps){
   return (
       <AnimatedColorBox
         flex={1}
-        bg = {useColorModeValue('#FEEAE6', 'black')}
+        bg = {useColorModeValue('#FEEAE6', 'darkBlue.900')}
         width="full" 
       >
         <View>
@@ -37,7 +37,7 @@ export default function DefaultScreen(props: navProps){
         </View>
         <VStack 
         space={5}
-        bg={useColorModeValue('#FEDBD0', 'blueGray.900')}
+        bg={useColorModeValue('#FEDBD0', 'darkBlue.800')}
         mt="-110px"
         height="full"
         shadow="6"
@@ -45,7 +45,14 @@ export default function DefaultScreen(props: navProps){
         borderTopRightRadius="30px"
         pt="40px"
         >
-          <Image alt="masjid" source={require("../assets/masjid2.png")} opacity={0.4} resizeMode="contain" alignSelf="center" justifyContent="center" position="absolute" />
+          <Image 
+            alt="sakura" 
+            source={require("../assets/sakuraa.png")} 
+            opacity={0.4} 
+            resizeMode="contain" 
+            alignSelf="center" 
+            justifyContent="center" 
+            position="absolute" />
 
           <View position="absolute" pt={10}>
             <PrayTimes />

@@ -3,7 +3,7 @@ import { IconButton, useColorModeValue, View, HStack, Image, FlatList, Box } fro
 import { TouchableOpacity, Dimensions, StatusBar} from "react-native"
 import { Feather } from "@expo/vector-icons"
 import AnimatedColorBox from "../components/animated-color-box"
-import Mushaf from "../components/mushaf"
+import Mushaf from "../utils/mushaf"
 
 interface MushafScreenProps{
   navigation: any
