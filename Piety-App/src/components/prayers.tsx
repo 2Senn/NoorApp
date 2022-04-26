@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { View, Image, Text, VStack, useColorModeValue, FlatList, Icon, IconButton, Box } from "native-base" 
-import { DrawerItem } from "@react-navigation/drawer"
-import { Dimensions, ImageBackground, StyleSheet } from "react-native"
-import AnimatedColorBox from "./animate-theme-shift"
+import { View, Text, VStack, useColorModeValue, Icon } from "native-base" 
+import { Dimensions, StyleSheet } from "react-native"
 import { Feather } from "@expo/vector-icons"
-import { Line } from "urip-rn-kit"
 
-interface timeProps{
-  navigation: any
-}
 
 const PrayTimes = () => {
 
@@ -194,110 +188,7 @@ const PrayTimes = () => {
           style={{justifyContent: 'center', alignSelf: 'center'}}/>
       </VStack>
     </View>
-
-    /*
-    <AnimatedColorBox
-      width="full"
-      bg={useColorModeValue("#FEDBD0", "blueGray.700")}
-    >
-      <View>
-      </View>
-      <View alignItems={'center'} justifyContent={'center'}>
-        <FlatList 
-          data={images}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({item, index}) => {
-            return(
-              <View justifyContent={"center"} alignItems="center" style={{width, height}}>
-               <View 
-                backgroundColor={cBorder}
-                style={{
-                  borderRadius: 18,
-                  shadowColor: '#000',
-                  shadowOpacity: 1,
-                  shadowRadius: 20,
-                  shadowOffset: {
-                    width: 0,
-                    height: 0,
-                  },
-                  elevation: 10,
-                  padding: 12,
-                }}
-              >
-                <View 
-                style={{
-                  width: ITEM_WIDTH, 
-                  height: ITEM_HEIGHT, 
-                  overflow: 'hidden',
-                  alignItems: 'center',
-                  borderRadius: 14
-              
-                }}
-                >
-                  <Image 
-                    alt="icon"
-                    source={item.avatar} 
-                    zIndex={1}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      position: 'absolute',
-                      bottom: -30,
-                      right: -10,
-                    }}
-                    />
-                
-                  <ImageBackground 
-                  source={item.image}
-                  style={{
-                      width: ITEM_WIDTH * 1.4, 
-                      height: ITEM_HEIGHT, 
-                     
-                    }}>
-                    <View flex={1} backgroundColor={'rgba(0,0,0,0.4)'}>
-                      <Icon
-                        as= {Feather}
-                        flex={1}
-                        left={20}
-                        top={20}
-                        name={item.icon}
-                        size='xl'
-                        opacity={1}
-                        zIndex={2}
-                        fontSize={64}
-                        strokeWidth={0.5}
-                        color="yellow.200"
-                      />
-                    </View>
-                     <Image 
-                      alt="icon"
-                      source={item.avatar} 
-                      style={{
-                        width: 60,
-                        height: 60,
-                        position: 'absolute',
-                        bottom: -30,
-                        right: ITEM_WIDTH * 0.005,
-                     }}
-                    />
-                
-                    <View style={{position: 'absolute', width: ITEM_WIDTH * 0.8}}>
-                      <Text padding={PADDING} flex={1} zIndex={1} style={styles.item}>{item.time}</Text>    
-                    </View>
-                  </ImageBackground>
-                </View> 
-                </View> 
-                </View>
-            )
-          }}
-        />
-      </View>
-    </AnimatedColorBox>
-      */
-  )
+ )
 
 }
 const styles= StyleSheet.create({
@@ -319,3 +210,4 @@ const styles= StyleSheet.create({
 })
 
 export default PrayTimes
+

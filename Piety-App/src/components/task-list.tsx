@@ -5,7 +5,7 @@ import {
   ScrollView
 } from 'react-native-gesture-handler'
 import TaskItem from './task-item'
-import { makeStyledComponent } from '../utilities/styled'
+import { makeStyledComponent } from '../utils/styled'
 
 const StyledView = makeStyledComponent(View)
 const StyledScrollView = makeStyledComponent(ScrollView)

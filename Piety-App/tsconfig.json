@@ -12,7 +12,5 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
   }
 }
-

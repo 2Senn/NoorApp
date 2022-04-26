@@ -1,10 +1,10 @@
 import { Box, useColorMode, HStack, VStack, Center, Avatar, Heading, IconButton, useColorModeValue, Image, View } from 'native-base'
 import React, { useCallback } from 'react'
 import { DrawerContentComponentProps } from '@react-navigation/drawer'
-import AnimatedColorBox from './animate-theme-shift'
-import ToggleTheme from './toggle-theme'
+import AnimatedColorBox from './animated-color-box'
+import ToggleTheme from './theme-toggle'
 import { Feather } from '@expo/vector-icons'
-import MenuButton from './menu-btn' 
+import MenuButton from './menu-button' 
 
 const Sidebar = (props: DrawerContentComponentProps) =>{
   const { state, navigation } = props
@@ -122,3 +122,4 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
 }
 
 export default Sidebar
+

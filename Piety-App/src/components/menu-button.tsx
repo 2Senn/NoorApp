@@ -36,3 +36,4 @@ const MenuButton = ({ active, icon, children, ...props}: Props) => {
 }
 
 export default MenuButton
+

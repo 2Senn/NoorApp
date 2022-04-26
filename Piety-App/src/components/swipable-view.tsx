@@ -13,7 +13,7 @@ import Animated, {
   runOnJS
 } from 'react-native-reanimated'
 import { Box } from 'native-base'
-import { makeStyledComponent } from '../utilities/styled'
+import { makeStyledComponent } from '../utils/styled'
 
 const StyledView = makeStyledComponent(Animated.View)
 

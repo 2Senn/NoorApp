@@ -1,6 +1,3 @@
-import React from "react"
-import { View, Text } from 'native-base'
-
 const Mushaf = [
     require(`../assets/mushafs/kingFahad/page001.png`),
     require('../assets/mushafs/kingFahad/page002.png'),
@@ -607,3 +604,4 @@ const Mushaf = [
     require('../assets/mushafs/kingFahad/page604.png'),
   ]
 export default Mushaf 
+

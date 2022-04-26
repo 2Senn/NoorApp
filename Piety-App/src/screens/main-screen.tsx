@@ -1,16 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { 
-  Text, Box, Center, VStack, HStack, 
-  themeTools, useTheme, useColorMode, useColorModeValue, View, Image, Button, IconButton } from 'native-base'
-import FetchPrayer from '../components/prayer-api'
-import { ImageBackground, StyleSheet, Dimensions } from 'react-native'
-import AnimatedColorBox from '../components/animate-theme-shift'
-import MainHeader from '../components/header'
+  Text, VStack, useColorModeValue, View, Image, IconButton } from 'native-base'
+import { StyleSheet, Dimensions } from 'react-native'
+import AnimatedColorBox from '../components/animated-color-box'
 import BarNav from '../components/navbar'
-import PrayTimes from '../components/pray-times'
-import MenuButton from '../components/menu-btn'
+import PrayTimes from '../components/prayers'
 import { Feather } from '@expo/vector-icons'
-import Hijri from '../components/hijri-time'
+import Hijri from '../components/hijri'
 
 
 interface navProps{
@@ -97,3 +93,4 @@ const styles = StyleSheet.create({
     borderColor: "#D4AF37",
   }
 })
+

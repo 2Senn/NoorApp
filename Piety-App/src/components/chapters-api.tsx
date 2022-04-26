@@ -1,22 +1,14 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react'
-import { ScrollView, StyleSheet, Animated, TouchableOpacity} from 'react-native'
-import { FlatList, Text, List, VStack, useColorModeValue, Image, View } from 'native-base'
-import AnimatedColorBox from './animate-theme-shift'
-import { Col } from 'urip-rn-kit'
-import { DrawerContentComponentProps } from '@react-navigation/drawer'
-import DetailScreen from '../screens/detail-screen'
+import { StyleSheet, Animated, TouchableOpacity} from 'react-native'
+import { Text, VStack, Image } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 
-interface QuranProps{
-  navigation: any
-  route: any,
-}
 
 export default function FetchQuran() {
 
   const navigation = useNavigation()
 
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any>([])
   const [loading, setLoading] = useState(true)
   const url = "https://api.quran.com/api/v3/chapters?language=en"
   const PADDING = 5
@@ -64,9 +56,9 @@ export default function FetchQuran() {
          
           const chapterNumber = item.id 
           const handleSelect = () => {
-
             navigation.navigate("Mushaf", {chapterNumber})
-        }
+        } 
+        
 
         return(
           <TouchableOpacity onPress={handleSelect}> 
@@ -129,3 +121,4 @@ const styles = StyleSheet.create({
   }
 
 })
+

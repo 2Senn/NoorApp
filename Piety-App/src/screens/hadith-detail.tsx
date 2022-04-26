@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect } from "react"
 import { View, Text, VStack, Image, FlatList, useColorModeValue, IconButton} from 'native-base'
-import AnimatedColorBox from "../components/animate-theme-shift"
 import { Feather } from "@expo/vector-icons"
 import { StyleSheet } from "react-native"
-import { height, width, SPACING, ITEM_HEIGHT } from "./hadith-results"
+import { height, width, SPACING, ITEM_HEIGHT } from "./hadith"
 
 interface screenProps{
   navigation: any,
@@ -137,3 +136,4 @@ const styles = StyleSheet.create({
   }
 
 })
+

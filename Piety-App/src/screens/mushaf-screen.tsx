@@ -1,14 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { IconButton, Text, useColorModeValue, View, VStack, HStack, Image, FlatList, Box } from "native-base"
-import QuranScreen from "./quran-screen"
+import React, { useCallback, useState } from "react"
+import { IconButton, useColorModeValue, View, HStack, Image, FlatList, Box } from "native-base"
 import { TouchableOpacity, Dimensions, StatusBar} from "react-native"
 import { Feather } from "@expo/vector-icons"
-import ToggleTheme from "../components/toggle-theme"
-import AnimatedColorBox from "../components/animate-theme-shift"
+import AnimatedColorBox from "../components/animated-color-box"
 import Mushaf from "../components/mushaf"
-import { interpolate } from "react-native-reanimated"
-import TextRecognition from 'react-native-text-recognition'
-import { require } from "yargs"
 
 interface MushafScreenProps{
   navigation: any
@@ -22,11 +17,6 @@ const MushafScreen = (props: MushafScreenProps) => {
     props.navigation.navigate("Quran")
   }, [props.navigation])
 
-  
-     
-  const range = () => {
-    return Array.from(Array(604).keys())
-}
   
   const [images, setimages] = useState(Mushaf)
   const [showOptions, setShowOptions] = useState(false)
@@ -99,36 +89,8 @@ const MushafScreen = (props: MushafScreenProps) => {
       </AnimatedColorBox>
 );
 
-
-    /*
-    <AnimatedColorBox
-      flex={1}
-      bg={useColorModeValue("#FEEAE6", "blueGray.800")}
-      width="full"
-    >
-      <DisplayMushaf />
-        <View flex={1} flexDirection={"row"} pt={PADDING}>
-          <IconButton
-            width="10"
-            onPress={handleBackbutton}
-            alignSelf="flex-start"
-            borderRadius={150}
-            variant="outline"
-            borderColor={useColorModeValue("#442C2E", "blue.700")}
-            _icon={{
-              as: Feather,
-              name: 'chevron-left',
-              size: 4,
-              color: useColorModeValue('#442C2E', 'darkBlue.700')
-              }}
-          />
-          <View flex={1} justifyContent="center" alignContent="center" padding={PADDING}>
-            <ToggleTheme />
-          </View>
-        </View>
-    </AnimatedColorBox>
-      */
 }
 
 export default MushafScreen
+
 

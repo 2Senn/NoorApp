@@ -1,10 +1,8 @@
-import { Button, FlatList, HStack, Icon, IconButton, Row, Text, useColorModeValue, VStack, View, Image} from "native-base"
-import React, { createRef, useCallback, useEffect, useRef, useState } from "react" 
-import { BackHandler, Dimensions, ListView, RefreshControl, StyleSheet,} from "react-native"
+import { Button, IconButton, Row, Text, useColorModeValue, View } from "native-base"
+import React, { useCallback, useEffect, useState } from "react" 
+import { StyleSheet } from "react-native"
 import { Feather } from '@expo/vector-icons'
-import ToggleTheme from "../components/toggle-theme"
-import AnimatedColorBox from "../components/animate-theme-shift"
-import DisplayMushaf from "../components/display-mushaf"
+
 
 interface DetailScreenProps {
   navigation: any
@@ -27,17 +25,7 @@ const DetailScreen = (props: DetailScreenProps) => {
     .catch((error) => console.error(error))
     .finally(() => setLoading(false))
   }, [chapterNumber])
-
-  /*
-  const getData = async () => {
-    const quran = new QuranKemenag()
-    const data = await quran.getSurah(surahNumber)
-    console.log(surahNumber)
-    setSurah(data)
-    setVerses(data.verses || [])
-  }
-  */
-  
+ 
   const PADDING = 10
  
   const handleBackbutton = useCallback(() => {
@@ -70,26 +58,6 @@ const DetailScreen = (props: DetailScreenProps) => {
 
 
   )
-    /*
-    <AnimatedColorBox
-      width="full"
-      flex= {1}
-      bg="#FEEBD0"
-    >
-    <FlatList 
-      data={data.verses}
-      renderItem={({item, index}) => {
-      const _image = `http:${item.image.url}`  
-        return(
-              <View>
-                <Image source={{uri: _image}} style={{width: 400, height: 40}}/>
-              </View>
-        )
-      }}
-      />
-    </AnimatedColorBox>
-  )
-  */
 }
 
 const styles = StyleSheet.create({
@@ -122,3 +90,4 @@ const styles = StyleSheet.create({
 })
 
 export default DetailScreen
+
