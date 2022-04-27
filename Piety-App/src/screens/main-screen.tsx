@@ -7,21 +7,17 @@ import BarNav from '../components/navbar'
 import PrayTimes from '../components/prayers'
 import { Feather } from '@expo/vector-icons'
 import Hijri from '../components/hijri'
+import AnimatedText from '../components/text-animator'
+import { fontFamily, paddingTop } from 'styled-system'
 
 
-interface navProps{
-  navigation: any
-}
 
-export default function DefaultScreen(props: navProps){
+export default function DefaultScreen({ navigation }: any){
 
-  const handleTest= useCallback(() => {
-    props.navigation.navigate("Test")
-  }, [props.navigation])
  
   const handleQuranBtn = useCallback(() => {
-    props.navigation.navigate("Quran")
-  }, [props.navigation])
+    navigation.navigate("Quran")
+  }, [navigation])
 
   return (
       <AnimatedColorBox
@@ -29,36 +25,38 @@ export default function DefaultScreen(props: navProps){
         bg = {useColorModeValue('#FEEAE6', 'darkBlue.900')}
         width="full" 
       >
-        <View>
-          <Image alt="icon2" source={require("../assets/icon2.png")} resizeMode="contain" size="250" alignSelf="center"/>
-          <View position="absolute">
+          <View zIndex={1} position="absolute">
             <BarNav />
           </View>
-        </View>
         <VStack 
         space={5}
         bg={useColorModeValue('#FEDBD0', 'darkBlue.800')}
-        mt="-110px"
         height="full"
-        shadow="6"
-        borderTopLeftRadius="30px" 
-        borderTopRightRadius="30px"
-        pt="40px"
+        style={styles.container}
         >
           <Image 
             alt="sakura" 
             source={require("../assets/sakuraa.png")} 
-            opacity={0.4} 
+            opacity={0.7} 
+            blurRadius={5}
             resizeMode="contain" 
             alignSelf="center" 
             justifyContent="center" 
             position="absolute" />
 
-          <View position="absolute" pt={10}>
+          <View>
+            <AnimatedText 
+              content="العلم بطالب أهلاً "
+              textStyle={styles.textStyle}
+              style={styles.containerStyle}
+              duration={700}
+            />
+          </View>
+
+          <View position="absolute" >
             <PrayTimes />
           </View>          
-          <View flex={1} justifyContent="center" alignSelf="center" paddingBottom={150}>
-            <Hijri />
+          <View flex={1} justifyContent="center" alignSelf="center" height={200} paddingBottom={150}>
           </View>
           <View mt={20} flex={1} alignSelf={"center"} flexDir={'row'}>
             <IconButton
@@ -77,27 +75,17 @@ export default function DefaultScreen(props: navProps){
 
 const deviceWidth = Math.round(Dimensions.get('window').width)
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: deviceWidth -25,
-    height: 250,
-    color: "#FEDBD0",
-    top: 50,
-    position: "relative",
-    alignSelf: "center",
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowRadius: 10,
-    elevation: 10,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 10,
+    padding: 8,
   },
-  timeContainer: {
-    borderWidth: 2,
-    borderRadius: 20,
-    borderColor: "#D4AF37",
-  }
+  textStyle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 14,
+  },
+  containerStyle: {}
 })
 

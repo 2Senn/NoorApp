@@ -105,7 +105,7 @@ const PrayTimes = () => {
     fetchData()
   }, [fetchData])
 
-  const textC = useColorModeValue("black", "white")
+  const textC = useColorModeValue("#000", "#fff")
  
   useEffect(() => {
     if((parseInt(time) <= parseInt(fajr)) && (parseInt(time) > parseInt(isha))){
@@ -128,63 +128,75 @@ const PrayTimes = () => {
   }) 
 
 
+  const iconColor = useColorModeValue("red.800", "yellow.500")
+
   return(
 
-    <View flex={1} flexDir={'row'} justifyContent="center" alignSelf="center" pl={width / 10}>
+    <View borderLeftWidth={5} flex={1} flexDir={'row'} justifyContent="center" alignSelf="center" pl={width / 10}>
       <VStack 
-        space="3" 
+        space={2} 
+        paddingTop={2}
+        paddingBottom={2}
         alignItems="center" 
         borderTopWidth={isFajr ? "1" : null}
         borderBottomWidth={isFajr ? "1" : null}
-        borderColor="#442C2E"
+        borderColor={textC}
       >
-        <Text>Fajr</Text>
-        <Text style={styles.item} color={textC}>{images[0].time}  </Text>
-        <Icon as={Feather} name="sunrise" size="md" opacity={1} color={"yellow.500"}/>
+        <Text style={styles.item}>Fajr</Text>
+        <Text style={styles.time} color={textC}>{images[0].time}  </Text>
+        <Icon as={Feather} name="sunrise" size="md" opacity={1} color={iconColor}/>
       </VStack>
       <VStack  
-        space="3" 
+        space={2} 
+        paddingTop={2}
+        paddingBottom={2}
         alignItems="center" 
         borderTopWidth={isDhuhr ? "1" : null}
         borderBottomWidth={isDhuhr ? "1" : null}
-        borderColor="#442C2E"
+        borderColor={textC}
       >
-        <Text>Dhuhr</Text>
-        <Text style={styles.item} color={textC}>{images[1].time}  </Text>
-        <Icon as={Feather} name="sun" size="md" opacity={1} color={"yellow.500"}/>
+        <Text style={styles.item}>Dhuhr</Text>
+        <Text style={styles.time} color={textC}>{images[1].time}  </Text>
+        <Icon as={Feather} name="sun" size="md" opacity={1} color={iconColor}/>
       </VStack>
        <VStack 
-        space="3" 
+        space={2} 
+        paddingTop={2}
+        paddingBottom={2}
         borderTopWidth={isAsr ? "1" : null}
         borderBottomWidth={isAsr ? "1" : null}
-        borderColor="#442C2E"
+        borderColor={textC}
         alignItems="center"
       >
-        <Text>Asr</Text>
-        <Text style={styles.item} color={textC}>{images[2].time}  </Text>
-        <Icon as={Feather} name="cloud" size="md" opacity={1} color={"yellow.500"}/>
+        <Text style={styles.item}>Asr</Text>
+        <Text style={styles.time} color={textC}>{images[2].time}  </Text>
+        <Icon as={Feather} name="cloud" size="md" opacity={1} color={iconColor}/>
       </VStack> 
       <VStack 
-        space="3" 
+        space={2}
+        paddingTop={2}
+        paddingBottom={2}
         alignItems="center"
         borderTopWidth={isMaghrib ? "1" : null}
         borderBottomWidth={isMaghrib ? "1" : null}
-        borderColor="#442C2E"
+        borderColor={textC}
       >
-        <Text>Maghrib</Text>
-        <Text style={styles.item} color={textC}>{images[3].time}  </Text>
-        <Icon as={Feather} name="sunset" size="md" opacity={1} color={"yellow.500"}/>
+        <Text style={styles.item}>Maghrib</Text>
+        <Text style={styles.time} color={textC}>{images[3].time}  </Text>
+        <Icon as={Feather} name="sunset" size="md" opacity={1} color={iconColor}/>
       </VStack>
       <VStack 
-        space="3" 
+        space={2} 
+        paddingTop={2}
+        paddingBottom={2}
         alignItems="center"
         borderTopWidth={isIsha ? "1" : null}
         borderBottomWidth={isIsha ? "1" : null}
-        borderColor="#442C2E"
+        borderColor={textC}
       >
-        <Text>Isha</Text>
-        <Text style={styles.item} color={textC}>{images[4].time}  </Text>
-        <Icon as={Feather} name="moon" size="md" opacity={1} color={"yellow.500"} 
+        <Text style={styles.item}>Isha</Text>
+        <Text style={styles.time} color={textC}>{images[4].time}  </Text>
+        <Icon as={Feather} name="moon" size="md" opacity={1} color={iconColor} 
           style={{justifyContent: 'center', alignSelf: 'center'}}/>
       </VStack>
     </View>
@@ -199,13 +211,20 @@ const styles= StyleSheet.create({
     justifyContent: 'center',
   },
   item: {
-    fontSize: 20,
+    fontSize: 22,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
   },
   selected: {
     backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+  time: {
+    fontSize: 20,
+    fontWeight: '700',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
   }
 })
 

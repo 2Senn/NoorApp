@@ -62,7 +62,7 @@ const Hijri = () => {
         pagingEnabled
         renderItem={({item}) => {
           return(
-            <View style={{ justifyContent: 'center', alignItems: "center", padding: 100}}>
+            <View style={{ justifyContent: 'center', alignItems: "center"}}>
               <View style={styles.container}>
                 <Text style={styles.item}>{item.title}</Text>
                 <Text style={styles.item}>{item.type}</Text>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     alignSelf: "center",
     justifyContent: "center",
-    padding: 10,
+    height: 100
 
   },
   container: {
