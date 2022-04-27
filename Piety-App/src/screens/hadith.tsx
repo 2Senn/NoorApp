@@ -1,37 +1,57 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button, useColorMode } from 'native-base'
-import { Dimensions, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native'
+import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button, useColorMode, Center } from 'native-base'
+import { Dimensions, StyleSheet, TouchableOpacity, FlatList, ScrollView, Animated, Alert } from 'react-native'
 import AnimatedColorBox from '../components/animated-color-box'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons' 
 import shortid from 'shortid'
+import { flexWrap } from 'styled-system'
+import { useNavigation } from '@react-navigation/native'
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+
 
 export const {width, height} = Dimensions.get('screen')
 export const ITEM_HEIGHT = height * 0.18
 export const SPACING = 20
 
-interface screenProps{
-  navigation: any,
-  route: any,
-}
+  export const detailsIcon = [
+    { color: '#CEB1B5', icon: 'user'},
+    { color: '#337692', icon: 'user-check'},
+    { color: '#F2988F', icon: 'book'},
+    { color: '#9FD7F1', icon: 'hash'},
+    { color: '#F3B000', icon: 'check-circle'},
 
-export default function HadithScreen(props: screenProps){
+  ]
+
+
+export type RootDrawerParamList = {
+  HDetail: { item: any };
+};
+
+
+
+export default function HadithScreen(){
+
+  const navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>()
 
   const [hadithJSON, setHadithJSON] = useState<any>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState("انما الأعمال بالنيات ")
+  const [search, setSearch] = useState("نيات ")
 
   const sb = useColorModeValue("rgba(0,0,0,0.6)", "darkBlue.800")
   const url = `https://dorar-hadith-api.herokuapp.com/api/search?value=${search}`
 
 
+  const t_image = [
+    "https://cdn-icons.flaticon.com/png/512/1008/premium/1008927.png?token=exp=1650959224~hmac=1aa3cc035e1a4b5d41aca4c061b42898",
+    "https://cdn-icons.flaticon.com/png/512/294/premium/294432.png?token=exp=1650959593~hmac=21cc30659994d80005b04fb67a9a9493"
+  ]                                                                       
 
   const getHadith = useCallback(async() => {
     try{
       let response = await fetch(url)
       let json = await response.json()
       setHadithJSON(json)
-      console.log(hadithJSON)
     } catch(error){
         console.log(error)
     }  
@@ -43,7 +63,6 @@ export default function HadithScreen(props: screenProps){
   useEffect(() => {
     getHadith()
   }, [getHadith])
-
 
 
   //islamic icons created by Freepik - Flaticon
@@ -131,13 +150,13 @@ export default function HadithScreen(props: screenProps){
   
 
   const checkBack = (item: string) => {
-    if(item.indexOf("صحيح") !== -1 ){
+    if(item.includes("صحيح")){
       return "#285D34"
     }
-    else if(((item.indexOf("حسن")) !== -1 )){
+    else if((item.includes("حسن"))){
       return "#698E71"
     }
-    else if(((item.indexOf("جيد" )) !== -1 )){
+    else if(item.includes("جيد")){
       return "#698E71"
     }
     else{
@@ -151,13 +170,13 @@ export default function HadithScreen(props: screenProps){
 
   const forImage = (item: string) => {
     if(checkBack(item) == "#698E71"){
-      return require("../assets/thumbs-up.png")
+      return require("../assets/approve.png")
     }
     if( checkBack(item) == "#285D34"){
-      return require("../assets/thumbs-up.png")
+      return require("../assets/approve.png")
     }
     else{
-      return require("../assets/dislike.png")
+      return require("../assets/rejected.png")
     }
   }
 
@@ -182,6 +201,11 @@ export default function HadithScreen(props: screenProps){
       </View>
     )
   }
+
+  //Animation
+  const scrollY = React.useRef(new Animated.Value(0)).current
+  const IMAGE_SIZE = 50 
+  const ITEM_SIZE = IMAGE_SIZE + 20 + SPACING * 5
 
   return(
     
@@ -220,38 +244,83 @@ export default function HadithScreen(props: screenProps){
       </View>
       <View flex={1} pt={SPACING}>
       {(loading) ? <Text  fontSize={30}>Hmmm...</Text> : (
-      <FlatList 
+      <Animated.FlatList 
         data={data}
+        onScroll={Animated.event(
+                  [{ nativeEvent: {contentOffset: {y: scrollY}}}],
+                  { useNativeDriver: true }
+                )}
         keyExtractor={item => item.key}
         contentContainerStyle={{ padding: SPACING}}
         renderItem={({item, index}) =>  {
+          const inputRange = [
+            -1,
+            0,
+            ITEM_SIZE * index,
+            ITEM_SIZE * (index + 2),
+          ]
+          const opacityInputRange = [
+            -1,
+            0,
+            ITEM_SIZE * index,
+            ITEM_SIZE * (index + 0.5)
+          ]
+
+          const scale = scrollY.interpolate({
+            inputRange,
+            outputRange: [1, 1, 1, 0],
+          })
+          const opacity = scrollY.interpolate({
+            inputRange,
+            outputRange: [1, 1, 1, 0]
+          })
+ 
           return(
             <TouchableOpacity 
                       style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} 
                       onPress={() => {
-                        props.navigation.navigate("HDetail", {item})
+                        if(item != null){
+                          navigation.navigate("HDetail", {item: item})
+                        }
+                        else{
+                          Alert.alert("Error", "please select a valid hadith")
+                        }
                       }}>
-              <View flex={1} p={SPACING}>
+              <Animated.View 
+                  style={{flex: 1, 
+                  padding: SPACING,
+                  transform: [{scale}],
+                  opacity
+                }}
+              >
                 <View 
                       style={[StyleSheet.absoluteFillObject ]} 
                       borderRadius={16} 
                       backgroundColor={hasData(item.hadiths) ? checkBack(item.hadiths.grade) : null} 
                       />
-                  <View style={{height: ITEM_HEIGHT, width: ITEM_HEIGHT * 1.5, position: 'absolute', flex: 1, flexShrink: 0.2}}>
-                    <Text 
-                      margin={2} 
-                      style={styles.hadith} 
-                      adjustsFontSizeToFit>{hasData(item.hadiths) ? item.hadiths.hadith : noResultView()}
-                    </Text>
-                  </View>
-                  <Text 
-                    margin={5} 
-                    style={styles.grade}
-                  >
-                    {hasData(item.hadiths) ? item.hadiths.grade : noResultView()}
-                  </Text>
-                <Image alt="i passed it..." source={hasData(item.hadiths) ? forImage(item.hadiths.grade) : null} style={styles.image}/>
-              </View>
+                  <VStack space={2} position={'absolute'} alignSelf={'flex-end'} justifyContent={'center'}>
+                    <View flex={1}>
+                      <Text
+                        textAlign={'center'}
+                        style={styles.hadith} 
+                        adjustsFontSizeToFit>{hasData(item.hadiths) ? item.hadiths.hadith : noResultView()}
+                      </Text>
+                    </View>
+                    <View flex={1} pr={SPACING} >
+                      <Text 
+                        adjustsFontSizeToFit
+                        style={styles.grade}
+                      >
+                        {hasData(item.hadiths) ? item.hadiths.grade : noResultView()}
+                      </Text>
+                    </View>
+                  </VStack>
+      
+                <Image 
+                  alt="i passed it..."
+                  size={IMAGE_SIZE}
+                  source={hasData(item.hadiths) ? forImage(item.hadiths.grade) : null} style={styles.image}/>
+              </Animated.View>
             </TouchableOpacity>
             
           )
@@ -268,11 +337,11 @@ export default function HadithScreen(props: screenProps){
 
 const styles = StyleSheet.create({
   image: {
-    width: ITEM_HEIGHT * 0.8,
-    height: ITEM_HEIGHT * 0.8,
+    //width: ITEM_HEIGHT * 0.7,
+    //height: ITEM_HEIGHT * 0.7,
     resizeMode: "contain",
     position: "absolute",
-    bottom: 0,
+    bottom: 20,
     right: SPACING
   },
   hadith: {
@@ -280,17 +349,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
     padding: SPACING,
+    right: 20
 
   },
   grade: {
     fontSize: 18,
-    opacity: 0.7,
-    width: width / 2,
-    height: ITEM_HEIGHT * 0.5,
-    right: 100,
+    opacity: 1,
     padding: SPACING,
-    color: "white",
-    overflow: "hidden"
+    alignSelf: 'center',
+    justifyContent: 'center',
+    bottom: 40,
+    color: "#EDC423",
+     
   }, 
   bg: {
     position: 'absolute',

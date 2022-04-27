@@ -1,47 +1,44 @@
-import React, { useCallback, useEffect } from "react"
-import { View, Text, VStack, Image, FlatList, useColorModeValue, IconButton} from 'native-base'
-import { Feather } from "@expo/vector-icons"
-import { StyleSheet } from "react-native"
-import { height, width, SPACING, ITEM_HEIGHT } from "./hadith"
-
-interface screenProps{
-  navigation: any,
-  route: any,
-}
+import React, { useCallback, useEffect, useState } from "react"
+import { View, Text, VStack, Image, FlatList, useColorModeValue, IconButton, Icon } from 'native-base'
+import { AntDesign, Feather } from "@expo/vector-icons"
+import { StyleSheet, Alert, ScrollView } from "react-native"
+import { height, width, SPACING, ITEM_HEIGHT, detailsIcon } from "./hadith"
+import AnimatedText from "../components/text-animator"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import AnimatedColorBox from "../components/animated-color-box"
 
 
-export default function HadithDetail(props: screenProps){
-  
-  const {item} = props.route.params
+const HEADER_HEIGHT = height * 0.3
 
+
+
+export default function HadithDetail(){
  
+  const [screenHeight, setScreenHeight] = useState(0)
 
-  const bg = useColorModeValue("#FEDBD0", "blueGray.700")
+  const navigation = useNavigation<any>()
+
   const handleback = useCallback(() => {
-    props.navigation.navigate("Hadith")
-  }, [props.navigation])  
- 
-  const hasData = (item: any) => {
-    if(item != null){
-      return true
-    }
-    else{
-      return false
-    }
+    navigation.navigate("Hadith")
+  }, [navigation])  
+  
+
+  const route = useRoute<any>()
+  const {item} = route.params 
+
+  const bg = useColorModeValue("#FEDBD0", "blueGray.900")
+
+/* use Regex for word filtering
+  var acceptedwords = /صحيح|حسن|جيد /;
+  var regex = new RegExp(acceptedwords.map(function(w: string){ return '\\b'+w+'\\b' }).join('|'),'g');
+
+  var str = 'عبد المجيد ';
+  if (acceptedwords.test(str)) { // Contains the accepted word
+    console.log("Contains accepted word: " + str);          
+  } else {
+    console.log("Does not contain accepted word: " + str);
   }
-
-
-  const noResultView = () => {
-    return(
-      <View flex={1} alignSelf="center" justifyContent="center">
-        <Text>
-          NO RESULTS... PLEASE MODIFY SEARCH 
-        </Text>
-      </View>
-    )
-  }
-
-
+*/
   const checkBack = (item: string) => {
     if(item.indexOf("صحيح") !== -1 ){
       return "#285D34"
@@ -57,54 +54,109 @@ export default function HadithDetail(props: screenProps){
     }
   }
 
-  const forImage = (item: string) => {
-    if(checkBack(item) == "#698E71"){
-      return require("../assets/thumbs-up.png")
-    }
-    if( checkBack(item) == "#285D34"){
-      return require("../assets/thumbs-up.png")
-    }
-    else{
-      return require("../assets/dislike.png")
-    }
+  const scrollEnabled = screenHeight > height
+  const onSizeChange = (contentWidth: number, contentHeight: number) => {
+    setScreenHeight(contentHeight) 
   }
 
   return(
-      <View style={{flex: 1}}>
-          <IconButton
-            onPress={handleback}
-            variant={"ghost"} 
-            position="absolute"
-            style={{padding: 12}}
-            top={5} 
-            left={3}
-            zIndex={2}
-            _icon={{
-              as: Feather,
-              name: "arrow-left",
-              size: 30,
-              color: useColorModeValue("#442C2E", "darkBlue.600")
-          }}
-            />
-          <View 
-            style={[StyleSheet.absoluteFillObject]} 
-            borderRadius={16} 
-            backgroundColor={checkBack(item.hadiths.grade)} 
-          />
-          <Text style={styles.hadith}>{item.hadiths.hadith}</Text>
-          <Text style={styles.grade}>{item.hadiths.grade}</Text>
-          <Image
-            progressiveRenderingEnabled
-            alt="i passed it..." 
-            source={item.image} 
-            key={item.id}
-            style={styles.image}
-          /> 
-          <View style={styles.bg}>
-            <Text>CONTENT</Text>
-          </View>
-            
-      </View> 
+    <AnimatedColorBox 
+      flex= {1}
+      width="full"
+      bg={bg}
+    >
+      <IconButton
+        onPress={handleback}
+        variant={"ghost"} 
+        position="absolute"
+        style={{padding: 12}}
+        top={5} 
+        left={3}
+        zIndex={1}            
+        _icon={{
+          as: Feather,
+          name: "arrow-left",
+          size: 30,
+          color: useColorModeValue("#442C2E", "darkBlue.600")
+      }}
+      />
+      <View 
+        style={[StyleSheet.absoluteFillObject]} 
+        backgroundColor={checkBack(item.hadiths.grade)}
+        height={HEADER_HEIGHT + 32}
+      />
+      <ScrollView 
+        onContentSizeChange={onSizeChange} 
+        scrollEnabled={scrollEnabled} 
+        contentContainerStyle={{ bottom: 150, height: "100%", width: "100%"}}
+      >
+        <View pl={20} right={5} >
+          <Text numberOfLines={4} style={styles.hadith} lineHeight="3xl" adjustsFontSizeToFit>{item.hadiths.hadith}</Text> 
+        </View>
+      </ScrollView>
+      <Image
+        alt="what" 
+        source={item.image} 
+        style={styles.image}
+      /> 
+      <View style={styles.bg} backgroundColor={bg}>
+        <VStack space={8} alignItems={"flex-end"} justifyContent={"space-evenly"}>
+          {detailsIcon.map((detail, index) => {
+            return(
+              <View 
+                key={`${detail.icon} - ${index}`} 
+                backgroundColor={detail.color} 
+                height={10} 
+                width={10} 
+                borderRadius={32}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Icon as={Feather} name={detail.icon} size={5} color={'black'}/> 
+              </View>
+            )
+          })}
+        </VStack>
+        <View>
+          <Text 
+            style={styles.sub} 
+            bottom={ITEM_HEIGHT * 2 + SPACING} 
+            pr={SPACING}
+          >
+            {item.hadiths.el_rawi}
+          </Text>
+          <Text 
+            style={styles.sub} 
+            bottom={ITEM_HEIGHT * 1.63 + SPACING} 
+            pr={SPACING}
+          >
+            {item.hadiths.el_mohdith}
+          </Text>
+          <Text 
+            style={styles.sub} 
+            bottom={ITEM_HEIGHT * 1.315 + SPACING} 
+            pr={SPACING}
+          >
+            {item.hadiths.source}
+          </Text>
+          <Text 
+            style={styles.sub} 
+            textAlign="right"
+            bottom={ITEM_HEIGHT * 0.97 + SPACING} 
+            pr={SPACING}
+          >
+            {item.hadiths.number_or_page}
+          </Text>
+          <Text 
+            style={styles.sub} 
+            bottom={ITEM_HEIGHT / 1.63 + SPACING} 
+            pr={SPACING}
+          >
+            {item.hadiths.grade}
+          </Text>
+        </View>
+      </View>    
+    </AnimatedColorBox> 
   )
 }
 const styles = StyleSheet.create({
@@ -113,27 +165,39 @@ const styles = StyleSheet.create({
     height: ITEM_HEIGHT * 0.8,
     resizeMode: 'contain',
     position: 'absolute',
-    bottom: 0,
-    right: SPACING
+    top: HEADER_HEIGHT - ITEM_HEIGHT * 0.8, //header height decremented by Item height
+    right: width / 1.5,
+
   },
   hadith: {
     fontWeight: '700',
-    fontSize: 18,
-    color: "white",
+    fontSize: 24,
+    padding: SPACING,
+    paddingRight: SPACING,
+    color: "black",
+    top: HEADER_HEIGHT - SPACING * 4,
+    left: SPACING,
 
   },
   grade: {
-    fontSize: 18,
+    fontSize: 19,
     color: "white",
   },
   bg: {
     position: 'absolute',
     width,
     height,
-    backgroundColor: 'red',
-    transform: [{ translateY: height }],
-    borderRadius: 32
+    transform: [{ translateY: HEADER_HEIGHT }],
+    borderRadius: 32,
+    padding: 32 + SPACING,
+  },
+  container: {
+  },
+  sub: {
+    fontSize: 18,
+
   }
+
 
 })
 
