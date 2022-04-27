@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button, useColorMode, Center } from 'native-base'
+import { View, Text, VStack, useColorModeValue, StatusBar, Image, Input, Icon, Button, useColorMode, Center, IconButton } from 'native-base'
 import { Dimensions, StyleSheet, TouchableOpacity, FlatList, ScrollView, Animated, Alert } from 'react-native'
 import AnimatedColorBox from '../components/animated-color-box'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Feather } from '@expo/vector-icons' 
 import shortid from 'shortid'
-import { flexWrap } from 'styled-system'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import BarNav from '../components/navbar'
 
 
 export const {width, height} = Dimensions.get('screen')
@@ -221,27 +221,30 @@ export default function HadithScreen(){
           />
       <SafeAreaView style={{flex: 1}}>
       <StatusBar hidden />
-      <View pt={5} flex={1} flexDir="row" width={width} height={100} position="absolute">
-        <Input 
-            placeholder="Search"
-            variant="filled" 
-            backgroundColor={sbg}
-            width={width}
-            height={50}
-            borderRadius="10" 
-            color={sbg}
-            onSubmitEditing={(text) => 
-              {
-                setSearch(text.nativeEvent.text)
-                setLoading(true)
-              }}
-            py="1" 
-            px="2" 
-            placeholderTextColor={inverse}
-            borderWidth="0" 
-            InputLeftElement={<Icon ml="2" size="4" color={inverse} as={ Feather } name="cloud" />} 
-            />
-      </View>
+        <View pt={5} flex={1} flexDir="row" width={width * 0.95} height={100} position="absolute">
+          <View style={{bottom: 50}}>
+            <BarNav />
+          </View>
+          <Input 
+              placeholder="Search"
+              variant="filled" 
+              backgroundColor={sbg}
+              width={width}
+              height={50}
+              borderRadius="10" 
+              color={sbg}
+              onSubmitEditing={(text) => 
+                {
+                  setSearch(text.nativeEvent.text)
+                  setLoading(true)
+                }}
+              py="1" 
+              px="2" 
+              placeholderTextColor={inverse}
+              borderWidth="0" 
+              InputLeftElement={<Icon ml="2" size="4" color={inverse} as={ Feather } name="cloud" />} 
+              />
+        </View>
       <View flex={1} pt={SPACING}>
       {(loading) ? <Text  fontSize={30}>Hmmm...</Text> : (
       <Animated.FlatList 
@@ -279,11 +282,11 @@ export default function HadithScreen(){
             <TouchableOpacity 
                       style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} 
                       onPress={() => {
-                        if(item != null){
-                          navigation.navigate("HDetail", {item: item})
+                        if(item.hadiths === void 0){
+                          Alert.alert("Error", "please select a valid hadith")
                         }
                         else{
-                          Alert.alert("Error", "please select a valid hadith")
+                          navigation.navigate("HDetail", {item: item})
                         }
                       }}>
               <Animated.View 

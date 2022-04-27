@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { View, Text, VStack, Image, FlatList, useColorModeValue, IconButton, Icon } from 'native-base'
-import { AntDesign, Feather } from "@expo/vector-icons"
-import { StyleSheet, Alert, ScrollView } from "react-native"
+import { Text, VStack, FlatList, useColorModeValue, IconButton, Icon } from 'native-base'
+import { Feather } from "@expo/vector-icons"
+import { StyleSheet, Alert, ScrollView, View, Image } from "react-native"
 import { height, width, SPACING, ITEM_HEIGHT, detailsIcon } from "./hadith"
 import AnimatedText from "../components/text-animator"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import AnimatedColorBox from "../components/animated-color-box"
-
+import { backgroundColor, paddingRight } from "styled-system"
+import * as Animatable from 'react-native-animatable'
 
 const HEADER_HEIGHT = height * 0.3
-
+const DURATION = 400
 
 
 export default function HadithDetail(){
@@ -81,43 +82,53 @@ export default function HadithDetail(){
       }}
       />
       <View 
-        style={[StyleSheet.absoluteFillObject]} 
-        backgroundColor={checkBack(item.hadiths.grade)}
-        height={HEADER_HEIGHT + 32}
+        style={[StyleSheet.absoluteFillObject, 
+          {backgroundColor: checkBack(item.hadiths.grade), height: HEADER_HEIGHT + 32}]} 
       />
       <ScrollView 
         onContentSizeChange={onSizeChange} 
         scrollEnabled={scrollEnabled} 
         contentContainerStyle={{ bottom: 150, height: "100%", width: "100%"}}
       >
-        <View pl={20} right={5} >
+        <Animatable.View 
+          style={{paddingLeft: 20, right: 5}}
+          animation={'fadeInRight'}
+
+        >
           <Text numberOfLines={4} style={styles.hadith} lineHeight="3xl" adjustsFontSizeToFit>{item.hadiths.hadith}</Text> 
-        </View>
+        </Animatable.View>
       </ScrollView>
-      <Image
-        alt="what" 
+      <Animatable.Image
+        animation="slideInLeft"
         source={item.image} 
         style={styles.image}
       /> 
-      <View style={styles.bg} backgroundColor={bg}>
-        <VStack space={8} alignItems={"flex-end"} justifyContent={"space-evenly"}>
+      <View style={[styles.bg, {backgroundColor: bg}]}>
+        <VStack space={9}  alignItems={"flex-end"} justifyContent={"space-evenly"}>
           {detailsIcon.map((detail, index) => {
             return(
-              <View 
+              <Animatable.View 
                 key={`${detail.icon} - ${index}`} 
-                backgroundColor={detail.color} 
-                height={10} 
-                width={10} 
-                borderRadius={32}
-                alignItems="center"
-                justifyContent="center"
+                animation="bounceIn"
+                delay={DURATION + index * 100}
+                style={{
+                  elevation: 1,
+                  backgroundColor: detail.color,
+                  height: 36,
+                  width: 36,
+                  borderRadius: 32,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
                 <Icon as={Feather} name={detail.icon} size={5} color={'black'}/> 
-              </View>
+              </Animatable.View>
             )
           })}
         </VStack>
-        <View>
+        <Animatable.View
+          animation="fadeInUpBig"
+        >
           <Text 
             style={styles.sub} 
             bottom={ITEM_HEIGHT * 2 + SPACING} 
@@ -148,13 +159,14 @@ export default function HadithDetail(){
             {item.hadiths.number_or_page}
           </Text>
           <Text 
-            style={styles.sub} 
-            bottom={ITEM_HEIGHT / 1.63 + SPACING} 
+            style={styles.sub}
+            textAlign="right"
+            bottom={ITEM_HEIGHT / 1.63 + SPACING}
             pr={SPACING}
           >
             {item.hadiths.grade}
           </Text>
-        </View>
+        </Animatable.View>
       </View>    
     </AnimatedColorBox> 
   )
