@@ -1,11 +1,12 @@
 import React from 'react'
-import { Text, HStack, Switch, useColorMode, Image} from 'native-base'
+import { Text, HStack, Switch, useColorMode, Image, Icon} from 'native-base'
+import { Feather } from '@expo/vector-icons'
 
 export default function ToggleTheme(){
   const { colorMode, toggleColorMode } = useColorMode()
   return (
     <HStack space={2} alignItems="center">
-      <Image resizeMode={'contain'} width={25} height={25}  source={require("../assets/moon.png")} />
+      <Icon as={ Feather } name="moon" strokeWidth={3.5} size={"md"} />
       <Switch 
         isChecked={colorMode==='light'} 
         onToggle={toggleColorMode}
@@ -15,7 +16,7 @@ export default function ToggleTheme(){
         offThumbColor={"black"}
       >
       </Switch>
-      <Image resizeMode={"contain"} width={25} height={25} source={require("../assets/sun.png")}/>
+      <Icon as={ Feather } name="sun" strokeWidth={3.5} size={"md"} color={'#AF8D7A'} />
 
   </HStack>
   )

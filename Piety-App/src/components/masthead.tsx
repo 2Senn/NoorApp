@@ -1,6 +1,7 @@
-import React from 'react'
-import { ImageSourcePropType } from 'react-native'
+import React, { useEffect } from 'react'
+import { Dimensions, ImageSourcePropType, StyleSheet } from 'react-native'
 import { Box, VStack, Heading, Image, useColorModeValue } from 'native-base'
+import AnimatedText from './text-animator'
 
 interface Props {
   title: string
@@ -8,27 +9,51 @@ interface Props {
   children: React.ReactNode
 }
 
+const {width, height} = Dimensions.get('window')
+
 const Masthead = ({ title, image, children }: Props) => {
+
+  useEffect(() => {
+      console.log(height)
+    })
+
   return (
-    <VStack h="300px" pb={5}>
+    <VStack h="15%" pb={5}>
       <Image
         position="absolute"
         left={0}
         right={0}
         bottom={0}
+        top={5}
         w="full"
-        h="300px"
-        resizeMode="cover"
+        h="75px"
+        resizeMode="contain"
         source={image}
         alt="header icon"
       />
       {children}
       <Box flex={1} />
-      <Heading color="white" p={6} size="xl">
-        {title}
-      </Heading>
+      <AnimatedText 
+        content={title}
+        duration={700}
+        textStyle={styles.text}
+        style={styles.container}
+      />
     </VStack>
   )
 }
+
+const styles = StyleSheet.create({
+    text: {
+     fontSize: 28,
+     fontWeight: 'bold',
+     color: "black",
+
+    },
+    container: {
+      flex: 1,
+      bottom: 70
+    }
+  })
 
 export default Masthead

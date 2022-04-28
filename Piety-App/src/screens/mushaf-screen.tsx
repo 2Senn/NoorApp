@@ -4,6 +4,8 @@ import { TouchableOpacity, Dimensions, StatusBar} from "react-native"
 import { Feather } from "@expo/vector-icons"
 import AnimatedColorBox from "../components/animated-color-box"
 import Mushaf from "../utils/mushaf"
+import { TouchableWithoutFeedback } from "react-native-gesture-handler"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 interface MushafScreenProps{
   navigation: any
@@ -41,48 +43,47 @@ const MushafScreen = (props: MushafScreenProps) => {
             zIndex={1}
             data={images}
             renderItem={ ({ item, index }) => (
-              <TouchableOpacity 
-                onPress={() => 
-                {
-                  setShowOptions(!showOptions)
-                  
-                }
-              }>
-                <View>
-                  {showOptions ? (
-                    <View>
-                      <View flex={1} flexDir={"row"}>
-                        <IconButton
-                          width="10"
-                          zIndex={1}
-                          onPress={handleBackbutton}
-                          alignSelf="flex-start"
-                          borderRadius={150}
-                          variant="outline"
-                          borderColor="black"
-                          _icon={{
-                            as: Feather,
-                            name: 'chevron-left',
-                            size: 4,
-                            color: "black"
-                            }}
-                        />
+              <SafeAreaView>
+                <TouchableWithoutFeedback 
+                  onPress={() => {setShowOptions(!showOptions)}}
+                  containerStyle={{height: height * 0.8, width: width, position: 'absolute', zIndex: 2 }}
+                > 
+                </TouchableWithoutFeedback>
+                  <View>
+                    {showOptions ? (
+                      <View>
+                        <View flex={1} flexDir={"row"}>
+                          <IconButton
+                            width="10"
+                            zIndex={2}
+                            onPress={handleBackbutton}
+                            alignSelf="flex-start"
+                            borderRadius={150}
+                            variant="outline"
+                            borderColor="black"
+                            _icon={{
+                              as: Feather,
+                              name: 'chevron-left',
+                              size: 4,
+                              color: "black"
+                              }}
+                          />
+                        </View>
                       </View>
-                    </View>
-                  ) : null}
-                  <Image 
-                    tintColor={tint}
-                    source={item} 
-                    key={index} 
-                    alt="."
-                    style={{
-                      width: width,
-                      height: height,
-                      resizeMode:'contain',
-                    }}
-                  />
-                </View>
-              </TouchableOpacity>
+                    ) : null}
+                    <Image 
+                      tintColor={tint}
+                      source={item} 
+                      key={index} 
+                      alt="."
+                      style={{
+                        width: width,
+                        height: height,
+                        resizeMode:'contain',
+                      }}
+                    />
+                  </View>
+              </SafeAreaView>
             )}
           />
         </View>

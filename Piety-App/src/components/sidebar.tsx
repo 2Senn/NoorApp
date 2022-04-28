@@ -28,20 +28,18 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
   const handlePressMenuHadithCheck = useCallback(() => {
     navigation.navigate('Hadith')
   }, [navigation])
-  const handlePressMenuLibrary = useCallback(() => {
-    navigation.navigate('Library')
-  }, [navigation])
-
+ 
 
   return(
-    <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#FEDBD0', 'darkBlue.800')} p={7}>
-      <VStack flex={1} space={2}>
-        <HStack flex={1} flexDir="row">
-          <Heading mb={4} size="xl">
+    <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#E7D5C5', 'black')} p={7}>
+      <VStack flex={1} space={5} top={5}>
+        <View flexDir="row">
+          <Heading mb={4} size="xl" zIndex={1} color={useColorModeValue("black", "white")}>
             استعن بالله ولا تعجز
           </Heading>
           <IconButton 
             onPress={handlePressBackBtn} 
+            zIndex={1}
             variant="ghost"
             _icon={{
               as: Feather,
@@ -51,17 +49,17 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
               color: useColorModeValue('#442C2E', 'darkBlue.700')
             }}
             />
-        </HStack>
-        <View flex={1} height={500} width={500} >
+        </View>
+        <View position="absolute" >
           <Image
             source={require("../assets/olive.png")}
             alt="olive tree"
             resizeMode="cover"
             position="absolute"
-            flex={1}
-            opacity="0.6"
-            width={500}
-            height={500}
+            flex={1}   
+            width={400}
+            height={300}
+            opacity={0.6}
             />
         </View>
      <MenuButton 
@@ -89,14 +87,6 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         Tasks
       </MenuButton>
       <MenuButton
-        active={currRoute === "About"}
-        onPress={handlePressMenuAbout}
-        icon="info"
-        borderRadius={20}
-      >
-        About
-      </MenuButton>
-      <MenuButton
         active={currRoute === "Hadith"}
         onPress={handlePressMenuHadithCheck}
         icon="check-circle"
@@ -105,16 +95,15 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         Hadith Authenticator
       </MenuButton>
       <MenuButton
-        active={currRoute === "Library"}
-        onPress={handlePressMenuLibrary}
-        icon="coffee"
+        active={currRoute === "About"}
+        onPress={handlePressMenuAbout}
+        icon="info"
         borderRadius={20}
-        >
-        Library
+      >
+        About
       </MenuButton>
-      <ToggleTheme />
-      <View flex={1}>
-        <Image source={require("../assets/fig-sm.png")} alt="fig tree" resizeMode="contain" height={150} width={100} opacity={0.5} />
+      <View alignItems="center" justifyContent="center" pt={10}>
+        <ToggleTheme />
       </View>
       </VStack>
     </AnimatedColorBox>

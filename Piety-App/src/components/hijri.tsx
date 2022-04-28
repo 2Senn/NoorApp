@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { Text, View, FlatList, useColorModeValue, Box } from "native-base"
-import { StyleSheet } from "react-native"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Text, View, FlatList, useColorModeValue, Box, Image } from "native-base"
+import { Dimensions, ImageBackground, StyleSheet } from "react-native"
 
 
 const Hijri = () => {
+
 
   const [date, setDate] = useState('')
   const [hijri, setHijri] = useState([])
@@ -17,7 +18,6 @@ const Hijri = () => {
       let json = await response.json()
       setHijri(json) 
       setHijriDate(json.data.hijri.date)
-      console.log(hijriDate)
     } catch(error){
       console.log(error)
     }
@@ -31,66 +31,18 @@ const Hijri = () => {
     setDate(
       day + "-" + month + "-" + year
     )
-    console.log(date)
   })
-
-  const data = [
-    {
-      id: 1,
-      type: hijriDate,
-      title: "Hijri date",
-    },
-    {
-      id: 2,
-      type: date,
-      title: "Gregorian"
-    }
-  ]
-  
-  const tc = useColorModeValue("#442C2E", "white")
 
   useEffect(() => {
     fetchHijri()
   }, [fetchHijri])
   
   return(
-    <View style={styles.container}>
-      <FlatList 
-        data={data}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        pagingEnabled
-        renderItem={({item}) => {
-          return(
-            <View style={{ justifyContent: 'center', alignItems: "center"}}>
-              <View style={styles.container}>
-                <Text style={styles.item}>{item.title}</Text>
-                <Text style={styles.item}>{item.type}</Text>
-              </View>
-            </View>
-          )
-        }}
-        />
-    </View>
-  )
 
+      <Text>{hijriDate}</Text>
+
+  )  
 }
-
-
-const styles = StyleSheet.create({
-  item: {
-    fontSize: 25,
-    alignSelf: "center",
-    justifyContent: "center",
-    height: 100
-
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
 
 export default Hijri
 

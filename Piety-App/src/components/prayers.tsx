@@ -69,20 +69,13 @@ const PrayTimes = () => {
     
   ]
 
-  //get screen dimensions
-  const {width, height} = Dimensions.get('screen')
-  const ITEM_WIDTH = width * 0.76
-  const ITEM_HEIGHT = height * 0.40
 
   //api options
   const method = "3" 
   const city= "Amman"
   const country = "Jordan"
 
-  const cBorder = useColorModeValue("#FEEAE6", "darkBlue.500")
-  const PADDING = 10
   const url = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`
-  //const url = `https://api.aladhan.com/v1/timingsByCity?city=amman&country=jordan&method=3`
 
   const fetchData = useCallback(async() => {
     try{
@@ -128,11 +121,11 @@ const PrayTimes = () => {
   }) 
 
 
-  const iconColor = useColorModeValue("red.800", "yellow.500")
+  const iconColor = useColorModeValue("red.900", "yellow.500")
 
   return(
 
-    <View borderLeftWidth={5} flex={1} flexDir={'row'} justifyContent="center" alignSelf="center" pl={width / 10}>
+    <View borderLeftWidth={4} paddingX={10} flex={1} flexDir={'row'} justifyContent="center" pt={2}  >
       <VStack 
         space={2} 
         paddingTop={2}

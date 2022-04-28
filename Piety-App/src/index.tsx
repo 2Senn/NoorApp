@@ -8,6 +8,8 @@ import DetailScreen from './screens/quran-detail'
 import MushafScreen from './screens/mushaf-screen'
 import HadithScreen from './screens/hadith'
 import HadithDetail from './screens/hadith-detail'
+import AboutScreen from './screens/about-screen'
+import TaskScreen from './screens/task-screen'
 
 const Drawer = createDrawerNavigator()
 
@@ -27,6 +29,8 @@ const App = () => {
       <Drawer.Screen name="Mushaf" component={MushafScreen} />
       <Drawer.Screen name="Hadith" component={HadithScreen} />
       <Drawer.Screen name="HDetail" component={HadithDetail} />
+      <Drawer.Screen name="About" component={AboutScreen} />
+      <Drawer.Screen name="Tasks"  component={TaskScreen} />
     </Drawer.Navigator>
   )
 }
