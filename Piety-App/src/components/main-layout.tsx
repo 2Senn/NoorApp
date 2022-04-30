@@ -1,19 +1,49 @@
 import { useNavigation } from "@react-navigation/native"
-import { Button, Icon, IconButton } from "native-base"
-import React, { useCallback } from "react"
-import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native'
+import { Button, Icon, IconButton, useColorModeValue } from "native-base"
+import React, { useCallback, useRef } from "react"
+import { View, Text, StyleSheet, ImageBackground, FlatList, Dimensions } from 'react-native'
 import Cards from "./card-component"
 import Panel from "./navigation-panel"
 import PrayTimes from "./prayers"
 import { Feather } from "@expo/vector-icons"
-
+import Carousel from "react-native-snap-carousel"
+import { fontSize, fontWeight } from "styled-system"
+/*
+                 <Button
+                        borderRadius={75}
+                        size="sm" 
+                        bg={btnBg}
+                        shadow={"7"}
+                        borderWidth={0.5}
+                        onPress={() => navigation.navigate(item.title)}
+                        _pressed={{
+                          bg: "black"
+                        }}
+                        _text={{
+                          color: "white"
+                        }}
+                        variant="solid"
+                        leftIcon={<Icon as={Feather} name={item.icon} size="sm" opacity={0.7} />}
+                      >
+                      <Text style={{color: 'white'}}>{item.title}</Text>
+                      </Button>
+                    )
+                }}
+              />
+*/
 export const MainLayout = () => {
   
   const navigation = useNavigation<any>()
-  
+
+  const btnBg = useColorModeValue("rgba(206, 173, 145, 0.7)", "darkBlue.700")
+  const ibg = useColorModeValue("black", "white")
+
+  const carouselRef = useRef(null)
+  const {width, height} = Dimensions.get('screen')
+
   const seperator = () => {
       return(
-        <View style={{width: 5}} />
+        <View style={{width: 40}} />
 
       )
   }
@@ -25,41 +55,97 @@ export const MainLayout = () => {
             <PrayTimes /> 
           </View>
         </View>
-        <View style={styles.box1}>
-          <View style={styles.inner}>
-             <FlatList 
-                data={Panel}
-                keyExtractor={item => item.id.toString()}
-                contentContainerStyle=
-                  {{
-                    height: 50, 
-                    alignSelf: "center", 
-                    justifyContent: "center"
-                  }}
-                ItemSeparatorComponent={seperator}
-                horizontal
-                renderItem={({item}) => {
-                    return(
-                      <Button
-                        borderRadius={75}
-                        size="sm" 
-                        bg={"black"}
-                        onPress={() => navigation.navigate(item.title)}
-                        _pressed={{
-                          bg: "white"
-                        }}
-                        _text={{
-                          color: "white"
-                        }}
-                        variant="solid"
-                        leftIcon={<Icon as={Feather} name={item.icon} size="sm" opacity={0.5} />}
-                      >
-                      <Text style={{color: 'white'}}>{item.title}</Text>
-                      </Button>
-                    )
+        <View style={styles.minibox}>
+            <View style={styles.miniInner}>
+              <Button
+                borderRadius={75}
+                width={"full"}
+                height={"full"}
+                size="sm" 
+                bg={btnBg}
+                shadow={"7"}
+                onPress={() => navigation.navigate("Quran")}
+                _pressed={{
+                  bg: "grey"
                 }}
-              />
+                _text={{
+                  color: "black"
+                }}
+                variant="ghost"
+                leftIcon={<Icon as={Feather} name={"book"} size="sm" opacity={0.7} color={ibg} />}
+              >
+              <Text style={styles.text}>Quran</Text>
+              </Button>
+            </View>
+        </View>
+        <View style={styles.minibox}>
+          <View style={styles.miniInner}>
+            <Button
+                borderRadius={75}
+                width={"full"}
+                height={"full"}
+                size="sm" 
+                bg={btnBg}
+                shadow={"7"}
+                onPress={() => navigation.navigate("Hadith")}
+                _pressed={{
+                  bg: "grey"
+                }}
+                _text={{
+                  color: "black"
+                }}
+                variant="ghost"
+                leftIcon={<Icon as={Feather} name={"check-circle"} size="sm" opacity={0.7} color={ibg} />}
+              >
+              <Text style={styles.text}>Hadith Check</Text>
+            </Button>
           </View>
+        </View>
+        <View style={styles.minibox}>  
+          <View style={styles.miniInner}>
+            <Button
+                borderRadius={75}
+                width={"full"}
+                height={"full"}
+                size="sm" 
+                bg={btnBg}
+                shadow={"7"}
+                onPress={() => navigation.navigate("Tasks")}
+                _pressed={{
+                  bg: "grey"
+                }}
+                _text={{
+                  color: "black"
+                }}
+                variant="ghost"
+                leftIcon={<Icon as={Feather} name={"clipboard"} size="sm" opacity={0.7} color={ibg} />}
+              >
+              <Text style={styles.text}>To Do List</Text>
+              </Button>
+        </View>
+        </View>
+        <View style={styles.minibox}>
+          <View style={styles.miniInner}>
+            <Button
+                borderRadius={75}
+                width={"full"}
+                height={"full"}
+                size="sm" 
+                bg={btnBg}
+                shadow={"7"}
+                onPress={() => navigation.navigate("About")}
+                _pressed={{
+                  bg: "grey"
+                }}
+                _text={{
+                  color: "black"
+                }}
+                variant="ghost"
+                leftIcon={<Icon as={Feather} name={"book"} size="sm" opacity={0.7} color={ibg} />}
+              >
+              <Text style={styles.text}>About</Text>
+              </Button>
+        </View>
         </View>
         <View style={styles.box2}>
           <View style={styles.inner}>
@@ -75,7 +161,7 @@ const styles = StyleSheet.create({
     container: {
       width: '100%',
       height: '85%',
-      padding: 10,
+      padding: 15,
       top: 10,
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -94,6 +180,21 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+    }, 
+    minibox: {
+      width: '50%',
+      height: '15%',
+      padding: 10,
+    },
+    miniInner: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    text: {
+      color: "black",
+      fontSize: 18,
+      fontWeight: "600"
     },
 })
 

@@ -1,8 +1,22 @@
-import React from "react"
-import { Text, View } from "native-base"
+import React, { useCallback, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+
 
 export default function TaskScreen(){
-    return(
-      <Text>Tasks</Text>
-    )
-} 
+  const [checked, setChecked] = useState<boolean>(false)
+
+
+}                                               
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  checkbox: {
+    width: 64,
+    height: 64
+  }
+})
+
+

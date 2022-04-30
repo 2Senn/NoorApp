@@ -8,17 +8,16 @@ export const Gregorian = () => {
 
   useEffect(() => {
     var year = new Date().getFullYear()
-    var month = new Date().getMonth()
+    var month = new Date().getUTCMonth() + 1
     var day = new Date().getDate()
     
     setDate(
       day + "-" + month + "-" + year
     )
-    console.log(date)
-  })
+  }, [Date])
 
   return(
-    <Text>{date}</Text>
+    date
   )
 
 

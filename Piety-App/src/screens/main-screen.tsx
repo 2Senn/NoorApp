@@ -15,7 +15,7 @@ export default function DefaultScreen({ navigation }: any){
 
   const bg=useColorModeValue("#E9D0C4", "black")
 
-  const isDay = () => {
+/*  const isDay = () => {
       var currTime = new Date().getHours()
       if(currTime < 12){
           return(
@@ -26,7 +26,7 @@ export default function DefaultScreen({ navigation }: any){
           false
         }
     }
-
+*/
   return(
     <AnimatedColorBox
       flex={1}
@@ -42,7 +42,7 @@ export default function DefaultScreen({ navigation }: any){
       </ImageBackground>
       <View>
         <Masthead 
-          title={isDay() ? "Good Morning" : "Good Evening"}
+          title={"Al Salamu Alaikum"}
           image={require("../assets/icon2.png")}
         >
         <BarNav />

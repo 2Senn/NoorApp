@@ -1,5 +1,6 @@
-import { Image, Text, useColorModeValue } from "native-base"
-import React, { useRef, useState } from "react"
+import { BlurView } from "@react-native-community/blur"
+import { Box, Image, Text, useColorModeValue } from "native-base"
+import React, { useEffect, useRef, useState } from "react"
 import { ImageBackground, View } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import Carousel from "react-native-snap-carousel"
@@ -12,24 +13,27 @@ export const Cards = () => {
  
   const [weather, setWeather] = useState<any>([])
 
-
+  
   const tc = useColorModeValue("#442C2E", "white")
   const cardColor = useColorModeValue("black", "#E9D0C4")
   const carouselRef = useRef(null)
   const bg=useColorModeValue("#E9D0C4", "black")
 
+  let getHijri = Hijri()
+  let getGregorian = Gregorian()
+
   const Calender = [
     {
       id: 1,
       title: "Hijri",
-      type: "Hijri",
+      type: getHijri,
       image: require('../assets/card1.png'), 
       secondary: require('../assets/lantern.png')
     },
     {
       id: 2,
       title: "Gregorian",
-      type: "gregorian",
+      type: getGregorian,
       image: require('../assets/card4.png'),
       secondary: require('../assets/header.png')
     },
@@ -42,24 +46,26 @@ export const Cards = () => {
     }
   ]
 
+
   const renderItem = ({item}: any)=>{
     return(
       <TouchableWithoutFeedback>
         <View>
-          <ImageBackground
-            source={item.image}
-            borderRadius={20}
+          <BlurView
             style={{
               flexDirection: 'row', 
               height: "100%",
               width: "100%",
               justifyContent: 'space-around', 
               alignItems: 'center',
+              backgroundColor: '#CEDADE',
+              borderRadius: 30,
+              borderWidth: .1,
             }}
           >
-            <Text style={{fontSize: 24, fontWeight: 'bold', color: '#fff'}}>{item.title}</Text>
-            <Text>{item.type}</Text>
-          </ImageBackground>
+            <Text style={{fontSize: 24, fontWeight: 'bold', color: '#000'}}>{item.title}</Text>
+            <Text color="black" fontSize={20}>{item.type}</Text>
+          </BlurView>
         </View>
       </TouchableWithoutFeedback>
     )
@@ -67,7 +73,7 @@ export const Cards = () => {
 
   return(
     <Carousel 
-      layout='tinder'
+      layout='default'
       ref={carouselRef}
       data={Calender}
       renderItem={renderItem}
