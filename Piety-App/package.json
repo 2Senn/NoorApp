@@ -51,7 +51,8 @@
     "react-native-web": "0.17.1",
     "shortid": "^2.2.16",
     "styled-components": "^5.3.3",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "expo-blur": "~10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

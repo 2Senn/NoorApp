@@ -5,7 +5,7 @@ import AnimatedColorBox from '../components/animated-color-box'
 import BarNav from '../components/navbar'
 import Masthead from '../components/masthead'
 import MainLayout from '../components/main-layout'
-import { ImageBackground } from 'react-native'
+import { ImageBackground, StatusBar } from 'react-native'
 
 
 
@@ -15,24 +15,13 @@ export default function DefaultScreen({ navigation }: any){
 
   const bg=useColorModeValue("#E9D0C4", "black")
 
-/*  const isDay = () => {
-      var currTime = new Date().getHours()
-      if(currTime < 12){
-          return(
-            true
-          )
-        }
-      else{
-          false
-        }
-    }
-*/
   return(
     <AnimatedColorBox
       flex={1}
       w="full"
       bg={bg}
     >
+      <StatusBar hidden/>
       <ImageBackground 
         source={require("../assets/sakuraa.png")} 
         resizeMode={"cover"} 

@@ -1,4 +1,3 @@
-import { BlurView } from "@react-native-community/blur"
 import { Box, Image, Text, useColorModeValue, View } from "native-base"
 import React, { useEffect, useRef, useState } from "react"
 import { ImageBackground, Animated } from "react-native"
@@ -8,7 +7,7 @@ import { width } from "../screens/hadith"
 import Gregorian from "./gregorian"
 import Hijri from "./hijri"
 import Paginator from "./paginator"
-
+import { BlurView } from "expo-blur"
 
 export const Cards = () => {
  
@@ -60,7 +59,7 @@ export const Cards = () => {
     return(
       <TouchableWithoutFeedback>
         <View>
-          <Box
+          <BlurView
             style={{
               flexDirection: 'row', 
               height: "100%",
@@ -70,10 +69,11 @@ export const Cards = () => {
               backgroundColor: '#CEDADE',
               borderRadius: 30,
             }}
+            intensity={100}
           >
             <Text style={{fontSize: 24, fontWeight: 'bold', color: '#000'}}>{item.title}</Text>
             <Text color="black" fontSize={20}>{item.type}</Text>
-          </Box>
+          </BlurView>
         </View>
       </TouchableWithoutFeedback>
     )
