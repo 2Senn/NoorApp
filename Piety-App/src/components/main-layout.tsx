@@ -7,30 +7,8 @@ import Panel from "./navigation-panel"
 import PrayTimes from "./prayers"
 import { Feather } from "@expo/vector-icons"
 import Carousel from "react-native-snap-carousel"
-import { fontSize, fontWeight } from "styled-system"
-/*
-                 <Button
-                        borderRadius={75}
-                        size="sm" 
-                        bg={btnBg}
-                        shadow={"7"}
-                        borderWidth={0.5}
-                        onPress={() => navigation.navigate(item.title)}
-                        _pressed={{
-                          bg: "black"
-                        }}
-                        _text={{
-                          color: "white"
-                        }}
-                        variant="solid"
-                        leftIcon={<Icon as={Feather} name={item.icon} size="sm" opacity={0.7} />}
-                      >
-                      <Text style={{color: 'white'}}>{item.title}</Text>
-                      </Button>
-                    )
-                }}
-              />
-*/
+import Paginator from "./paginator"
+
 export const MainLayout = () => {
   
   const navigation = useNavigation<any>()
@@ -40,13 +18,6 @@ export const MainLayout = () => {
 
   const carouselRef = useRef(null)
   const {width, height} = Dimensions.get('screen')
-
-  const seperator = () => {
-      return(
-        <View style={{width: 40}} />
-
-      )
-  }
 
     return(
       <View style={styles.container}> 
@@ -152,6 +123,11 @@ export const MainLayout = () => {
             <Cards />  
           </View>
         </View>
+        <View style={styles.box3}>
+          <View style={styles.inner}>
+            <Paginator />
+          </View>
+        </View>
       </View>
 
     )
@@ -173,7 +149,12 @@ const styles = StyleSheet.create({
     },
     box2: {
       width: '100%',
-      height: '45%',
+      height: '38%',
+      padding: 5,
+    },
+    box3: {
+      width: "100%",
+      height: "7%",
       padding: 5,
     },
     inner: {
