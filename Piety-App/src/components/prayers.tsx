@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import { View, Text, VStack, useColorModeValue, Icon } from "native-base" 
 import { Dimensions, StyleSheet } from "react-native"
 import { Feather } from "@expo/vector-icons"
+import { flexGrow } from "styled-system"
 
 
 const PrayTimes = () => {
@@ -125,73 +126,98 @@ const PrayTimes = () => {
 
   return(
 
-    <View borderLeftWidth={4} paddingX={10} flex={1} flexDir={'row'} justifyContent="center" pt={2}  >
-      <VStack 
-        space={2} 
-        paddingTop={2}
-        paddingBottom={2}
-        alignItems="center" 
-        borderTopWidth={isFajr ? "1" : null}
-        borderBottomWidth={isFajr ? "1" : null}
-        borderColor={textC}
-      >
-        <Text style={styles.item}>Fajr</Text>
-        <Text style={styles.time} color={textC}>{images[0].time}  </Text>
-        <Icon as={Feather} name="sunrise" size="md" opacity={1} color={iconColor}/>
-      </VStack>
-      <VStack  
-        space={2} 
-        paddingTop={2}
-        paddingBottom={2}
-        alignItems="center" 
-        borderTopWidth={isDhuhr ? "1" : null}
-        borderBottomWidth={isDhuhr ? "1" : null}
-        borderColor={textC}
-      >
-        <Text style={styles.item}>Dhuhr</Text>
-        <Text style={styles.time} color={textC}>{images[1].time}  </Text>
-        <Icon as={Feather} name="sun" size="md" opacity={1} color={iconColor}/>
-      </VStack>
-       <VStack 
-        space={2} 
-        paddingTop={2}
-        paddingBottom={2}
-        borderTopWidth={isAsr ? "1" : null}
-        borderBottomWidth={isAsr ? "1" : null}
-        borderColor={textC}
-        alignItems="center"
-      >
-        <Text style={styles.item}>Asr</Text>
-        <Text style={styles.time} color={textC}>{images[2].time}  </Text>
-        <Icon as={Feather} name="cloud" size="md" opacity={1} color={iconColor}/>
-      </VStack> 
-      <VStack 
-        space={2}
-        paddingTop={2}
-        paddingBottom={2}
-        alignItems="center"
-        borderTopWidth={isMaghrib ? "1" : null}
-        borderBottomWidth={isMaghrib ? "1" : null}
-        borderColor={textC}
-      >
-        <Text style={styles.item}>Maghrib</Text>
-        <Text style={styles.time} color={textC}>{images[3].time}  </Text>
-        <Icon as={Feather} name="sunset" size="md" opacity={1} color={iconColor}/>
-      </VStack>
-      <VStack 
-        space={2} 
-        paddingTop={2}
-        paddingBottom={2}
-        alignItems="center"
-        borderTopWidth={isIsha ? "1" : null}
-        borderBottomWidth={isIsha ? "1" : null}
-        borderColor={textC}
-      >
-        <Text style={styles.item}>Isha</Text>
-        <Text style={styles.time} color={textC}>{images[4].time}  </Text>
-        <Icon as={Feather} name="moon" size="md" opacity={1} color={iconColor} 
-          style={{justifyContent: 'center', alignSelf: 'center'}}/>
-      </VStack>
+    <View 
+      borderLeftWidth={4} 
+      flexDir={'row'} 
+      alignItems="center"
+      alignSelf="center"
+      justifyContent="center" pt={2}  >
+      <View style={styles.minibox}>
+        <View style={styles.miniInner}>
+          <VStack 
+            space={2} 
+            paddingTop={2}
+            paddingBottom={2}
+            alignItems="center" 
+            borderTopWidth={isFajr ? "2" : null}
+            borderBottomWidth={isFajr ? "2" : null}
+            borderColor={textC}
+          >
+            <Text style={styles.item}>Fajr</Text>
+            <Text style={styles.time} color={textC}>{images[0].time}  </Text>
+            <Icon as={Feather} name="sunrise" size="md" opacity={1} color={iconColor}/>
+          </VStack>
+        </View>
+      </View>
+      <View style={styles.minibox}>
+        <View style={styles.miniInner}>
+          <VStack  
+            space={2} 
+            paddingTop={2}
+            paddingBottom={2}
+            alignItems="center" 
+            borderTopWidth={isDhuhr ? "2" : null}
+            borderBottomWidth={isDhuhr ? "2" : null}
+            borderColor={textC}
+          >
+            <Text style={styles.item}>Dhuhr</Text>
+            <Text style={styles.time} color={textC}>{images[1].time}  </Text>
+            <Icon as={Feather} name="sun" size="md" opacity={1} color={iconColor}/>
+          </VStack>
+        </View>
+      </View>
+      <View style={styles.minibox}>
+        <View style={styles.miniInner}>
+          <VStack 
+            space={2} 
+            paddingTop={2}
+            paddingBottom={2}
+            borderTopWidth={isAsr ? "2" : null}
+            borderBottomWidth={isAsr ? "2" : null}
+            borderColor={textC}
+            alignItems="center"
+          >
+            <Text style={styles.item}>Asr</Text>
+            <Text style={styles.time} color={textC}>{images[2].time}  </Text>
+            <Icon as={Feather} name="cloud" size="md" opacity={1} color={iconColor}/>
+          </VStack> 
+        </View>
+      </View>
+      <View style={styles.minibox}>
+        <View style={styles.miniInner}>
+           <VStack 
+              space={2}
+              paddingTop={2}
+              paddingBottom={2}
+              alignItems="center"
+              borderTopWidth={isMaghrib ? "2" : null}
+              borderBottomWidth={isMaghrib ? "2" : null}
+              borderColor={textC}
+            >
+              <Text numberOfLines={1} style={styles.item}>Maghrib</Text>
+              <Text style={styles.time} color={textC}>{images[3].time}  </Text>
+              <Icon as={Feather} name="sunset" size="md" opacity={1} color={iconColor}/>
+          </VStack>
+        </View>
+      </View>
+      <View style={styles.minibox}>
+        <View style={styles.miniInner}>
+          <VStack 
+            space={2} 
+            paddingTop={2}
+            paddingBottom={2}
+            alignItems="center"
+            borderTopWidth={isIsha ? "2" : null}
+            borderBottomWidth={isIsha ? "2" : null}
+            borderColor={textC}
+          >
+            <Text style={styles.item}>Isha</Text>
+            <Text style={styles.time} color={textC}>{images[4].time}  </Text>
+            <Icon as={Feather} name="moon" size="md" opacity={1} color={iconColor} 
+              style={{justifyContent: 'center', alignSelf: 'center'}}/>
+          </VStack>
+        </View>
+      </View>
     </View>
  )
 
@@ -204,10 +230,11 @@ const styles= StyleSheet.create({
     justifyContent: 'center',
   },
   item: {
-    fontSize: 22,
+    fontSize: 19,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+
   },
   selected: {
     backgroundColor: 'rgba(0,0,0,0.4)'
@@ -218,7 +245,15 @@ const styles= StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-  }
+  },
+  minibox: {
+    width: '20%',
+  },
+  miniInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
 })
 
 export default PrayTimes

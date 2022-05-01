@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
-import { Button, Icon, IconButton, useColorModeValue } from "native-base"
+import { Button, Icon, IconButton, useColorModeValue, VStack } from "native-base"
 import React, { useCallback, useRef } from "react"
 import { View, Text, StyleSheet, ImageBackground, FlatList, Dimensions } from 'react-native'
 import Cards from "./card-component"
@@ -8,36 +8,36 @@ import PrayTimes from "./prayers"
 import { Feather } from "@expo/vector-icons"
 import Carousel from "react-native-snap-carousel"
 import Paginator from "./paginator"
+import { BlurView } from "expo-blur"
 
 export const MainLayout = () => {
   
   const navigation = useNavigation<any>()
 
-  const btnBg = useColorModeValue("rgba(206, 173, 145, 0.7)", "darkBlue.700")
+  const btnBg = useColorModeValue("#FEEAE6", "darkBlue.700")
   const ibg = useColorModeValue("black", "white")
 
   const carouselRef = useRef(null)
   const {width, height} = Dimensions.get('screen')
+  const tc = useColorModeValue("black", "white")
 
     return(
-      <View style={styles.container}> 
+      <VStack style={styles.container} space={4}> 
         <View style={styles.box1}>
           <View style={styles.inner}>
             <PrayTimes /> 
           </View>
         </View>
         <View style={styles.minibox}>
-            <View style={styles.miniInner}>
+            <BlurView style={styles.miniInner} tint={'light'} intensity={20}>
               <Button
-                borderRadius={75}
                 width={"full"}
                 height={"full"}
                 size="sm" 
-                bg={btnBg}
-                shadow={"7"}
+                borderLeftWidth={3}
                 onPress={() => navigation.navigate("Quran")}
                 _pressed={{
-                  bg: "grey"
+                  bg: "black"
                 }}
                 _text={{
                   color: "black"
@@ -45,19 +45,17 @@ export const MainLayout = () => {
                 variant="ghost"
                 leftIcon={<Icon as={Feather} name={"book"} size="sm" opacity={0.7} color={ibg} />}
               >
-              <Text style={styles.text}>Quran</Text>
+              <Text style={[styles.text, {color: tc}]}>Quran</Text>
               </Button>
-            </View>
+            </BlurView>
         </View>
         <View style={styles.minibox}>
-          <View style={styles.miniInner}>
+          <BlurView style={styles.miniInner} tint={"light"} intensity={20}>
             <Button
-                borderRadius={75}
                 width={"full"}
                 height={"full"}
                 size="sm" 
-                bg={btnBg}
-                shadow={"7"}
+                borderLeftWidth={3}
                 onPress={() => navigation.navigate("Hadith")}
                 _pressed={{
                   bg: "grey"
@@ -68,19 +66,17 @@ export const MainLayout = () => {
                 variant="ghost"
                 leftIcon={<Icon as={Feather} name={"check-circle"} size="sm" opacity={0.7} color={ibg} />}
               >
-              <Text style={styles.text}>Hadith Check</Text>
+              <Text style={[styles.text, {color: tc}]}>Hadith Check</Text>
             </Button>
-          </View>
+          </BlurView>
         </View>
         <View style={styles.minibox}>  
-          <View style={styles.miniInner}>
+          <BlurView style={styles.miniInner} intensity={20} tint={'light'}>
             <Button
-                borderRadius={75}
                 width={"full"}
                 height={"full"}
                 size="sm" 
-                bg={btnBg}
-                shadow={"7"}
+                borderLeftWidth={3}
                 onPress={() => navigation.navigate("Tasks")}
                 _pressed={{
                   bg: "grey"
@@ -91,19 +87,17 @@ export const MainLayout = () => {
                 variant="ghost"
                 leftIcon={<Icon as={Feather} name={"clipboard"} size="sm" opacity={0.7} color={ibg} />}
               >
-              <Text style={styles.text}>To Do List</Text>
+              <Text style={[styles.text, {color: tc}]}>To Do List</Text>
               </Button>
-        </View>
+          </BlurView>
         </View>
         <View style={styles.minibox}>
-          <View style={styles.miniInner}>
+          <BlurView style={styles.miniInner} tint={"light"} intensity={20}>
             <Button
-                borderRadius={75}
                 width={"full"}
                 height={"full"}
                 size="sm" 
-                bg={btnBg}
-                shadow={"7"}
+                borderLeftWidth={3}
                 onPress={() => navigation.navigate("About")}
                 _pressed={{
                   bg: "grey"
@@ -112,11 +106,11 @@ export const MainLayout = () => {
                   color: "black"
                 }}
                 variant="ghost"
-                leftIcon={<Icon as={Feather} name={"book"} size="sm" opacity={0.7} color={ibg} />}
+                leftIcon={<Icon as={Feather} name={"book"} size="sm" opacity={1} color={ibg} />}
               >
-              <Text style={styles.text}>About</Text>
+              <Text style={[styles.text, {color: tc}]}>About</Text>
               </Button>
-        </View>
+          </BlurView>
         </View>
         <View style={styles.box2}>
           <View style={styles.inner}>
@@ -128,7 +122,7 @@ export const MainLayout = () => {
             <Paginator />
           </View>
         </View>
-      </View>
+      </VStack>
 
     )
 }
@@ -137,7 +131,7 @@ const styles = StyleSheet.create({
     container: {
       width: '100%',
       height: '85%',
-      padding: 15,
+      padding: 10,
       top: 10,
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -149,12 +143,12 @@ const styles = StyleSheet.create({
     },
     box2: {
       width: '100%',
-      height: '38%',
+      height: '40%',
       padding: 5,
     },
     box3: {
       width: "100%",
-      height: "7%",
+      height: "5%",
       padding: 5,
     },
     inner: {
@@ -173,9 +167,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     text: {
-      color: "black",
-      fontSize: 18,
-      fontWeight: "600"
+      fontSize: 19,
+      fontWeight: "700"
     },
 })
 
