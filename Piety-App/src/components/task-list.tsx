@@ -1,36 +1,146 @@
-import { Text, FlatList } from 'native-base'
-import React, { useState } from 'react'
-import { StyleSheet, View, Pressable} from 'react-native'
-import AnimatedCheckbox from 'react-native-checkbox-reanimated'
-import { toDoData } from '../db/todo-data'
-import Todo from './todo'
+import React, { useCallback, useRef } from 'react'
+import { AnimatePresence, View } from 'moti'
+import {
+  PanGestureHandlerProps,
+  ScrollView
+} from 'react-native-gesture-handler'
+import TaskItem from './todo'
+import { makeStyledComponent } from '../utils/styled'
+import { FlatList, useColorModeValue, VStack } from 'native-base'
 
-export default function TaskList() {
+const StyledView = makeStyledComponent(View)
+const StyledScrollView = makeStyledComponent(ScrollView)
+
+interface TaskItemData {
+  id: string
+  subject: string
+  done: boolean
+}
+
+interface TaskListProps {
+  data: Array<TaskItemData>
+  editingItemId: string | null
+  onToggleItem: (item: TaskItemData) => void
+  onChangeSubject: (item: TaskItemData, newSubject: string) => void
+  onFinishEditing: (item: TaskItemData) => void
+  onPressLabel: (item: TaskItemData) => void
+  onRemoveItem: (item: TaskItemData) => void
+}
+
+interface TaskItemProps
+  extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
+  data: TaskItemData
+  isEditing: boolean
+  onToggleItem: (item: TaskItemData) => void
+  onChangeSubject: (item: TaskItemData, newSubject: string) => void
+  onFinishEditing: (item: TaskItemData) => void
+  onPressLabel: (item: TaskItemData) => void
+  onRemove: (item: TaskItemData) => void
+}
+
+export const AnimatedTaskItem = (props: TaskItemProps) => {
+  const {
+    simultaneousHandlers,
+    data,
+    isEditing,
+    onToggleItem,
+    onChangeSubject,
+    onFinishEditing,
+    onPressLabel,
+    onRemove
+  } = props
+
+
   
-  return(
-    <FlatList 
-      data={toDoData}
-      keyExtractor={item => item.id}
-      renderItem={({item}) =>{
-        return(
-          <View style={styles.container} >
-            <Todo {...item}/>
-          </View>
-          
-        )
-      }}
-    />
-  )
-} 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    height: "100%"
-  },
-  checkbox: {
-    width: 64,
-    height: 64
-  }
-})
+  const handleToggleCheckbox = useCallback(() => {
+    onToggleItem(data)
+  }, [data, onToggleItem])
+  const handleChangeSubject = useCallback(
+    subject => {
+      onChangeSubject(data, subject)
+    },
+    [data, onChangeSubject]
+  )
+  const handleFinishEditing = useCallback(() => {
+    onFinishEditing(data)
+  }, [data, onFinishEditing])
+  const handlePressLabel = useCallback(() => {
+    onPressLabel(data)
+  }, [data, onPressLabel])
+  const handleRemove = useCallback(() => {
+    onRemove(data)
+  }, [data, onRemove])
+
+
+  return (
+    <StyledView
+      w="full"
+      from={{
+        opacity: 0,
+        scale: 0.5,
+        marginBottom: -46
+      }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        marginBottom: 0
+      }}
+      exit={{
+        opacity: 0,
+        scale: 0.5,
+        marginBottom: -46
+      }}
+    >
+      <TaskItem
+        simultaneousHandlers={simultaneousHandlers}
+        subject={data.subject}
+        isDone={data.done}
+        isEditing={isEditing}
+        onToggleCheckbox={handleToggleCheckbox}
+        onChangeSubject={handleChangeSubject}
+        onFinishEditing={handleFinishEditing}
+        onPressLabel={handlePressLabel}
+        onRemove={handleRemove}
+      />
+    </StyledView>
+  )
+}
+
+export default function TaskList(props: TaskListProps) {
+  const {
+    data,
+    editingItemId,
+    onToggleItem,
+    onChangeSubject,
+    onFinishEditing,
+    onPressLabel,
+    onRemoveItem
+  } = props
+
+  const refScrollView = useRef(null)
+
+  const bg = useColorModeValue("#FEDBD0", "blueGray.900")
+
+  return (
+    <StyledScrollView ref={refScrollView} w="full">
+      <AnimatePresence>
+        {data.map(item => (
+          <VStack padding={2} mt={2}>
+            <AnimatedTaskItem
+              key={item.id}
+              data={item}
+              simultaneousHandlers={refScrollView}
+              isEditing={item.id === editingItemId}
+              onToggleItem={onToggleItem}
+              onChangeSubject={onChangeSubject}
+              onFinishEditing={onFinishEditing}
+              onPressLabel={onPressLabel}
+              onRemove={onRemoveItem}
+            />
+          </VStack>
+        ))}
+             </AnimatePresence>
+    </StyledScrollView>
+  )
+}
