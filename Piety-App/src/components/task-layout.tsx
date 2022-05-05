@@ -16,7 +16,8 @@ export const TaskLayout = () => {
   const [data, setData] = useState(toDoData)
   const [editID, setEditID] = useState<string | null>(null)
 
-  const handleToggleTaskItem = useCallback(item => {
+
+  const handleToggleTask = useCallback(item => {
     setData(prevData => {
       const newData = [...prevData]
       const index = prevData.indexOf(item)
@@ -27,27 +28,28 @@ export const TaskLayout = () => {
       return newData
     })
   }, [])
-  const handleChangeTaskItemSubject = useCallback((item, newSubject) => {
+
+  const handleChangeContent = useCallback((item, newSubject) => {
     setData(prevData => {
-      const newData = [...prevData]
+      const changed = [...prevData]
       const index = prevData.indexOf(item)
-      newData[index] = {
-        ...item,
-        subject: newSubject
-      }
-      return newData
+      changed[index] = {...item, subject: newSubject}
+      return changed
     })
   }, [])
-  const handleFinishEditingTaskItem = useCallback(_item => {
+
+  const handleFinishEdit = useCallback(_item => {
     setEditID(null)
   }, [])
+
   const handlePressTaskItemLabel = useCallback(item => {
     setEditID(item.id)
   }, [])
-  const handleRemoveItem = useCallback(item => {
+
+  const handleDelete = useCallback(item => {
     setData(prevData => {
-      const newData = prevData.filter(i => i !== item)
-      return newData
+      const updateArr = prevData.filter(i => i !== item)
+      return updateArr
     })
   }, [])
 
@@ -73,28 +75,28 @@ export const TaskLayout = () => {
       >
         <TaskList
           data={data}
-          onToggleItem={handleToggleTaskItem}
-          onChangeSubject={handleChangeTaskItemSubject}
-          onFinishEditing={handleFinishEditingTaskItem}
+          onToggleItem={handleToggleTask}
+          onChangeSubject={handleChangeContent}
+          onFinishEditing={handleFinishEdit}
           onPressLabel={handlePressTaskItemLabel}
-          onRemoveItem={handleRemoveItem}
+          onRemoveItem={handleDelete}
           editingItemId={editID}
         />
       </VStack>
       <Fab
         position="absolute"
-        renderInPortal={false}
         size="sm"
+        renderInPortal={false}
         icon={<Icon color="white" as={<Feather name="plus" />} size="sm" />}
-        colorScheme={useColorModeValue('blue', 'darkBlue')}
-        bg={useColorModeValue('blue.500', 'blue.400')}
+        colorScheme={useColorModeValue('#442C2E', 'darkBlue')}
+        bg={useColorModeValue('#442C2E', 'blue.400')}
         onPress={() => {
-          const id = shortid.generate().toString()
+          const id = shortid.generate()
           setData([
             {
               id,
-              subject: '',
-              done: false
+              subject: "",
+              done: false,
             },
             ...data
           ])

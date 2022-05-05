@@ -14,15 +14,24 @@ import TaskScreen from './screens/task-screen'
 const Drawer = createDrawerNavigator()
 
 const App = () => {
+  
+
   return (
     <Drawer.Navigator 
-    initialRouteName = "Home"
-    drawerContent={props => <Sidebar {...props} />}
-    screenOptions={{
-      headerShown: false,
-      drawerType: 'back',
-      drawerActiveBackgroundColor: "#FEDBD0"
-      }}>
+      initialRouteName = "Home"
+      drawerContent={props => <Sidebar {...props} />}
+      screenOptions={{
+        drawerType: 'slide',
+        headerShown: false,
+        drawerActiveBackgroundColor: "transparent",
+        drawerActiveTintColor: "red",
+        drawerInactiveTintColor: "red",
+        sceneContainerStyle: {
+          backgroundColor: "blue"
+        }
+      }}
+      
+    >
       <Drawer.Screen name="Pray" component={DefaultScreen} />
       <Drawer.Screen name="Quran" component={QuranScreen} />
       <Drawer.Screen name="Detail" component={DetailScreen} />

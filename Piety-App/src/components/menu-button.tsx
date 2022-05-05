@@ -12,7 +12,10 @@ const MenuButton = ({ active, icon, children, ...props}: Props) => {
   const colorScheme = useColorModeValue("#FEDBD0", "darkBlue")
   const inactiveTextColor = useColorModeValue("#FEEAE6", "white")
   const pressedBgColor = useColorModeValue("#442C2E", "blueGray.700")
-  const activeColor = useColorModeValue("#442C2E", "blue.700")
+  const activeColor = useColorModeValue("rgba(255,255,255,0.6)", "blue.700")
+  const inactiveColor = useColorModeValue("rgba(0,0,0,0.6)", "rgba(255,255,255,0.5)")
+  const activeBorder = useColorModeValue("#000", "orange")
+  const inactiveBorder = useColorModeValue("#FEDBD0", "white")
 
   return(
     <Button 
@@ -23,11 +26,13 @@ const MenuButton = ({ active, icon, children, ...props}: Props) => {
         bg: pressedBgColor
       }}
       _text={{
-        color: active ? '#FEDBD0' : inactiveTextColor
+        color: active ? 'black' : inactiveTextColor
       }}
       variant="solid"
       justifyContent="flex-start"
-      leftIcon={<Icon as={Feather} name={icon} size="sm" opacity={0.5} />}
+      borderLeftWidth={5}
+      borderColor={active ? activeBorder : inactiveBorder}
+      leftIcon={<Icon as={Feather} name={icon} size="sm" opacity={1} />}
       {...props}
     >
       {children}

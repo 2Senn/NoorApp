@@ -1,15 +1,10 @@
 import React, { useCallback, useRef } from 'react'
 import { AnimatePresence, View } from 'moti'
-import {
-  PanGestureHandlerProps,
-  ScrollView
-} from 'react-native-gesture-handler'
+import { PanGestureHandlerProps, ScrollView } from 'react-native-gesture-handler'
 import TaskItem from './todo'
 import { makeStyledComponent } from '../utils/styled'
 import { FlatList, useColorModeValue, VStack } from 'native-base'
 
-const StyledView = makeStyledComponent(View)
-const StyledScrollView = makeStyledComponent(ScrollView)
 
 interface TaskItemData {
   id: string
@@ -21,7 +16,7 @@ interface ListProps {
   data: Array<TaskItemData>
   editingItemId: string | null
   onToggleItem: (item: TaskItemData) => void
-  onChangeSubject: (item: TaskItemData, newSubject: string) => void
+  onChangeSubject: (item: TaskItemData, newInput: string) => void
   onFinishEditing: (item: TaskItemData) => void
   onPressLabel: (item: TaskItemData) => void
   onRemoveItem: (item: TaskItemData) => void
@@ -32,11 +27,16 @@ interface TaskProps
   data: TaskItemData
   isEditing: boolean
   onToggleItem: (item: TaskItemData) => void
-  onChangeSubject: (item: TaskItemData, newSubject: string) => void
+  onChangeSubject: (item: TaskItemData, newInput: string) => void
   onFinishEditing: (item: TaskItemData) => void
   onPressLabel: (item: TaskItemData) => void
   onRemove: (item: TaskItemData) => void
 }
+
+//Styled components
+const StyledView = makeStyledComponent(View)
+const StyledScrollView = makeStyledComponent(ScrollView)
+
 
 export const AnimatedTaskItem = (props: TaskProps) => {
   const {
@@ -80,7 +80,7 @@ export const AnimatedTaskItem = (props: TaskProps) => {
       from={{
         opacity: 0,
         scale: 0.5,
-        marginBottom: -46
+        marginBottom: -51
       }}
       animate={{
         opacity: 1,
@@ -90,19 +90,19 @@ export const AnimatedTaskItem = (props: TaskProps) => {
       exit={{
         opacity: 0,
         scale: 0.5,
-        marginBottom: -46
+        marginBottom: -51
       }}
     >
       <TaskItem
-        simultaneousHandlers={simultaneousHandlers}
         subject={data.subject}
         isDone={data.done}
         isEditing={isEditing}
         onToggleCheckbox={handleCheck}
+        simultaneousHandlers={simultaneousHandlers}
         onChangeSubject={handleChangeSubject}
-        onFinishEditing={handleFinishEditing}
-        onPressLabel={handlePressLabel}
         onRemove={handleRemove}
+        onPressLabel={handlePressLabel}
+        onFinishEditing={handleFinishEditing}
       />
     </StyledView>
   )
@@ -131,17 +131,17 @@ export default function TaskList(props: ListProps) {
             <AnimatedTaskItem
               key={item.id}
               data={item}
-              simultaneousHandlers={scrollRef}
               isEditing={item.id === editingItemId}
-              onToggleItem={onToggleItem}
-              onChangeSubject={onChangeSubject}
               onFinishEditing={onFinishEditing}
-              onPressLabel={onPressLabel}
+              simultaneousHandlers={scrollRef}
+              onChangeSubject={onChangeSubject}
+              onToggleItem={onToggleItem}
               onRemove={onRemoveItem}
+              onPressLabel={onPressLabel}
             />
           </VStack>
         ))}
-             </AnimatePresence>
+      </AnimatePresence>
     </StyledScrollView>
   )
 }

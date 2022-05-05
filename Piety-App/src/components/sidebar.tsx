@@ -31,10 +31,10 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
  
 
   return(
-    <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#E7D5C5', 'black')} p={7}>
+    <AnimatedColorBox safeArea flex={1} bg={useColorModeValue('#442C2E', 'black')} p={7}>
       <VStack flex={1} space={5} top={5}>
         <View flexDir="row">
-          <Heading mb={4} size="xl" zIndex={1} color={useColorModeValue("black", "white")}>
+          <Heading mb={4} size="xl" zIndex={1} color={useColorModeValue("white", "orange")}>
             استعن بالله ولا تعجز
           </Heading>
           <IconButton 
@@ -50,23 +50,10 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
             }}
             />
         </View>
-        <View position="absolute" >
-          <Image
-            source={require("../assets/olive.png")}
-            alt="olive tree"
-            resizeMode="cover"
-            position="absolute"
-            flex={1}   
-            width={400}
-            height={300}
-            opacity={0.6}
-            />
-        </View>
-     <MenuButton 
+             <MenuButton 
         active={currRoute === "Pray"} 
         onPress={handlePressMenuMain}
         icon="cloud"
-        borderRadius="20"
       >
         Prayers
       </MenuButton>
@@ -74,7 +61,6 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         active={currRoute === "Quran"}
         onPress={handlePressMenuQuran}
         icon="book-open"
-        borderRadius={20}
       >
         Quran
       </MenuButton> 
@@ -82,7 +68,6 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         active={currRoute === "Tasks"}
         onPress={handlePressMenuTask}
         icon="feather"
-        borderRadius="20"  
       >
         Tasks
       </MenuButton>
@@ -90,7 +75,6 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         active={currRoute === "Hadith"}
         onPress={handlePressMenuHadithCheck}
         icon="check-circle"
-        borderRadius={20}  
       >
         Hadith Authenticator
       </MenuButton>
@@ -98,7 +82,6 @@ const Sidebar = (props: DrawerContentComponentProps) =>{
         active={currRoute === "About"}
         onPress={handlePressMenuAbout}
         icon="info"
-        borderRadius={20}
       >
         About
       </MenuButton>

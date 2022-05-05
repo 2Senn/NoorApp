@@ -25,11 +25,8 @@ export const Cards = () => {
   }).current
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50}).current
   
-  //Component colors
-  const tc = useColorModeValue("#442C2E", "white")
-  const cardColor = useColorModeValue("black", "#E9D0C4")
+  //REF to keep track of carousel
   const carouselRef = useRef(null)
-  const bg=useColorModeValue("#E9D0C4", "black")
 
   //Calender Variables
   let getHijri = Hijri()
@@ -101,7 +98,7 @@ export const Cards = () => {
                 />
             </View>
           </VStack>
-            <View flex={1} alignItems='center' justifyContent='center' width={100} >
+            <View flex={1} alignItems='center' justifyContent='center'  >
              <Text paddingX={10}  >{randomHadith}</Text> 
             </View>
           </BlurView>
