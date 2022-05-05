@@ -1,4 +1,4 @@
-import { Box, Image, Text, useColorMode, useColorModeValue, View } from "native-base"
+import { Box, Image, Text, useColorMode, useColorModeValue, View, VStack } from "native-base"
 import React, { useEffect, useRef, useState } from "react"
 import { ImageBackground, Animated, StyleSheet } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
@@ -10,6 +10,7 @@ import Paginator from "./paginator"
 import { BlurView } from "expo-blur"
 import { LinearGradient } from 'expo-linear-gradient'
 import { borderWidth } from "styled-system"
+import RandomHadith from "./random-hadith"
 
 export const Cards = () => {
  
@@ -37,8 +38,10 @@ export const Cards = () => {
   //gradient options
   //
   const _lightArray = ["rgba(204,154, 137, 1)", "rgba(156, 33, 37, 0.4)"]
-  const _darkArray = ["rgba(0,0,0,0.2)", "rgba(0,0,0,0.1)"]
+  const _darkArray = ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.1)"]
   const checkColor = useColorModeValue(_lightArray, _darkArray)
+
+  const randomHadith = RandomHadith[Math.floor(Math.random() * RandomHadith.length)].english
 
   //data
   const Calender = [
@@ -56,13 +59,6 @@ export const Cards = () => {
       image: require('../assets/card4.png'),
       secondary: require('../assets/header.png')
     },
-    {
-      id: 3,
-      title: "Weather",
-      type: "soon",
-      image: require('../assets/card3.png'),
-      secondary: require('../assets/cloudy.png')
-    }
   ]
   
   //render function
@@ -76,12 +72,10 @@ export const Cards = () => {
               flexDirection: 'row', 
               height: "100%",
               width: "100%",
-              justifyContent: 'space-around', 
-              alignItems: 'center',
               borderRadius: 45,
             }}
-            intensity={80}
-            tint={"light"}
+            intensity={50}
+            tint={"default"}
           >
             <LinearGradient 
               colors={checkColor} 
@@ -92,9 +86,23 @@ export const Cards = () => {
                 borderRadius: 45,
               }]}
               />
-            <View flex={1} alignItems='flex-start' justifyContent="flex-start" width={"50%"} height="50%" >
-              <Text style={{fontSize: 22, fontWeight: 'bold', color: '#000'}}>{item.title}</Text>
+          <VStack space={2}>
+            <View flex={1} alignItems='flex-start' justifyContent="flex-start" margin={5} >
+              <Text style={{fontSize: 25, fontWeight: 'bold', color: '#000', paddingTop: 10}}>{item.title}</Text>
               <Text color="#000" fontSize={20}>{item.type}</Text>
+              <Image 
+                  source={require('../assets/lantern.png')} 
+                  resizeMode={"contain"} 
+                  position="absolute" 
+                  width={50} 
+                  height={50} 
+                  top={20} 
+                  alt="lantern vector icon by freepik - FlatList.com"
+                />
+            </View>
+          </VStack>
+            <View flex={1} alignItems='center' justifyContent='center' width={100} >
+             <Text paddingX={10}  >{randomHadith}</Text> 
             </View>
           </BlurView>
         </View>
@@ -117,9 +125,9 @@ export const Cards = () => {
           })}
         onViewableItemsChanged={itemChanged}
         viewabilityConfig={viewConfig}
-        sliderWidth={width - 20}
+        sliderWidth={width - 10}
         showsHorizontalScrollIndicator={false}
-        itemWidth={width-20}
+        itemWidth={width-10}
       />
       <Paginator data={Calender} scrollX={scrollX} />
     </View>

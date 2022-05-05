@@ -27,14 +27,14 @@ export const TaskItem = (props: Props) => {
   //get props
   const {
     isEditing,
-    isDone,
-    onToggleCheckbox,
-    subject,
+    onFinishEditing,
     onPressLabel,
+    isDone,
+    subject,
+    onToggleCheckbox,
+    simultaneousHandlers,
     onRemove,
     onChangeSubject,
-    onFinishEditing,
-    simultaneousHandlers
   } = props
 
   /* COLORS */

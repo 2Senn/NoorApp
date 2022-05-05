@@ -89,7 +89,7 @@ export const TaskLayout = () => {
         colorScheme={useColorModeValue('blue', 'darkBlue')}
         bg={useColorModeValue('blue.500', 'blue.400')}
         onPress={() => {
-          const id = shortid.generate()
+          const id = shortid.generate().toString()
           setData([
             {
               id,

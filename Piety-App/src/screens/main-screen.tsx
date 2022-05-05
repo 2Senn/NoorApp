@@ -13,7 +13,8 @@ export default function DefaultScreen({ navigation }: any){
   
 
 
-  const bg=useColorModeValue("#E9D0C4", "black")
+  const bg=useColorModeValue('primary.300', "blueGray.900")
+  const headerBg = useColorModeValue('primary.300', "blueGray.900")
 
   return(
     <AnimatedColorBox
@@ -26,10 +27,10 @@ export default function DefaultScreen({ navigation }: any){
         source={require("../assets/sakuraa.png")} 
         resizeMode={"cover"} 
         style={{width: "100%", height: "100%", position: 'absolute'}}
-        blurRadius={3}
+        blurRadius={5}
       >
       </ImageBackground>
-      <View>
+      <View backgroundColor={headerBg}>
         <Masthead 
           title={"Al Salamu Alaikum"}
           image={require("../assets/icon2.png")}

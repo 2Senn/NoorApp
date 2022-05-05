@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     },
     container: {
       flex: 1,
-      bottom: 70
+      bottom: 70,
+      padding: 15
     }
   })
 

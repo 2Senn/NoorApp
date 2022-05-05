@@ -17,7 +17,7 @@ interface TaskItemData {
   done: boolean
 }
 
-interface TaskListProps {
+interface ListProps {
   data: Array<TaskItemData>
   editingItemId: string | null
   onToggleItem: (item: TaskItemData) => void
@@ -27,7 +27,7 @@ interface TaskListProps {
   onRemoveItem: (item: TaskItemData) => void
 }
 
-interface TaskItemProps
+interface TaskProps
   extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   data: TaskItemData
   isEditing: boolean
@@ -38,7 +38,7 @@ interface TaskItemProps
   onRemove: (item: TaskItemData) => void
 }
 
-export const AnimatedTaskItem = (props: TaskItemProps) => {
+export const AnimatedTaskItem = (props: TaskProps) => {
   const {
     simultaneousHandlers,
     data,
@@ -51,23 +51,24 @@ export const AnimatedTaskItem = (props: TaskItemProps) => {
   } = props
 
 
-  
+  /* EVENT HANDLING */
 
-  const handleToggleCheckbox = useCallback(() => {
+  const handleCheck = useCallback(() => {
     onToggleItem(data)
   }, [data, onToggleItem])
-  const handleChangeSubject = useCallback(
-    subject => {
-      onChangeSubject(data, subject)
-    },
-    [data, onChangeSubject]
-  )
+
+  const handleChangeSubject = useCallback(subject => {
+    onChangeSubject(data, subject)
+  }, [data, onChangeSubject])
+  
   const handleFinishEditing = useCallback(() => {
     onFinishEditing(data)
   }, [data, onFinishEditing])
+  
   const handlePressLabel = useCallback(() => {
     onPressLabel(data)
   }, [data, onPressLabel])
+
   const handleRemove = useCallback(() => {
     onRemove(data)
   }, [data, onRemove])
@@ -97,7 +98,7 @@ export const AnimatedTaskItem = (props: TaskItemProps) => {
         subject={data.subject}
         isDone={data.done}
         isEditing={isEditing}
-        onToggleCheckbox={handleToggleCheckbox}
+        onToggleCheckbox={handleCheck}
         onChangeSubject={handleChangeSubject}
         onFinishEditing={handleFinishEditing}
         onPressLabel={handlePressLabel}
@@ -107,30 +108,30 @@ export const AnimatedTaskItem = (props: TaskItemProps) => {
   )
 }
 
-export default function TaskList(props: TaskListProps) {
+export default function TaskList(props: ListProps) {
   const {
     data,
-    editingItemId,
     onToggleItem,
     onChangeSubject,
-    onFinishEditing,
+    editingItemId,
     onPressLabel,
+    onFinishEditing,
     onRemoveItem
   } = props
 
-  const refScrollView = useRef(null)
+  const scrollRef = useRef(null)
 
   const bg = useColorModeValue("#FEDBD0", "blueGray.900")
 
   return (
-    <StyledScrollView ref={refScrollView} w="full">
+    <StyledScrollView ref={scrollRef} w="full">
       <AnimatePresence>
-        {data.map(item => (
+        {data.map (item => (
           <VStack padding={2} mt={2}>
             <AnimatedTaskItem
               key={item.id}
               data={item}
-              simultaneousHandlers={refScrollView}
+              simultaneousHandlers={scrollRef}
               isEditing={item.id === editingItemId}
               onToggleItem={onToggleItem}
               onChangeSubject={onChangeSubject}

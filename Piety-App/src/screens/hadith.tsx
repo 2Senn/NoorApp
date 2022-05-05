@@ -8,6 +8,7 @@ import shortid from 'shortid'
 import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import BarNav from '../components/navbar'
+import { textAlign } from 'styled-system'
 
 
 export const {width, height} = Dimensions.get('screen')
@@ -23,12 +24,9 @@ export const SPACING = 20
 
   ]
 
-
 export type RootDrawerParamList = {
   HDetail: { item: any };
 };
-
-
 
 export default function HadithScreen(){
 
@@ -38,14 +36,8 @@ export default function HadithScreen(){
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState("نيات ")
 
-  const sb = useColorModeValue("rgba(0,0,0,0.6)", "darkBlue.800")
   const url = `https://dorar-hadith-api.herokuapp.com/api/search?value=${search}`
 
-
-  const t_image = [
-    "https://cdn-icons.flaticon.com/png/512/1008/premium/1008927.png?token=exp=1650959224~hmac=1aa3cc035e1a4b5d41aca4c061b42898",
-    "https://cdn-icons.flaticon.com/png/512/294/premium/294432.png?token=exp=1650959593~hmac=21cc30659994d80005b04fb67a9a9493"
-  ]                                                                       
 
   const getHadith = useCallback(async() => {
     try{
@@ -214,7 +206,7 @@ export default function HadithScreen(){
       width="full"
       height={height}
     >
-      <AnimatedColorBox width={"full"} bg={useColorModeValue('#FEDBD0', 'blueGray.900')} flex={1}>
+      <AnimatedColorBox width={"full"} bg={useColorModeValue('primary.300', 'blueGray.900')} flex={1}>
       <Image 
         source={require('../assets/sakuraa.png')}
         style={StyleSheet.absoluteFillObject} blurRadius={10}
@@ -246,7 +238,11 @@ export default function HadithScreen(){
               />
         </View>
       <View flex={1} pt={SPACING}>
-      {(loading) ? <Text  fontSize={30}>Hmmm...</Text> : (
+      {(loading) ? 
+              <View alignSelf="center" justifyContent="center"> 
+                <Text fontSize={30}>Hmmm...</Text> 
+              </View>
+      : (
       <Animated.FlatList 
         data={data}
         onScroll={Animated.event(
@@ -280,7 +276,7 @@ export default function HadithScreen(){
  
           return(
             <TouchableOpacity 
-                      style={{ marginBottom: SPACING, height: ITEM_HEIGHT}} 
+                      style={{ marginBottom: SPACING, height: ITEM_HEIGHT * 0.85}} 
                       onPress={() => {
                         if(item.hadiths === void 0){
                           Alert.alert("Error", "please select a valid hadith")
@@ -301,26 +297,26 @@ export default function HadithScreen(){
                       borderRadius={16} 
                       backgroundColor={hasData(item.hadiths) ? checkBack(item.hadiths.grade) : null} 
                       />
-                  <VStack space={2} position={'absolute'} alignSelf={'flex-end'} justifyContent={'center'}>
+                  <VStack space={2} position={'absolute'} alignSelf={'flex-end'} justifyContent={'center'} width={300}>
                     <View flex={1}>
                       <Text
+                        noOfLines={3}
                         textAlign={'center'}
                         style={styles.hadith} 
                         adjustsFontSizeToFit>{hasData(item.hadiths) ? item.hadiths.hadith : noResultView()}
                       </Text>
                     </View>
-                    <View flex={1} pr={SPACING} >
-                      <Text 
-                        adjustsFontSizeToFit
-                        style={styles.grade}
-                      >
-                        {hasData(item.hadiths) ? item.hadiths.grade : noResultView()}
-                      </Text>
-                    </View>
                   </VStack>
-      
+                <View position={'absolute'} flex={1} style={{marginTop: 50, padding: 5}} alignItems="flex-start" justifyContent="flex-start" >
+                  <Text 
+                    adjustsFontSizeToFit
+                    style={styles.grade}
+                  >
+                    {hasData(item.hadiths) ? item.hadiths.grade : noResultView()}
+                  </Text>
+                </View>
                 <Image 
-                  alt="i passed it..."
+                  alt="Icons by Freepik from FlatIcons.com"
                   size={IMAGE_SIZE}
                   source={hasData(item.hadiths) ? forImage(item.hadiths.grade) : null} style={styles.image}/>
               </Animated.View>
@@ -343,27 +339,27 @@ const styles = StyleSheet.create({
     //width: ITEM_HEIGHT * 0.7,
     //height: ITEM_HEIGHT * 0.7,
     resizeMode: "contain",
-    position: "absolute",
+    padding: 10,
+    margin: 10,
     bottom: 20,
     right: SPACING
   },
   hadith: {
     fontWeight: '700',
     fontSize: 18,
+    margin: 20,
     color: "white",
-    padding: SPACING,
-    right: 20
+    right: 10,
+    textAlign: 'right'
 
   },
   grade: {
     fontSize: 18,
     opacity: 1,
-    padding: SPACING,
     alignSelf: 'center',
     justifyContent: 'center',
-    bottom: 40,
+    margin: 15,
     color: "#EDC423",
-     
   }, 
   bg: {
     position: 'absolute',

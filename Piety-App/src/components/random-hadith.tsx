@@ -1,41 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { View, Text } from 'native-base'
-
-const RandomHadith = () => {
-  
-  const [hadith, setHadith] = useState<any>([])
-  const [single, setSingle] = useState("")
-
-  const names = ['bukhari', 'muslim']
-  var name = names[Math.floor(Math.random()*names.length)]; 
-  
-  const url = `https://api.hadith.sutanlab.id/books/${names[1]}?range=1-299` 
-
-  const fetchHadith = useCallback(async() => {
-    try{
-      let response = await fetch(url)
-      let json = await response.json()
-      setHadith(json)
-    }catch(error){
-        console.log(error)
-      }
-    }, [])
-
-  useEffect(() => {
-      fetchHadith()
-      console.log(hadith)
-      const getRandom = Math.floor(Math.random() * hadith.data.hadiths.length)
-      setSingle(hadith.data.hadiths[getRandom].arab)
-    }, [fetchHadith]) 
-
-    return(
-      <View>
-        <Text>{single}</Text>
-      </View>
-  )
-
-
-}
+const RandomHadith = [
+  {
+    id: 1,
+    header: "Narrated Abu Huraira:",
+    english: "Allah's Messenger (ﷺ) said: \"When the month of Ramadan starts, the gates of the heaven are opened and the gates of Hell are closed and the devils are chained.\"",
+    narrator: "Abu Huraira",
+    book: "Sahih Al-Bukhari",
+    chapter: "The Book of Fasting",
+    topic: "Fasting",
+    url: "http://sunnah.com/bukhari/30/9"
+  },
+  {
+    id: 2,
+    header: "Narrated Umar ibn Al-Khattab",
+    english:"Allah's Messenger (ﷺ) said: \"The reward of deeds depends upon the intention and every person will get the reward according to what he has intended. So whoever emigrated for Allah and His Apostle, then his emigration was for Allah and His Apostle. And whoever emigrated for worldly benefits or for a woman to marry, his emigration was for what he emigrated for.\"",
+    narrator: "Umar Ibn Al-Khattab",
+    book: "Sahih Al-Bukhari",
+    chapter: "The Book of Belief",
+    topic: "Belief",
+    url: "http://sunnah.com/bukhari/2/47"
+  },
+]
 
  export default RandomHadith
 

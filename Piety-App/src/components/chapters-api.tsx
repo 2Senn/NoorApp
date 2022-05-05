@@ -75,10 +75,9 @@ export default function FetchQuran() {
             }}
                
             >
-              <Image source={require("../assets/icon2.png")} size={ICON_SIZE} alignSelf="center" alt="icon2" />
               <Text style={styles.item}>{item.id}</Text>
               <Text style={styles.item} >{item.name_arabic}</Text>
-              <VStack alignSelf={"flex-end"}>
+              <VStack flex={1} alignSelf={"flex-end"} justifyContent="flex-end">
                 <Text style={styles.item}>{item.name_complex}</Text>
                 <Text style={styles.verse_count}>{item.verses_count} Verses</Text>
               </VStack>

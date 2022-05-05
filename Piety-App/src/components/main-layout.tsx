@@ -22,7 +22,7 @@ export const MainLayout = () => {
   const tc = useColorModeValue("black", "white")
 
     return(
-      <VStack style={styles.container} space={4}> 
+      <VStack style={styles.container} space={3} marginY={10}> 
         <View style={styles.box1}>
           <View style={styles.inner}>
             <PrayTimes /> 
@@ -37,7 +37,7 @@ export const MainLayout = () => {
                 borderLeftWidth={3}
                 onPress={() => navigation.navigate("Quran")}
                 _pressed={{
-                  bg: "black"
+                  backgroundColor: "rgba(0,0,0,0.2)"
                 }}
                 _text={{
                   color: "black"
@@ -58,7 +58,7 @@ export const MainLayout = () => {
                 borderLeftWidth={3}
                 onPress={() => navigation.navigate("Hadith")}
                 _pressed={{
-                  bg: "grey"
+                  bg: "rgba(0,0,0,0.2)"
                 }}
                 _text={{
                   color: "black"
@@ -79,7 +79,7 @@ export const MainLayout = () => {
                 borderLeftWidth={3}
                 onPress={() => navigation.navigate("Tasks")}
                 _pressed={{
-                  bg: "grey"
+                  bg: "rgba(0,0,0,0.2)"
                 }}
                 _text={{
                   color: "black"
@@ -100,7 +100,7 @@ export const MainLayout = () => {
                 borderLeftWidth={3}
                 onPress={() => navigation.navigate("About")}
                 _pressed={{
-                  bg: "grey"
+                  bg: "rgba(0,0,0,0.2)"
                 }}
                 _text={{
                   color: "black"
