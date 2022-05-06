@@ -13,10 +13,6 @@ const {width, height} = Dimensions.get('window')
 
 const Masthead = ({ title, image, children }: Props) => {
 
-  useEffect(() => {
-      console.log(height)
-    })
-
   return (
     <VStack h="15%" pb={5}>
       <Image

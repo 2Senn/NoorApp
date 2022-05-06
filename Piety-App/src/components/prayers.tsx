@@ -3,6 +3,7 @@ import { View, Text, VStack, useColorModeValue, Icon } from "native-base"
 import { Dimensions, StyleSheet } from "react-native"
 import { Feather } from "@expo/vector-icons"
 import { flexGrow } from "styled-system"
+import LoadingIndicator from "./moti-loading"
 
 
 const PrayTimes = () => {
@@ -28,7 +29,6 @@ const PrayTimes = () => {
     var minutes = new Date().getMinutes()
     const time = hour.toString() + "." + minutes.toString()
     setTime(time)
-    console.log(time)
   }, [])
   //images
   const images = [
@@ -124,6 +124,7 @@ const PrayTimes = () => {
 
   const iconColor = useColorModeValue("red.900", "yellow.500")
 
+
   return(
 
     <View 
@@ -134,6 +135,7 @@ const PrayTimes = () => {
       justifyContent="center" pt={2}  >
       <View style={styles.minibox}>
         <View style={styles.miniInner}>
+          {loading ? <LoadingIndicator size={40}/> : (
           <VStack 
             space={2} 
             paddingTop={2}
@@ -147,10 +149,12 @@ const PrayTimes = () => {
             <Text style={styles.time} color={textC}>{images[0].time}  </Text>
             <Icon as={Feather} name="sunrise" size="md" opacity={1} color={iconColor}/>
           </VStack>
+          )}
         </View>
       </View>
       <View style={styles.minibox}>
         <View style={styles.miniInner}>
+          {loading ? <LoadingIndicator size={40}/> : (
           <VStack  
             space={2} 
             paddingTop={2}
@@ -164,10 +168,12 @@ const PrayTimes = () => {
             <Text style={styles.time} color={textC}>{images[1].time}  </Text>
             <Icon as={Feather} name="sun" size="md" opacity={1} color={iconColor}/>
           </VStack>
+          )}
         </View>
       </View>
       <View style={styles.minibox}>
         <View style={styles.miniInner}>
+          {loading ? <LoadingIndicator size={40}/> : (
           <VStack 
             space={2} 
             paddingTop={2}
@@ -181,10 +187,12 @@ const PrayTimes = () => {
             <Text style={styles.time} color={textC}>{images[2].time}  </Text>
             <Icon as={Feather} name="cloud" size="md" opacity={1} color={iconColor}/>
           </VStack> 
+          )}
         </View>
       </View>
       <View style={styles.minibox}>
         <View style={styles.miniInner}>
+          {loading ? <LoadingIndicator size={40}/> : (
            <VStack 
               space={2}
               paddingTop={2}
@@ -198,10 +206,12 @@ const PrayTimes = () => {
               <Text style={styles.time} color={textC}>{images[3].time}  </Text>
               <Icon as={Feather} name="sunset" size="md" opacity={1} color={iconColor}/>
           </VStack>
+          )}
         </View>
       </View>
       <View style={styles.minibox}>
         <View style={styles.miniInner}>
+          {loading ? <LoadingIndicator size={40}/> : (
           <VStack 
             space={2} 
             paddingTop={2}
@@ -216,6 +226,7 @@ const PrayTimes = () => {
             <Icon as={Feather} name="moon" size="md" opacity={1} color={iconColor} 
               style={{justifyContent: 'center', alignSelf: 'center'}}/>
           </VStack>
+          )}
         </View>
       </View>
     </View>

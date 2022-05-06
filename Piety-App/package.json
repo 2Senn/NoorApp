@@ -38,6 +38,7 @@
     "expo-linking": "^2.4.2",
     "expo-status-bar": "~1.1.0",
     "firebase": "^9.6.11",
+    "lottie-react-native": "^5.0.1",
     "moti": "^0.16.1",
     "native-base": "^3.2.1",
     "react": "17.0.1",
@@ -57,7 +58,8 @@
     "shortid": "^2.2.16",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "expo-app-loading": "~1.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

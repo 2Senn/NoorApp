@@ -4,6 +4,7 @@ import { PanGestureHandlerProps, ScrollView } from 'react-native-gesture-handler
 import TaskItem from './todo'
 import { makeStyledComponent } from '../utils/styled'
 import { FlatList, useColorModeValue, VStack } from 'native-base'
+import shortid from 'shortid'
 
 
 interface TaskItemData {
@@ -129,7 +130,7 @@ export default function TaskList(props: ListProps) {
         {data.map (item => (
           <VStack padding={2} mt={2}>
             <AnimatedTaskItem
-              key={item.id}
+              key={item.id.toString()}
               data={item}
               isEditing={item.id === editingItemId}
               onFinishEditing={onFinishEditing}

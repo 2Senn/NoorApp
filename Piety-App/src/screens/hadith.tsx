@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import BarNav from '../components/navbar'
 import { textAlign } from 'styled-system'
+import LoadingIndicator from '../components/moti-loading'
 
 
 export const {width, height} = Dimensions.get('screen')
@@ -56,6 +57,8 @@ export default function HadithScreen(){
     getHadith()
   }, [getHadith])
 
+
+  const borderColor = useColorModeValue("#000", "#fff")
 
   //islamic icons created by Freepik - Flaticon
 
@@ -185,13 +188,7 @@ export default function HadithScreen(){
   
 
   const noResultView = () => {
-    return(
-      <View flex={1} alignSelf="center" justifyContent="center">
-        <Text>
-          NO RESULTS... PLEASE MODIFY SEARCH 
-        </Text>
-      </View>
-    )
+      setLoading(true)
   }
 
   //Animation
@@ -206,11 +203,7 @@ export default function HadithScreen(){
       width="full"
       height={height}
     >
-      <AnimatedColorBox width={"full"} bg={useColorModeValue('primary.300', 'blueGray.900')} flex={1}>
-      <Image 
-        source={require('../assets/sakuraa.png')}
-        style={StyleSheet.absoluteFillObject} blurRadius={10}
-          />
+      <AnimatedColorBox width={"full"} bg={useColorModeValue('primary.100', 'blueGray.900')} flex={1}>
       <SafeAreaView style={{flex: 1}}>
       <StatusBar hidden />
         <View pt={5} flex={1} flexDir="row" width={width * 0.95} height={100} position="absolute">
@@ -239,8 +232,8 @@ export default function HadithScreen(){
         </View>
       <View flex={1} pt={SPACING}>
       {(loading) ? 
-              <View alignSelf="center" justifyContent="center"> 
-                <Text fontSize={30}>Hmmm...</Text> 
+              <View alignSelf="center" justifyContent="center" height="full" > 
+                <LoadingIndicator size={150}/>
               </View>
       : (
       <Animated.FlatList 
@@ -293,10 +286,12 @@ export default function HadithScreen(){
                 }}
               >
                 <View 
-                      style={[StyleSheet.absoluteFillObject ]} 
-                      borderRadius={16} 
-                      backgroundColor={hasData(item.hadiths) ? checkBack(item.hadiths.grade) : null} 
-                      />
+                  style={[StyleSheet.absoluteFillObject ]} 
+                  borderRightWidth={5}
+                  borderColor={borderColor}
+                  borderTopLeftRadius={30}
+                  backgroundColor={hasData(item.hadiths) ? checkBack(item.hadiths.grade) : null} 
+                />
                   <VStack space={2} position={'absolute'} alignSelf={'flex-end'} justifyContent={'center'} width={300}>
                     <View flex={1}>
                       <Text

@@ -40,12 +40,18 @@ export const TaskItem = (props: Props) => {
   /* COLORS */
   const bg = useColorModeValue("#FFF4F1", "rgba(0,0,0,0)")
   const fillColor = useColorModeValue("#000", "#fff")
-  const inactiveTextColor = useColorModeValue("muted.500", "muted.400")
+  const borderC = useColorModeValue("#442C2E", "#000")
 
+  const generateColor = () => {
+  const randomColor = Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, '0');
+  return `#${randomColor}`;
+};
 
   const unfillColor = useToken(
     'colors',
-    useColorModeValue("#FEEAE6", "darkBlue.500")
+    useColorModeValue("primary.200", "darkBlue.500")
   )
   const activeTextColor = useToken(
     'colors',
@@ -93,8 +99,10 @@ const handleChangeSubject = useCallback(
         w="full"
         px={4}
         py={2}
-        borderRadius={30}
         bg={useColorModeValue('#FFF4F1', 'primary.900')}
+        borderLeftWidth={4}
+        borderTopRightRadius={15}
+        borderBottomRightRadius={15}
         shadow = {8}
         space={2}
       >
@@ -105,6 +113,10 @@ const handleChangeSubject = useCallback(
               onPress={onToggleCheckbox} 
               fillColor={fillColor}
               unfillColor={unfillColor}
+              iconStyle={{
+                borderColor: borderC
+              }}
+              bounceFriction={1}
             />
           </Pressable>
         </Box>
