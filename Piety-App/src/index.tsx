@@ -10,6 +10,7 @@ import HadithScreen from './screens/hadith'
 import HadithDetail from './screens/hadith-detail'
 import AboutScreen from './screens/about-screen'
 import TaskScreen from './screens/task-screen'
+import AuthScreen from './screens/authentication-screen'
 
 const Drawer = createDrawerNavigator()
 
@@ -23,15 +24,11 @@ const App = () => {
       screenOptions={{
         drawerType: 'slide',
         headerShown: false,
-        drawerActiveBackgroundColor: "transparent",
-        drawerActiveTintColor: "red",
-        drawerInactiveTintColor: "red",
-        sceneContainerStyle: {
-          backgroundColor: "blue"
-        }
       }}
       
     >
+
+      <Drawer.Screen name="Login"  component={AuthScreen} />
       <Drawer.Screen name="Pray" component={DefaultScreen} />
       <Drawer.Screen name="Quran" component={QuranScreen} />
       <Drawer.Screen name="Detail" component={DetailScreen} />

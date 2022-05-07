@@ -1,6 +1,6 @@
-import { Button, Fab, Icon, IconButton, Pressable, Text, useColorModeValue, View, VStack } from "native-base"
+import { Box, Button, Fab, Icon, IconButton, Image, Pressable, ScrollView, Text, useColorModeValue, View, VStack } from "native-base"
 import React, { useCallback, useEffect, useState } from "react"
-import { AsyncStorage, StyleSheet, TouchableOpacity, Alert } from "react-native"
+import { AsyncStorage, StyleSheet, TouchableOpacity, Alert, Dimensions } from "react-native"
 import AnimatedColorBox from "./animated-color-box"
 import Masthead from "./masthead"
 import BarNav from "./navbar"
@@ -12,6 +12,16 @@ import shortid from "shortid"
 import LoadingIndicator from "./moti-loading"
 import AppLoading from 'expo-app-loading'
 import { storedData } from '../utils/stored-tasks'  
+import { LinearGradient } from "expo-linear-gradient"
+import NeoButton from "./neo-button"
+import { width } from "../screens/hadith"
+import {neostyles} from './neo-button'
+import { BlurView } from "expo-blur"
+import { borderColor } from "styled-system"
+import RandomHadith from "./random-hadith"
+import Hijri from "./hijri"
+import Gregorian from "./gregorian"
+
 
 export const TaskLayout = () => {
 
@@ -23,6 +33,7 @@ export const TaskLayout = () => {
     else return []
   }
 
+  const navigation = useNavigation<any>()
   const [data, setData] = useState(checkStorage())
   const [editID, setEditID] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -59,6 +70,10 @@ export const TaskLayout = () => {
     })
     await AsyncStorage.setItem("Tasks", JSON.stringify(update))
   }, [])
+
+  const handleBack = useCallback(() => {
+    navigation.navigate("Pray")
+  }, [navigation])
 
   const handleChangeContent = useCallback( async (item, newSubject) => {
     const result = await AsyncStorage.getItem("Tasks")
@@ -111,68 +126,189 @@ export const TaskLayout = () => {
       })
   }, [])
 
+  const handleEntry = async () => {
+    const id = shortid.generate()
+    setData([
+      {
+        id,
+        subject: "",
+        done: false,
+      },
+      ...data
+    ])
+    setEditID(id)
+
+  }
+
+  const getTotalTasks = async () => {
+    const result = await AsyncStorage.getItem("Tasks")
+    return data.length
+  }
+
   
   return (
     <AnimatedColorBox
+      p={10}
+      flexDir={'row'}
+      flexWrap={'wrap'}
       width="full"
-      bg={useColorModeValue("#FEDBD0", "blueGray.900")}
+      bg={useColorModeValue("#e1a998", "blueGray.900")}
       flex={1}
     >
-      <Masthead
-        title="Got tasks to do?"
-        image={require('../assets/icon2.png')}
-      >
-        <BarNav />
-      </Masthead>
-      {loading ? 
-        <View width="full" height="full" alignItems={'center'} justifyContent="center"> 
-          <LoadingIndicator size={150}/> 
-        </View> 
-      : (
-      <VStack
-        space={1}
-        height={"full"}
-        mt={30}
-        bg={useColorModeValue('#FEEAE6', 'primary.900')}
-        borderTopLeftRadius="30px"
-        borderTopRightRadius="30px"
-      >
-        <TaskList
-          data={data}
-          onToggleItem={handleToggleTask}
-          onChangeSubject={handleChangeContent}
-          onFinishEditing={handleFinishEdit}
-          onPressLabel={handlePressTaskItemLabel}
-          onRemoveItem={handleDelete}
-          editingItemId={editID}
-        />
-      </VStack>
-      )}
-      <Fab
-        position="absolute"
-        size="sm"
-        renderInPortal={false}
-        icon={<Icon color="white" as={<Feather name="plus" />} size="sm" />}
-        bg={useColorModeValue('#442C2E', 'blue.400')}
-        onPress={async () => {
-          const id = shortid.generate()
-          setData([
-            {
-              id,
-              subject: "",
-              done: false,
-            },
-            ...data
-          ])
-          setEditID(id)
-        }}
-        
-      />
-      
+      <View style={styles.header}>
+        <View style={styles.inner}>
+          <NeoButton nav={handleBack}>
+            <Icon as={Feather} name="arrow-left" size="sm"/>
+          </NeoButton>
+          <View flex={1} alignItems={'center'} justifyContent={'center'} >
+            <Text style={styles.title}>My Tasks</Text>
+          </View>
+          <View flex={1} alignItems="flex-end" justifyContent="center">
+            <NeoButton>
+              <Icon as={Feather} name="sun" size="sm"/>
+            </NeoButton>
+          </View>
+        </View>
+      </View>
+      <View style={styles.upper}>
+        <View style={styles.inner}>
+          <View style={styles.minibox1}>
+            <View style={styles.neoView}>
+              <View style={styles.card}>
+                <VStack flex={1} alignItems={'center'} justifyContent={'center'}>
+                  <Text fontWeight='bold'>Good Morning</Text>
+                </VStack>
+              </View>
+            </View>
+          </View>
+          <View style={styles.minibox2}>
+            <BlurView intensity={40} tint={"default"} >
+              <View style={styles.card}>
+                <VStack alignItems='center' justifyContent='center' flex={1}>
+                  <Text fontSize={17} fontWeight={"bold"}>Total Tasks</Text>
+                  <Text fontSize={17} opacity={0.8}>{data.length}</Text>
+                </VStack>
+              </View>
+            </BlurView>
+          </View>
+        </View>
+      </View>
+      <View style={styles.main}>
+        <View  flex={1} flexDir='row' style={styles.neoView}>
+          {loading ? 
+            <View width="full" height="full" alignItems={'center'} justifyContent="center"> 
+              <LoadingIndicator size={150}/> 
+            </View> 
+          : (
+          <VStack space={5} paddingY={4}>
+          <ScrollView >
+            <TaskList
+              data={data}
+              onToggleItem={handleToggleTask}
+              onChangeSubject={handleChangeContent}
+              onFinishEditing={handleFinishEdit}
+              onPressLabel={handlePressTaskItemLabel}
+              onRemoveItem={handleDelete}
+              editingItemId={editID}
+            />
+          </ScrollView>
+          </VStack>
+          )}
+        </View>
+      </View>
+      <View style={styles.footer}>
+        <View style={styles.inner}>
+          <View alignItems={'flex-end'} flex={1} height={50} width={50} >
+            <NeoButton nav={handleEntry}>
+              <Icon as={Feather} name="plus" size="sm" />
+            </NeoButton>
+          </View>
+        </View>
+      </View>
     </AnimatedColorBox>
   )
 }
 
+
+const styles = StyleSheet.create({
+  header: {
+    width: "100%",
+    height: "10%",
+    padding: 5,
+  },
+  inner: {
+    flex: 1,
+    flexDirection: 'row',
+    
+  },
+  title: {
+    alignSelf: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  main: {
+    width: "100%",
+    height: "60%",
+    padding: 5,
+    backgroundColor: '#e1a998',
+    borderRadius: 10,
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    shadowRadius: 16,
+    elevation: 8,
+    shadowOpacity: 1,
+    shadowColor: '#ad8275',
+
+  },
+  upper: {
+    width: "100%",
+    height: "20%",
+    padding: 5,
+    marginTop: 10
+  },
+  footer: {
+    width: "100%",
+    height: "10%",
+    padding: 10,
+  },
+  card: {
+    padding: 3,
+    width: "100%",
+    height: "100%",
+    borderColor: "rgba(255,255,255,0.6)",
+    borderWidth: 2,
+    borderRadius: 10,
+    alignItems: 'center'
+
+  },
+  minibox1: {
+    width: "50%",
+    height: "100%",
+    padding: 5
+  },
+  minibox2: {
+    width: "50%",
+    height: "100%",
+    padding: 5,
+  },
+  neoView: {
+    backgroundColor: '#e1a998',
+    borderRadius: 10,
+    shadowOffset: {
+      width: -8,
+      height: -8,
+    },
+    shadowRadius: 10,
+    elevation: 8,
+    shadowOpacity: 1,
+    shadowColor: '#ffd0bb',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  }
+})
 
 export default TaskLayout
 

@@ -125,10 +125,10 @@ export default function TaskList(props: ListProps) {
   const bg = useColorModeValue("#FEDBD0", "blueGray.900")
 
   return (
-    <StyledScrollView ref={scrollRef} w="full">
+    <StyledScrollView ref={scrollRef} w="full" >
       <AnimatePresence>
         {data.map (item => (
-          <VStack padding={2} mt={2}>
+          <VStack borderRadius={30} mt={2} backgroundColor={'#e1a998'}>
             <AnimatedTaskItem
               key={item.id.toString()}
               data={item}
@@ -140,7 +140,7 @@ export default function TaskList(props: ListProps) {
               onRemove={onRemoveItem}
               onPressLabel={onPressLabel}
             />
-          </VStack>
+            </VStack>
         ))}
       </AnimatePresence>
     </StyledScrollView>

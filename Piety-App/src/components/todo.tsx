@@ -79,7 +79,7 @@ const handleChangeSubject = useCallback(
           w="100%"
           h="100%"
           borderRadius={30}
-          bg="red.600"
+          bg="red.700"
           justifyContent="center"
           pr={4}
           alignItems="flex-end"
@@ -99,11 +99,11 @@ const handleChangeSubject = useCallback(
         w="full"
         px={4}
         py={2}
-        bg={useColorModeValue('#FFF4F1', 'primary.900')}
+        bg={useColorModeValue( '#e1a998', 'primary.900')}
         borderLeftWidth={4}
         borderTopRightRadius={15}
         borderBottomRightRadius={15}
-        shadow = {8}
+        borderBottomColor={"black"}
         space={2}
       >
         <Box width={30} height={30} mr={2}>
@@ -147,5 +147,20 @@ const handleChangeSubject = useCallback(
     </SwipableView>
   )
 }
+
+const styles=StyleSheet.create({
+  boxNeo: {
+    backgroundColor: '#e6a089',
+    shadowOffset: {
+      width: 6,
+      height: 6,
+    },
+    shadowRadius: 20,
+    elevation: 8,
+    shadowOpacity: 1,
+    shadowColor: '#ad8275',
+
+  }
+})
 
 export default TaskItem
