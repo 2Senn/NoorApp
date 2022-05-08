@@ -1,36 +1,140 @@
-import React from "react"
-import { View, Text, Image, useColorModeValue, } from 'native-base'
-import { StyleSheet, Dimensions } from 'react-native'
+import React, { useState } from "react"
+import { View, Text, Image, useColorModeValue, HStack, VStack, } from 'native-base'
+import { StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { BlurView } from "expo-blur"
 import AnimatedColorBox from "../components/animated-color-box"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { firebaseConfig } from '../../firebase-config'
 
 export const AuthScreen = () => {
 
-  const bg = useColorModeValue("#EBECF0", "black")
+  //use states
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState('')
+
+  const app = initializeApp(firebaseConfig)
+  const auth = getAuth(app)
+
+  const handleCreateUser = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        console.log('Account Created')
+        const user = userCredential.user 
+        console.log(user)
+      })
+    .catch(error => {
+        console.log(error)
+      })
+  }
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        console.log('Signed In!')
+        const user = userCredential.user
+        console.log(user)
+      })
+    .catch(error => {
+        console.log(error)
+      })
+  }
+
+
+  const bg = useColorModeValue("#fedbd0", "blueGray.900")
+  const _lightArray = ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.1)"]
 
   return(
     <AnimatedColorBox w="full" h="full" bg={bg}>
-      <View style={styles.box1}>
-        <View style={styles.inner}>
-          <Text fontSize={40}>AUTH</Text>
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={{
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        alignItems: 'center',
+        justifyContent: 'center',
+        }} 
+      >
+        <BlurView intensity={100} style={styles.blur}>
+          <View style={styles.login}>
+            <Image 
+              alt="logo" 
+              source={require("../assets/logoICON.png")} 
+              resizeMode="contain"
+              maxHeight={"100"}
+              maxW={"100"}
+            />
+            <View>
+              <Text style={styles.text}>Email</Text>
+              <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="your-email@something.com"/>
+            </View>
+            <View>
+              <Text style={styles.text}>Password</Text>
+              <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} placeholder="password" secureTextEntry={true} />
+            </View>
+            <TouchableOpacity onPress={handleLogin} style={[styles.button, {backgroundColor: "rgba(68, 44, 46, 0.5)"}]}>
+              <Text style={styles.text}>Login</Text> 
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleCreateUser} style={[styles.button, {backgroundColor: "rgba(68, 44, 46, 0.5)" } ]}>
+              <Text style={styles.text}>Create Account</Text> 
+            </TouchableOpacity>
+          </View>
+        </BlurView>
+      </ScrollView>
     </AnimatedColorBox>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
+    width: "100%",
+    height: "20%",
+    padding: 5,
     
   },
-  box1: {
+  login: {
     width: "100%",
-    height: "60%",
-    padding: 5,
+    height: "90%",
+    borderColor: "#fff",
+    padding: 20,
+    borderWidth: 2,
+    alignItems: 'center',
+  },
+  input: {
+    width: 250,
+    height: 40,
+    borderColor: '#fff',
+    borderWidth: 2,
+    padding: 10,
+    marginBottom: 20,
+    marginVertical: 10,
+    backgroundColor: '#ffffff90',
+    borderRadius: 40
   },
   inner: {
     flex: 1
+  },
+  blur: {
+    width: "80%",
+    height: "80%",
+  },
+  text: {
+    fontSize: 17, 
+    fontWeight: '400', 
+    color: '#000'
+  },
+  button: {
+    width: 250,
+    height: 40,
+    borderRadius: 50,
+    backgroundColor: "rgba(68, 44, 46, 0.5)",
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    borderColor: '#fff',
+    borderWidth: 1
+
   }
 })
 
 export default AuthScreen
+
