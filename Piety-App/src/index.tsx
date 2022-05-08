@@ -24,11 +24,12 @@ const App = () => {
       screenOptions={{
         drawerType: 'slide',
         headerShown: false,
+        swipeEnabled: false,
       }}
       
     >
 
-      <Drawer.Screen name="Login"  component={AuthScreen} />
+      <Drawer.Screen name="Login"  component={AuthScreen}  />
       <Drawer.Screen name="Pray" component={DefaultScreen} />
       <Drawer.Screen name="Quran" component={QuranScreen} />
       <Drawer.Screen name="Detail" component={DetailScreen} />

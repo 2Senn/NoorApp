@@ -1,13 +1,16 @@
 import React, { useState } from "react"
-import { View, Text, Image, useColorModeValue, HStack, VStack, } from 'native-base'
-import { StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, useColorModeValue, HStack, VStack } from 'native-base'
+import { StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { BlurView } from "expo-blur"
 import AnimatedColorBox from "../components/animated-color-box"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../firebase-config'
+import { useNavigation } from "@react-navigation/native"
 
 export const AuthScreen = () => {
+
+  const navigation = useNavigation<any>()
 
   //use states
   const [email, setEmail] = useState("")
@@ -19,30 +22,32 @@ export const AuthScreen = () => {
   const handleCreateUser = () => {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-        console.log('Account Created')
+        Alert.alert("User Registered!")
         const user = userCredential.user 
         console.log(user)
       })
     .catch(error => {
         console.log(error)
+        Alert.alert(error.message)
       })
   }
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-        console.log('Signed In!')
+        console.log('signed in')
         const user = userCredential.user
         console.log(user)
+        navigation.navigate("Pray")
       })
     .catch(error => {
         console.log(error)
+        Alert.alert(error.message)
       })
   }
 
 
   const bg = useColorModeValue("#fedbd0", "blueGray.900")
-  const _lightArray = ["rgba(255,255,255,0.2)", "rgba(255,255,255,0.1)"]
 
   return(
     <AnimatedColorBox w="full" h="full" bg={bg}>
