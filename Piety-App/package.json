@@ -25,6 +25,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/amiri": "^0.2.2",
+    "@expo-google-fonts/cinzel-decorative": "^0.2.2",
     "@react-native-community/blur": "^3.6.0",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
@@ -49,6 +51,7 @@
     "react-native-checkbox-reanimated": "^0.1.1",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-neu-element": "^1.1.9",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",

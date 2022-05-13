@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native"
-import { Button, Icon, IconButton, useColorModeValue, VStack } from "native-base"
+import { Button, Icon, IconButton, Text, useColorModeValue, VStack, View, Heading } from "native-base"
 import React, { useCallback, useRef } from "react"
-import { View, Text, StyleSheet, ImageBackground, FlatList, Dimensions } from 'react-native'
+import { StyleSheet, ImageBackground, FlatList, Dimensions } from 'react-native'
 import Cards from "./card-component"
 import Panel from "./navigation-panel"
 import PrayTimes from "./prayers"
@@ -9,20 +9,19 @@ import { Feather } from "@expo/vector-icons"
 import Carousel from "react-native-snap-carousel"
 import Paginator from "./paginator"
 import { BlurView } from "expo-blur"
+import BarNav from "./navbar"
 
 export const MainLayout = () => {
   
   const navigation = useNavigation<any>()
 
-  const btnBg = useColorModeValue("#FEEAE6", "darkBlue.700")
   const ibg = useColorModeValue("black", "white")
 
-  const carouselRef = useRef(null)
-  const {width, height} = Dimensions.get('screen')
   const tc = useColorModeValue("black", "white")
 
     return(
-      <VStack style={styles.container} space={3} marginY={10}> 
+      <VStack style={styles.container} space={3} > 
+              <BarNav />
         <View style={styles.box1}>
           <View style={styles.inner}>
             <PrayTimes /> 
@@ -130,11 +129,15 @@ export const MainLayout = () => {
 const styles = StyleSheet.create({
     container: {
       width: '100%',
-      height: '85%',
+      height: '100%',
       padding: 10,
       top: 10,
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    header: {
+      width: '100%',
+      height: '15%',
     },
     box1: {
       width: '100%',

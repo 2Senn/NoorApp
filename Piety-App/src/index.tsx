@@ -24,7 +24,6 @@ const App = () => {
       screenOptions={{
         drawerType: 'slide',
         headerShown: false,
-        swipeEnabled: false,
       }}
       
     >

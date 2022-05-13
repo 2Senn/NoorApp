@@ -157,14 +157,14 @@ export const TaskLayout = () => {
     >
       <View style={styles.header}>
         <View style={styles.inner}>
-          <NeoButton nav={handleBack}>
+          <NeoButton nav={handleBack} w={50} h={50} br={100}>
             <Icon as={Feather} name="arrow-left" size="sm"/>
           </NeoButton>
           <View flex={1} alignItems={'center'} justifyContent={'center'} >
             <Text style={styles.title}>My Tasks</Text>
           </View>
           <View flex={1} alignItems="flex-end" justifyContent="center">
-            <NeoButton>
+            <NeoButton w={50} h={50} br={100}>
               <Icon as={Feather} name="sun" size="sm"/>
             </NeoButton>
           </View>
@@ -219,7 +219,7 @@ export const TaskLayout = () => {
       <View style={styles.footer}>
         <View style={styles.inner}>
           <View alignItems={'flex-end'} flex={1} height={50} width={50} >
-            <NeoButton nav={handleEntry}>
+            <NeoButton nav={handleEntry} w={50} h={50} br={100}>
               <Icon as={Feather} name="plus" size="sm" />
             </NeoButton>
           </View>

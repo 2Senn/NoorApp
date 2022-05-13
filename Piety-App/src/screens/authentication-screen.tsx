@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, Text, Image, useColorModeValue, HStack, VStack } from 'native-base'
+import { View, Text, Image, useColorModeValue, HStack, VStack, Input } from 'native-base'
 import { StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { BlurView } from "expo-blur"
 import AnimatedColorBox from "../components/animated-color-box"
@@ -7,8 +7,26 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../firebase-config'
 import { useNavigation } from "@react-navigation/native"
+import LoadingIndicator from "../components/moti-loading"
+import { 
+  CinzelDecorative_400Regular,
+  CinzelDecorative_700Bold,
+  CinzelDecorative_900Black,
+  useFonts
+} from '@expo-google-fonts/cinzel-decorative'
+import NeoButton, { neostyles } from "../components/neo-button"
 
 export const AuthScreen = () => {
+
+  let [fontsLoaded] = useFonts({
+    CinzelDecorative_900Black,
+    CinzelDecorative_700Bold,
+    CinzelDecorative_400Regular
+  }) 
+
+  const borders = useColorModeValue("primary.200", "white")
+  const ibg  = useColorModeValue("primary.200", "white")
+  
 
   const navigation = useNavigation<any>()
 
@@ -47,44 +65,73 @@ export const AuthScreen = () => {
   }
 
 
-  const bg = useColorModeValue("#fedbd0", "blueGray.900")
+  const bg = useColorModeValue("primary.600", "blueGray.900")
 
   return(
+   
     <AnimatedColorBox w="full" h="full" bg={bg}>
-      <ScrollView contentContainerStyle={{
-        flex: 1,
+      {fontsLoaded ? 
+
+      <View style={{
         width: "100%",
         height: "100%",
-        alignItems: 'center',
-        justifyContent: 'center',
         }} 
       >
-        <BlurView intensity={100} style={styles.blur}>
+          <View style={styles.header} alignItems={'center'} justifyContent={'center'} padding={10}>
+            <View style={styles.inner} flexDir='row'>
+              <Image 
+                alt="logo"
+                source={require("../assets/noor-alpha.png")} 
+                resizeMode={'contain'} 
+                width={300}
+                height={300}
+                />
+            </View>
+          </View>
           <View style={styles.login}>
-            <Image 
-              alt="logo" 
-              source={require("../assets/logoICON.png")} 
-              resizeMode="contain"
-              maxHeight={"100"}
-              maxW={"100"}
-            />
-            <View>
-              <Text style={styles.text}>Email</Text>
-              <TextInput style={styles.input} onChangeText={(text) => setEmail(text)} placeholder="your-email@something.com"/>
+            <View >
+              <Text style={styles.title}>Al Salamu Alaikum</Text>
             </View>
             <View>
-              <Text style={styles.text}>Password</Text>
-              <TextInput style={styles.input} onChangeText={(text) => setPassword(text)} placeholder="password" secureTextEntry={true} />
+              <View >
+                <Input 
+                  style={[styles.input]} 
+                  borderColor={"primary.600"}
+                  borderLeftColor={"primary.500"}
+                  onChangeText={(text) => setEmail(text)} 
+                  placeholder="type your email here!"
+                  placeholderTextColor="black"
+                  fontFamily={"CinzelDecorative_400Regular"}
+                  />
+              </View>
             </View>
-            <TouchableOpacity onPress={handleLogin} style={[styles.button, {backgroundColor: "rgba(68, 44, 46, 0.5)"}]}>
-              <Text style={styles.text}>Login</Text> 
+            <View>
+              <Input 
+                style={styles.input}
+                borderColor={"primary.600"}
+                borderLeftColor={"primary.500"}
+                onChangeText={(text) => setPassword(text)} 
+                placeholder="password" 
+                fontFamily={"CinzelDecorative_400Regular"}
+                placeholderTextColor="black"
+                secureTextEntry={true} />
+            </View>
+            <TouchableOpacity onPress={handleLogin} style={[styles.button]}>
+              <NeoButton w={"full"} h={"full"} br={30}>
+                <Text style={styles.text}>Login</Text> 
+              </NeoButton>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleCreateUser} style={[styles.button, {backgroundColor: "rgba(68, 44, 46, 0.5)" } ]}>
-              <Text style={styles.text}>Create Account</Text> 
+            <TouchableOpacity onPress={handleCreateUser} style={[styles.button]}>
+              <NeoButton w={"full"} h={"full"} br={30}>
+                <Text style={styles.text}>Create Account</Text> 
+              </NeoButton>
             </TouchableOpacity>
           </View>
-        </BlurView>
-      </ScrollView>
+      </View>
+      : <View alignItems='center' justifyContent='center' width="full" height="full">
+          <LoadingIndicator size={150}/> 
+        </View>
+      }
     </AnimatedColorBox>
   )
 }
@@ -99,21 +146,18 @@ const styles = StyleSheet.create({
   login: {
     width: "100%",
     height: "90%",
-    borderColor: "#fff",
     padding: 20,
-    borderWidth: 2,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    
   },
   input: {
     width: 250,
     height: 40,
-    borderColor: '#fff',
-    borderWidth: 2,
+    borderLeftWidth: 3,
     padding: 10,
     marginBottom: 20,
     marginVertical: 10,
-    backgroundColor: '#ffffff90',
-    borderRadius: 40
   },
   inner: {
     flex: 1
@@ -124,19 +168,22 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17, 
+    padding: 10,
+    fontFamily: 'CinzelDecorative_400Regular',
     fontWeight: '400', 
-    color: '#000'
+  },
+  title: {
+    fontSize: 25, 
+    fontFamily: 'CinzelDecorative_700Bold',
+    paddingTop: 20
   },
   button: {
     width: 250,
     height: 40,
     borderRadius: 50,
-    backgroundColor: "rgba(68, 44, 46, 0.5)",
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
-    borderColor: '#fff',
-    borderWidth: 1
 
   }
 })
