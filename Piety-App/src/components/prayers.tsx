@@ -124,9 +124,48 @@ const PrayTimes = () => {
 
   const iconColor = useColorModeValue("red.900", "yellow.500")
 
-
+  let result = [fajr, dhuhr, asr, maghrib, isha]
+    
   return(
+   result 
+ )
 
+}
+const styles= StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor:  '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  item: {
+    fontSize: 19,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+
+  },
+  selected: {
+    backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+  time: {
+    fontSize: 20,
+    fontWeight: '700',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  minibox: {
+    width: '20%',
+  },
+  miniInner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+})
+
+/*
     <View 
       borderLeftWidth={4} 
       flexDir={'row'} 
@@ -230,42 +269,6 @@ const PrayTimes = () => {
         </View>
       </View>
     </View>
- )
-
-}
-const styles= StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:  '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  item: {
-    fontSize: 19,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-
-  },
-  selected: {
-    backgroundColor: 'rgba(0,0,0,0.4)'
-  },
-  time: {
-    fontSize: 20,
-    fontWeight: '700',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-  minibox: {
-    width: '20%',
-  },
-  miniInner: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-})
-
+*/
 export default PrayTimes
 

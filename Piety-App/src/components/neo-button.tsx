@@ -26,8 +26,8 @@ const _lightArray = isPressedIn ? ["#f1b5a3", "#cb9889"] : ["#cb9889", "#f1b5a3"
       onPressOut={props.nav}
       containerStyle={{flex: 1}}
     >
-      <View style={neostyles.buttonOuter} h={props.h} w={props.w} >
-        <View style={neostyles.buttonInner} h={props.h} w={props.w}>
+      <View style={[neostyles.buttonOuter, {shadowColor: props.shadowColor}]} backgroundColor={props.backgroundColor} h={props.h} w={props.w} >
+        <View style={[neostyles.buttonInner, {shadowColor: props.shadowColor2}]} backgroundColor={props.backgroundColor} h={props.h} w={props.w}>
           <LinearGradient 
             colors={_lightArray}
             start={[0,1]}
@@ -46,7 +46,6 @@ const {width, height} = Dimensions.get('screen')
 
 export const neostyles= StyleSheet.create({
   buttonOuter: {
-    backgroundColor: '#e1a998',
     borderRadius: Math.round((width + height) / 2),
     shadowOffset: {
       width: 8,
@@ -55,10 +54,8 @@ export const neostyles= StyleSheet.create({
     shadowRadius: 16,
     elevation: 8,
     shadowOpacity: 1,
-    shadowColor: '#ad8275',
   },
   buttonInner: {
-    backgroundColor: '#e1a998',
     borderRadius: Math.round((width + height) / 2),
     shadowOffset: {
       width: -8,
@@ -67,7 +64,6 @@ export const neostyles= StyleSheet.create({
     shadowRadius: 16,
     elevation: 8,
     shadowOpacity: 1,
-    shadowColor: '#ffd0bb',
     alignItems: 'center',
     justifyContent: 'center'
   },

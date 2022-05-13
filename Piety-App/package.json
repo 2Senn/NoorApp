@@ -27,6 +27,7 @@
   "dependencies": {
     "@expo-google-fonts/amiri": "^0.2.2",
     "@expo-google-fonts/cinzel-decorative": "^0.2.2",
+    "@expo-google-fonts/limelight": "^0.2.2",
     "@react-native-community/blur": "^3.6.0",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
@@ -36,6 +37,7 @@
     "expo": "~43.0.2",
     "expo-app-loading": "~1.2.1",
     "expo-blur": "~10.0.3",
+    "expo-font": "~10.0.3",
     "expo-linear-gradient": "~10.0.3",
     "expo-linking": "^2.4.2",
     "expo-status-bar": "~1.1.0",

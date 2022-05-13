@@ -39,6 +39,15 @@ export const TaskLayout = () => {
   const [loading, setLoading] = useState(true)
   const [task, setTask] = useState<any>([])
   
+  const [isPressedIn, setIsPressedIn] = useState(false)
+  const handlePressIn = useCallback(() => {
+    setIsPressedIn(!isPressedIn)
+  }, [isPressedIn])
+
+ const handlePressOut = useCallback(() => {
+    setIsPressedIn(false)
+  }, [isPressedIn])
+  const _lightArray = isPressedIn ? ["#f1b5a3", "#cb9889"] : ["#cb9889", "#f1b5a3"]
 
   const deleteAlert = () => {
     alert('Delete this Task? There is no going back after this :o')
@@ -157,14 +166,31 @@ export const TaskLayout = () => {
     >
       <View style={styles.header}>
         <View style={styles.inner}>
-          <NeoButton nav={handleBack} w={50} h={50} br={100}>
+          <NeoButton 
+            nav={handleBack} 
+            w={50} 
+            h={50} 
+            br={100} 
+            backgroundColor={"#e1a998"}
+            shadowColor={"#ad8275"}
+
+                shadowColor2={"#ffd0bb"}
+          >
             <Icon as={Feather} name="arrow-left" size="sm"/>
           </NeoButton>
           <View flex={1} alignItems={'center'} justifyContent={'center'} >
             <Text style={styles.title}>My Tasks</Text>
           </View>
           <View flex={1} alignItems="flex-end" justifyContent="center">
-            <NeoButton w={50} h={50} br={100}>
+            <NeoButton 
+              w={50} 
+              h={50} 
+              br={100}
+              backgroundColor={"#e1a998"}
+              shadowColor={"#ad8275"}
+
+                shadowColor2={"#ffd0bb"}
+            >
               <Icon as={Feather} name="sun" size="sm"/>
             </NeoButton>
           </View>
@@ -219,7 +245,16 @@ export const TaskLayout = () => {
       <View style={styles.footer}>
         <View style={styles.inner}>
           <View alignItems={'flex-end'} flex={1} height={50} width={50} >
-            <NeoButton nav={handleEntry} w={50} h={50} br={100}>
+            <NeoButton 
+              nav={handleEntry} 
+              w={50} 
+              h={50} 
+              br={100} 
+              backgroundColor={"#e1a998"}
+              shadowColor={"#ad8275"}
+
+                shadowColor2={"#ffd0bb"}
+            >
               <Icon as={Feather} name="plus" size="sm" />
             </NeoButton>
           </View>

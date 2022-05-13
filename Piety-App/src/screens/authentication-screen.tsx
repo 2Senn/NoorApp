@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import { View, Text, Image, useColorModeValue, HStack, VStack, Input } from 'native-base'
 import { StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { BlurView } from "expo-blur"
@@ -24,8 +24,15 @@ export const AuthScreen = () => {
     CinzelDecorative_400Regular
   }) 
 
-  const borders = useColorModeValue("primary.200", "white")
-  const ibg  = useColorModeValue("primary.200", "white")
+  const [isPressedIn, setIsPressedIn] = useState(false)
+  const handlePressIn = useCallback(() => {
+    setIsPressedIn(!isPressedIn)
+  }, [isPressedIn])
+
+ const handlePressOut = useCallback(() => {
+    setIsPressedIn(false)
+  }, [isPressedIn])
+  const _lightArray = isPressedIn ? ["#f1b5a3", "#cb9889"] : ["#cb9889", "#f1b5a3"]
   
 
   const navigation = useNavigation<any>()
@@ -65,7 +72,7 @@ export const AuthScreen = () => {
   }
 
 
-  const bg = useColorModeValue("primary.600", "blueGray.900")
+  const bg = useColorModeValue("primary.350", "blueGray.900")
 
   return(
    
@@ -96,8 +103,8 @@ export const AuthScreen = () => {
               <View >
                 <Input 
                   style={[styles.input]} 
-                  borderColor={"primary.600"}
-                  borderLeftColor={"primary.500"}
+                  borderColor={"primary.350"}
+                  borderLeftColor={"primary.400"}
                   onChangeText={(text) => setEmail(text)} 
                   placeholder="type your email here!"
                   placeholderTextColor="black"
@@ -108,8 +115,8 @@ export const AuthScreen = () => {
             <View>
               <Input 
                 style={styles.input}
-                borderColor={"primary.600"}
-                borderLeftColor={"primary.500"}
+                borderColor={"primary.350"}
+                borderLeftColor={"primary.400"}
                 onChangeText={(text) => setPassword(text)} 
                 placeholder="password" 
                 fontFamily={"CinzelDecorative_400Regular"}
@@ -117,12 +124,26 @@ export const AuthScreen = () => {
                 secureTextEntry={true} />
             </View>
             <TouchableOpacity onPress={handleLogin} style={[styles.button]}>
-              <NeoButton w={"full"} h={"full"} br={30}>
+              <NeoButton 
+                w={"full"} 
+                h={"full"} 
+                br={30}
+                backgroundColor={"#e1a998"}
+                shadowColor={"#ad8275"}
+                shadowColor2={"#ffd0bb"}
+              >
                 <Text style={styles.text}>Login</Text> 
               </NeoButton>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleCreateUser} style={[styles.button]}>
-              <NeoButton w={"full"} h={"full"} br={30}>
+              <NeoButton 
+                w={"full"} 
+                h={"full"} 
+                br={30}
+                backgroundColor={"#e1a998"}
+                shadowColor={"#ad8275"}
+                shadowColor2={"#ffd0bb"}
+              >
                 <Text style={styles.text}>Create Account</Text> 
               </NeoButton>
             </TouchableOpacity>
