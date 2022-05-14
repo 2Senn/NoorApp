@@ -56,16 +56,16 @@ const BarNav = (props: any) => {
         <View 
           w={50}
           h={50}
-          style={[styles.buttonOuter, {shadowColor: shadows}]}>
+          style={[neo.buttonOuter, {shadowColor: shadows}]}>
             <View
               w={50}
               h={50}
-              style={[styles.buttonInner, {shadowColor: shadows2}]}>
+              style={[neo.buttonInner, {shadowColor: shadows2}]}>
                 <LinearGradient 
                 colors={gradient}
                 start={[0.6,0.5]}
                 end={[0.1,0.48]}
-                style={[styles.face, {borderRadius: 25}]}
+                style={[neo.face, {borderRadius: 25}]}
                 >
                   <Icon  
                     borderRadius={100} 
@@ -92,18 +92,18 @@ const BarNav = (props: any) => {
         <View 
           w={50}
           h={50}
-          style={[styles.buttonOuter, {shadowColor: shadows}]}
+          style={[neo.buttonOuter, {shadowColor: shadows}]}
         >
           <View
             w={50}
             h={50}
-            style={[styles.buttonInner, {shadowColor: shadows2}]}
+            style={[neo.buttonInner, {shadowColor: shadows2}]}
           >
             <LinearGradient 
               colors={gradient}
               start={[0.6,0.5]}
               end={[0.1, 0.48]}
-              style={[styles.face, {borderRadius: 25}]}
+              style={[neo.face, {borderRadius: 25}]}
             >
               <View>
                 <Hidden colorMode="light">
@@ -131,7 +131,7 @@ const BarNav = (props: any) => {
   )
 }
 
-const styles = StyleSheet.create({
+export const neo = StyleSheet.create({
   buttonOuter: {
     borderRadius: 25,
     shadowOffset: {

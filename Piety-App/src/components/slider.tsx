@@ -5,7 +5,8 @@ import Goo,
   HEIGHT, 
   MARGIN_WIDTH, 
   Edges, 
-  WIDTH 
+  WIDTH, 
+  MIN_LEDGE
 } from "./goo";
 import Button from "./Button";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -37,8 +38,8 @@ const Slider = ({
     
     //3 animations: 1) to check if next/prev page is activated 2) x anime 3) y anime
     const currEdge = useSharedValue(Edges.NA)
-    const left = useVector()
-    const right = useVector()
+    const left = useVector(0, HEIGHT / 2)
+    const right = useVector(0, HEIGHT / 2)
 
     //need to animate transition so it is smooth and there is no delay
     const goingLeft = useSharedValue(false)
@@ -67,7 +68,7 @@ const Slider = ({
       },
       onEnd: ({ x, velocityX, velocityY }) => {
         if(currEdge.value === Edges.L){
-          const activationPoints = [MARGIN_WIDTH, WIDTH]
+          const activationPoints = [MIN_LEDGE, WIDTH]
           const endpoint = snapPoint(x, velocityX, activationPoints)
           goingLeft.value = endpoint === WIDTH
           left.x.value = withSpring(endpoint, 
@@ -83,9 +84,10 @@ const Slider = ({
         })
         }
         else if(currEdge.value === Edges.R){
-          const activationPoints = [WIDTH - MARGIN_WIDTH, 0]
+          const activationPoints = [WIDTH - MIN_LEDGE, 0]
           const endpoint = snapPoint(x, velocityX, activationPoints)
           goingRight.value = endpoint === 0
+          right.y.value = withSpring(HEIGHT / 2, { velocity: velocityY })
           right.x.value = withSpring(WIDTH - endpoint, 
           { 
             velocity: velocityX, 
@@ -103,8 +105,8 @@ const Slider = ({
   
     //using useEffect to animate slider from 0 to margin width
     useEffect(() => {
-      left.x.value = withSpring(MARGIN_WIDTH)
-      right.x.value = withSpring(MARGIN_WIDTH)
+      left.x.value = withSpring(MIN_LEDGE)
+      right.x.value = withSpring(MIN_LEDGE)
     }, [left.x, right.x])
 
     //fix pages overlapping
@@ -112,16 +114,16 @@ const Slider = ({
 
     return (
       <PanGestureHandler onGestureEvent={gestureEvent}>
-        <Animated.View style={[StyleSheet.absoluteFill]}>
+        <Animated.View style={[StyleSheet.absoluteFill, {borderRadius: 30}]}>
           {current}
           {prev && (
-            <Animated.View style={[StyleSheet.absoluteFill, lefty]}>
-              <Goo edges={Edges.L} position={left}>{prev}</Goo>
+            <Animated.View style={[StyleSheet.absoluteFill, lefty, {borderRadius: 30}]}>
+              <Goo edges={Edges.L} position={left} isGoing={goingLeft} >{prev}</Goo>
             </Animated.View>
           )}
           {next && (
-            <View style={StyleSheet.absoluteFill}>
-              <Goo edges={Edges.R} position={right}>{next}</Goo>
+            <View style={[StyleSheet.absoluteFill, {borderRadius: 30}]}>
+              <Goo edges={Edges.R} position={right} isGoing={goingRight}>{next}</Goo>
             </View>
           )}
         </Animated.View>

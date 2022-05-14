@@ -22,6 +22,8 @@ const Button = ({ position, edge, currEdge }: ButtonProps) => {
   const leftEdge = edge === Edges.L;
   const style = useAnimatedStyle(() => ({
     position: "absolute",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
     left: leftEdge ? position.x.value - RADIUS * 2 : WIDTH - position.x.value,
     top: position.y.value - RADIUS,
     //borderWidth: 1,
@@ -34,7 +36,7 @@ const Button = ({ position, edge, currEdge }: ButtonProps) => {
     opacity: withTiming(currEdge.value === Edges.NA ? 1 : 0),
   }));
   return (
-    <Animated.View style={style}>
+    <Animated.View style={style} >
       <Icon
         name={`chevron-${leftEdge ? "right" : "left"}` as const}
         size={24}

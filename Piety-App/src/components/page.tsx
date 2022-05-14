@@ -10,8 +10,9 @@ import Svg,
 } from "react-native-svg"
 import { Feather } from "@expo/vector-icons"
 import { HEIGHT, WIDTH } from "./goo";
+import { Italiana_400Regular, useFonts } from "@expo-google-fonts/italiana"
 
-const SIZE = WIDTH - 75;
+
 
 export const tweakColor = (color: string, deg: number) => {
 	var usePound = false;
@@ -48,19 +49,21 @@ export const tweakColor = (color: string, deg: number) => {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    padding: 37.5,
-    paddingTop: 75,
+    borderRadius: 30,
+    padding: 30,
+    paddingTop: 50,
     alignItems: "center",
   },
   title: {
     fontSize: 48,
-    color: "white",
+    color: "black",
     textAlign: "center",
     marginBottom: 16,
+    fontFamily: "Italiana_400Regular"
   },
   description: {
     fontSize: 18,
-    color: "white",
+    color: "black",
     textAlign: "center",
   },
 });
@@ -79,17 +82,19 @@ const Page = ({
 }: PageProps) => {
   return (
     <>
-      <Svg style={StyleSheet.absoluteFill}>
+      <Svg style={[StyleSheet.absoluteFill]}>
         <Defs>
           <RadialGradient id="gradient" cx="50%" cy="35%">
             <Stop offset="0%" stopColor={tweakColor(color, -50)} />
             <Stop offset="100%" stopColor={color} />
           </RadialGradient>
         </Defs>
-        <Rect x={0} y={0} width={WIDTH} height={HEIGHT} fill="url(#gradient)" />
+        <Rect x={0} y={0} width={WIDTH} opacity="1" height={HEIGHT} rx={50} fill="url(#gradient)" />
       </Svg>
       <View style={styles.container}>
-        <Icon as={Feather} name={icon} size="lg" color="black" />
+        <View style={{alignItems: 'flex-start' }}>
+          <Icon as={Feather} name={icon} size="lg"  />
+        </View>
         <View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>

@@ -14,7 +14,7 @@ const MenuButton = ({ active, icon, children, ...props}: Props) => {
   const activeColor = useColorModeValue("rgba(255,255,255,0.6)", "blue.700")
   const inactiveColor = useColorModeValue("rgba(0,0,0,0.6)", "rgba(255,255,255,0.5)")
   const activeBorder = useColorModeValue("primary.400", "orange")
-  const inactiveBorder = useColorModeValue("primary.300", "white")
+  const inactiveBorder = useColorModeValue("primary.75", "white")
 
   return(
     <Button 
