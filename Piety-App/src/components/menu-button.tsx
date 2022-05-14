@@ -9,28 +9,28 @@ interface Props extends IButtonProps {
 }
 
 const MenuButton = ({ active, icon, children, ...props}: Props) => {
-  const colorScheme = useColorModeValue("#FEDBD0", "darkBlue")
-  const inactiveTextColor = useColorModeValue("#FEEAE6", "white")
-  const pressedBgColor = useColorModeValue("#442C2E", "blueGray.700")
+  const inactiveTextColor = useColorModeValue("primary.400", "white")
+  const pressedBgColor = useColorModeValue("rgba(17,47,75,0.2)", "rgba(70, 63, 96, 0.4)")
   const activeColor = useColorModeValue("rgba(255,255,255,0.6)", "blue.700")
   const inactiveColor = useColorModeValue("rgba(0,0,0,0.6)", "rgba(255,255,255,0.5)")
-  const activeBorder = useColorModeValue("#000", "orange")
-  const inactiveBorder = useColorModeValue("#FEDBD0", "white")
+  const activeBorder = useColorModeValue("primary.400", "orange")
+  const inactiveBorder = useColorModeValue("primary.300", "white")
 
   return(
     <Button 
       size="lg" 
-      colorScheme={colorScheme} 
-      bg={active ? activeColor : "black"}
       _pressed={{
-        bg: pressedBgColor
+        bg: pressedBgColor,
+        borderColor: "rgba(0,0,0,0.3)"
       }}
       _text={{
-        color: active ? 'black' : inactiveTextColor
+        color: active ? 'primary.400' : inactiveTextColor,
+        fontWeight: active ? 'bold' : '400'
       }}
-      variant="solid"
+      variant="ghost"
       justifyContent="flex-start"
       borderLeftWidth={5}
+      borderRadius={0}
       borderColor={active ? activeBorder : inactiveBorder}
       leftIcon={<Icon as={Feather} name={icon} size="sm" opacity={1} />}
       {...props}

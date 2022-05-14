@@ -1,31 +1,20 @@
 import { useNavigation } from "@react-navigation/native"
-import { Button, Icon, IconButton, Text, useColorModeValue, VStack, View, Heading } from "native-base"
-import React, { useCallback, useRef } from "react"
-import { StyleSheet, ImageBackground, FlatList, Dimensions } from 'react-native'
-import Cards from "./card-component"
-import Panel from "./navigation-panel"
-import PrayTimes from "./prayers"
-import { Feather } from "@expo/vector-icons"
-import Carousel from "react-native-snap-carousel"
-import Paginator from "./paginator"
-import { BlurView } from "expo-blur"
-import BarNav from "./navbar"
-import { height } from "../screens/hadith"
+import { Text } from "native-base"
+import { StyleSheet, View } from "react-native"
 
-export const MainLayout = () => {
+export const MainComponents = ({ navigation }: any) => {
   
-  const navigation = useNavigation<any>()
+  return(
+    <View>
+      <Text>...</Text>
+    </View>
+  )
 
-  const ibg = useColorModeValue("black", "white")
-
-  const tc = useColorModeValue("black", "white")
-
-    return(
-      <VStack style={styles.container} space={3} > 
-              </VStack>
-
-    )
 }
+ 
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -76,4 +65,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default MainLayout
+export default MainComponents

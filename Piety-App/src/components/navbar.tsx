@@ -17,8 +17,8 @@ const BarNav = (props: any) => {
     nav.openDrawer()
   }, [nav])
 
-  const shadows = useColorModeValue('#98807a', "#121211")
-  const shadows2 = useColorModeValue("#fff4e8", "#000")
+  const shadows = useColorModeValue('#b0aca3', "#121211")
+  const shadows2 = useColorModeValue("#ffffff", "#000")
 
   
   const [isPressedIn, setIsPressedIn] = useState(false)
@@ -35,7 +35,8 @@ const BarNav = (props: any) => {
     setIsPressedIn(false)
     toggleColorMode()
   }, [isPressedIn])
-  const _lightArray = isPressedIn ? ["#9f867f", "#ffeee3"] : ["#ffeee3", "#9f867f"]
+
+  const _lightArray = isPressedIn ? ["#faf5e8",  "#d3cec3"] : ["#d3cec3", "#faf5e8"]
   const _darkarray = isPressedIn ? ['#121211', '#2c2c2b'] : ['#2c2c2b', '#121211']  
 
   const gradient = useColorModeValue(_lightArray, _darkarray)
@@ -62,8 +63,8 @@ const BarNav = (props: any) => {
               style={[styles.buttonInner, {shadowColor: shadows2}]}>
                 <LinearGradient 
                 colors={gradient}
-                start={[1,0]}
-                end={[0,1]}
+                start={[0.6,0.5]}
+                end={[0.1,0.48]}
                 style={[styles.face, {borderRadius: 25}]}
                 >
                   <Icon  
@@ -71,7 +72,7 @@ const BarNav = (props: any) => {
                     as={Feather}
                     name= 'menu'
                     size= {6}
-                    color={useColorModeValue('primary.400', '#F79548')}
+                    color={useColorModeValue('primary.75', '#F79548')}
                   />
                 </LinearGradient>
             </View>
@@ -100,8 +101,8 @@ const BarNav = (props: any) => {
           >
             <LinearGradient 
               colors={gradient}
-              start={[1,0]}
-              end={[0,1]}
+              start={[0.6,0.5]}
+              end={[0.1, 0.48]}
               style={[styles.face, {borderRadius: 25}]}
             >
               <View>
@@ -118,7 +119,7 @@ const BarNav = (props: any) => {
                   as={Feather}
                   name= 'moon'
                   size={6}
-                  color={useColorModeValue('#442C2E', '#FEDBD0')}
+                  color={useColorModeValue('primary.75', '#FEDBD0')}
                 />
               </Hidden>
                 </View>
@@ -134,20 +135,20 @@ const styles = StyleSheet.create({
   buttonOuter: {
     borderRadius: 25,
     shadowOffset: {
-      width: 7,
-      height: 7,
+      width: 5,
+      height: 5,
     },
-    shadowRadius: 15,
+    shadowRadius: 5,
     elevation: 8,
     shadowOpacity: 1,
   },
   buttonInner: {
     borderRadius: 25,
     shadowOffset: {
-      width: -7,
-      height: -7,
+      width: -5,
+      height: -5,
     },
-    shadowRadius: 15,
+    shadowRadius: 5,
     elevation: 8,
     shadowOpacity: 1,
     alignItems: 'center',
