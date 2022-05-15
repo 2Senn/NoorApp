@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react"
-import { IconButton, useColorModeValue, View, HStack, FlatList, Box, Icon } from "native-base"
-import { TouchableOpacity, Dimensions, StatusBar, StyleSheet, Image} from "react-native"
+import { IconButton, useColorModeValue, View, HStack, FlatList, Box, Icon, Hidden, useColorMode } from "native-base"
+import { TouchableOpacity, Dimensions, StatusBar, StyleSheet, Image, ImageBackground} from "react-native"
 import { Feather } from "@expo/vector-icons"
 import AnimatedColorBox from "../components/animated-color-box"
 import Mushaf from "../utils/mushaf"
@@ -20,36 +20,20 @@ const MushafScreen = (props: MushafScreenProps) => {
   const handleBackbutton = useCallback(() => {
     props.navigation.navigate("Quran")
   }, [props.navigation])
-
- 
-  const [isPressedIn, setIsPressedIn] = useState(false)
-  const handlePressIn = useCallback(() => {
-    setIsPressedIn(!isPressedIn)
-  }, [isPressedIn])
-
-  const handlePressOut = useCallback(() => {
-    setIsPressedIn(false)
-  }, [isPressedIn])
   
-  const l1 = "#faf5e8" 
-  const l2 = "#d3cec3"
-  const d1 = '#121211'
-  const d2 = '#2c2c2b'
+  const handleTranslate = useCallback(() => {
 
-  const bg=useColorModeValue('primary.25', "#1f1f1e")
-  const outerShadow = useColorModeValue('#b0aca3', "#121211")
-  const innerShadow = useColorModeValue("#ffffff", "#000")
-  const _lightArray = isPressedIn ? [l1, l2] : [l2, l1]
-  const _darkarray = isPressedIn ? [d1, d2] : [d2, d1]  
+  }, [])
 
-  const gradient = useColorModeValue(_lightArray, _darkarray)
-
-
+  const {toggleColorMode, colorMode} = useColorMode()
+ 
+  const bg=useColorModeValue('primary.25', "#000")
+  const iconColor = useColorModeValue("primary.75", "primary.550")
 
   const [images, setimages] = useState(Mushaf2)  
   const [showOptions, setShowOptions] = useState(false)
 
-  const tint = useColorModeValue("yellow.900", "white")
+  const tint = useColorModeValue("primary.25", "#000")
 
   const height = Dimensions.get('window').height
   const width = Dimensions.get('window').width
@@ -80,33 +64,44 @@ const MushafScreen = (props: MushafScreenProps) => {
                         p={2}
                         zIndex={2}
                       >
-                        <View flex={1} flexDir={"row"} >
-                          <TouchableWithoutFeedback onPressIn={handlePressIn} onPressOut={handlePressOut}>
-                          <View w={50} h={50} p={5} style={[styles.buttonOuter, {shadowColor: outerShadow}]}>
-                            <View flex={1} w={50} h={50} style={[styles.buttonInner, {shadowColor: innerShadow}]}>
-                              <LinearGradient 
-                                colors={gradient}
-                                start={[0.6,0.5]}
-                                end={[0.1, 0.48]}
-                                style={[styles.face, {borderRadius: 25}]}
-                              >
-                                <Icon as={Feather} name="arrow-left-circle" w={40} h={40}/>  
-                              </LinearGradient>
-                            </View>
-                          </View>
-                          </TouchableWithoutFeedback>
+                        <View flex={1} flexDir={"row"} p={5} justifyContent="space-evenly" >
+                          <TouchableOpacity 
+                            style={{flex: 1, alignItems: 'flex-start'}} 
+                            onPress={handleBackbutton}
+                          > 
+                            <Icon as={Feather} name="arrow-left-circle" color={iconColor} w={40} h={40}/>  
+                          </TouchableOpacity>
+                          <TouchableOpacity 
+                            style={{flex: 1, alignItems: 'center'}} 
+                            onPress={handleTranslate}
+                          > 
+                            <Icon as={Feather} name="globe" color={iconColor} w={40} h={40}/>  
+                          </TouchableOpacity>
+                          <TouchableOpacity 
+                            style={{flex: 1, alignItems: 'flex-end'}} 
+                            onPress={toggleColorMode}
+                          >
+                            <Hidden colorMode={"light"}>
+                              <Icon as={Feather} name="sun" color="primary.550" w={40} h={40}/>  
+                            </Hidden>
+                            <Hidden colorMode={"dark"}>
+                              <Icon as={Feather} name="moon" color="primary.75" w={40} h={40}/>  
+                            </Hidden>
+                          </TouchableOpacity>
                         </View>
                       </View>
                     ) : null}
-                    <View backgroundColor={"primary.25"} >
+                    <View backgroundColor={tint} >
                     <Image 
                       source={item} 
                       key={index} 
+                      resizeMode={'contain'}
                       style={{
                         width: width,
                         height: height,
-                        resizeMode:'contain',
                       }}
+                      tintColor = {colorMode === 'light' ? "#442C2E" : "#fff"}
+                      
                     />
                     </View>
                   <View w="full" h="80%" position={'absolute'}>
