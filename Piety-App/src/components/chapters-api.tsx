@@ -58,8 +58,6 @@ export default function FetchQuran() {
           const handleSelect = () => {
             navigation.navigate("Mushaf", {chapterNumber})
         } 
-        
-
         return(
           <TouchableOpacity onPress={handleSelect}> 
             <Animated.View 

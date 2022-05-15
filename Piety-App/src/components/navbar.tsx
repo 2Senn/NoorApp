@@ -10,6 +10,15 @@ import { StyleSheet } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { alignSelf } from 'styled-system'
 
+
+interface Props{
+  shadowOuter: string,
+  shadowInner: string,
+  backgroundColor: string,
+  width: number,
+  height: number,
+}
+
 const BarNav = (props: any) => {
 
   const nav = useNavigation<DrawerNavigationProp<{}>>()
@@ -17,10 +26,7 @@ const BarNav = (props: any) => {
     nav.openDrawer()
   }, [nav])
 
-  const shadows = useColorModeValue('#b0aca3', "#121211")
-  const shadows2 = useColorModeValue("#ffffff", "#000")
-
-  
+    
   const [isPressedIn, setIsPressedIn] = useState(false)
   const handlePressIn = useCallback(() => {
     setIsPressedIn(!isPressedIn)
@@ -36,8 +42,8 @@ const BarNav = (props: any) => {
     toggleColorMode()
   }, [isPressedIn])
 
-  const _lightArray = isPressedIn ? ["#faf5e8",  "#d3cec3"] : ["#d3cec3", "#faf5e8"]
-  const _darkarray = isPressedIn ? ['#121211', '#2c2c2b'] : ['#2c2c2b', '#121211']  
+  const _lightArray = isPressedIn ? [props.l1,  props.l2] : [props.l2, props.l1]
+  const _darkarray = isPressedIn ? [props.d1, props.d2] : [props.d2, props.d1]  
 
   const gradient = useColorModeValue(_lightArray, _darkarray)
 
@@ -56,11 +62,11 @@ const BarNav = (props: any) => {
         <View 
           w={50}
           h={50}
-          style={[neo.buttonOuter, {shadowColor: shadows}]}>
+          style={[neo.buttonOuter, {shadowColor: props.outerShadow}]}>
             <View
               w={50}
               h={50}
-              style={[neo.buttonInner, {shadowColor: shadows2}]}>
+              style={[neo.buttonInner, {shadowColor: props.innerShadow}]}>
                 <LinearGradient 
                 colors={gradient}
                 start={[0.6,0.5]}
@@ -72,7 +78,7 @@ const BarNav = (props: any) => {
                     as={Feather}
                     name= 'menu'
                     size= {6}
-                    color={useColorModeValue('primary.75', '#F79548')}
+                    color={props.iconColor}
                   />
                 </LinearGradient>
             </View>
@@ -92,12 +98,12 @@ const BarNav = (props: any) => {
         <View 
           w={50}
           h={50}
-          style={[neo.buttonOuter, {shadowColor: shadows}]}
+          style={[neo.buttonOuter, {shadowColor: props.outerShadow}]}
         >
           <View
             w={50}
             h={50}
-            style={[neo.buttonInner, {shadowColor: shadows2}]}
+            style={[neo.buttonInner, {shadowColor: props.innerShadow}]}
           >
             <LinearGradient 
               colors={gradient}
@@ -111,7 +117,7 @@ const BarNav = (props: any) => {
                     as={Feather}
                     name= 'sun'
                     size= {6}
-                    color={useColorModeValue('primary.200', '#F79548')}
+                    color={props.iconColor}
                   />
                 </Hidden>
                 <Hidden colorMode="dark">
@@ -119,7 +125,7 @@ const BarNav = (props: any) => {
                   as={Feather}
                   name= 'moon'
                   size={6}
-                  color={useColorModeValue('primary.75', '#FEDBD0')}
+                  color={props.iconColor}
                 />
               </Hidden>
                 </View>

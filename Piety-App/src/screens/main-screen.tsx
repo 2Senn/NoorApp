@@ -23,16 +23,27 @@ import RandomHadith from '../components/random-hadith'
 import Cards from '../components/card-component'
 import Hijri from '../components/hijri'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import BottomSheet from '../components/bottomsheet'
 
 
 export default function DefaultScreen({ navigation }: any){
   
+
+
+  //colors
   const bg=useColorModeValue('primary.25', "#1f1f1e")
+  const outerShadow = useColorModeValue('#b0aca3', "#121211")
+  const innerShadow = useColorModeValue("#ffffff", "#000")
+  const l1 = "#faf5e8" 
+  const l2 = "#d3cec3"
+  const d1 = '#121211'
+  const d2 = '#2c2c2b'
+  const iconColor = useColorModeValue('primary.75', '#F79548')
   let [fontsLoaded] = useFonts({
     Italiana_400Regular
   }) 
+ 
   
+
   const textColor = useColorModeValue("primary.75", "primary.50")
   
   if(!fontsLoaded){
@@ -44,7 +55,6 @@ export default function DefaultScreen({ navigation }: any){
   }
 
   return(
-    <GestureHandlerRootView style={{flex:1}}>
     <AnimatedColorBox
       flex={1}
       w="full"
@@ -55,7 +65,15 @@ export default function DefaultScreen({ navigation }: any){
     >
       <StatusBar hidden/>
       <View w="100%" h="12%" p={2}>
-        <BarNav>
+        <BarNav 
+          l1={l1} 
+          l2={l2} 
+          d1={d1} 
+          d2={d2} 
+          iconColor={iconColor} 
+          innerShadow={innerShadow} 
+          outerShadow={outerShadow}
+        >
           <View flex={1} alignItems="center" justifyContent="center">
             <Hidden colorMode="dark">
               <Image source={require("../assets/kaaba.png")} alt={"logo"} resizeMode={"contain"} w={50} h="50"/>
@@ -83,9 +101,7 @@ export default function DefaultScreen({ navigation }: any){
         <View flex={1}>
         </View>
       </View>
-      <BottomSheet />
     </AnimatedColorBox>
-    </GestureHandlerRootView>
   )
 }
 
