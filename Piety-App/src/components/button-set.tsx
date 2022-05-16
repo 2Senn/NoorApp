@@ -1,12 +1,13 @@
 import React from "react"
 import { LinearGradient } from "expo-linear-gradient"
-import { HStack, Icon, Text, useColorModeValue, View, VStack } from "native-base"
+import { HStack, Icon, IconButton, Text, useColorModeValue, View, VStack } from "native-base"
 import { useCallback, useState } from "react"
 import { StyleSheet } from "react-native"
 import { TouchableWithoutFeedback } from "react-native-gesture-handler"
 import { neo } from "./navbar"
 import { Feather } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/native"
+import { alignSelf } from "styled-system"
 
 export const ButtonSet = ({ navigation }: any) => {
 
@@ -41,17 +42,13 @@ export const ButtonSet = ({ navigation }: any) => {
     setIsPressedIn(false)
     handleButton(ref)
   }, [isPressedIn])
-
+    
+  /* IOS ONLY
   const _lightArray = isPressedIn ? ["#faf5e8",  "#d3cec3"] : ["#d3cec3", "#faf5e8"]
   const _darkarray = isPressedIn ? ['#121211', '#2c2c2b'] : ['#2c2c2b', '#121211']  
 
   const gradient = useColorModeValue(_lightArray, _darkarray)
-
-
-  return(
-    <HStack flex={1}>
-      <VStack h={75} >
-        <TouchableWithoutFeedback
+  <TouchableWithoutFeedback
           onPressIn={handlePressIn}
           onPressOut={() => handlePressOut(1)}
           containerStyle={{
@@ -173,14 +170,94 @@ export const ButtonSet = ({ navigation }: any) => {
         <View flex={1} alignItems="center" justifyContent="center" w={100} h={50}>
           <Text style={styles.text}>About</Text>
         </View>
+    */
+
+  return(
+    <HStack  space="5" flex={1}>
+      <VStack h={75} >
+        <View flex={1}>
+        <IconButton 
+          onPress={() => handleButton(1)}
+          width={50}
+          height={50}
+          borderWidth={2}
+          borderRadius="50"
+          justifyContent="center"
+          _icon={{
+            as: Feather,
+            name: 'book',
+            size: 6,
+            alignSelf: "center",
+          }}
+          />
+          <Text style={styles.text}>Quran</Text>
+          </View>
       </VStack>
+      <VStack h={75} >
+        <View flex={1}>
+        <IconButton 
+          onPress={() => handleButton(2)}
+          width={50}
+          height={50}
+          borderWidth={2}
+          borderRadius="50"
+          justifyContent="center"
+          _icon={{
+            as: Feather,
+            name: 'check-circle',
+            size: 6,
+            alignSelf: "center",
+          }}
+          />
+          <Text style={styles.text}>Hadith</Text>
+          </View>
+      </VStack>
+      <VStack h={75} >
+        <View flex={1}>
+        <IconButton 
+          onPress={() => handleButton(3)}
+          width={50}
+          height={50}
+          borderWidth={2}
+          borderRadius="50"
+          justifyContent="center"
+          _icon={{
+            as: Feather,
+            name: 'clipboard',
+            size: 6,
+            alignSelf: "center",
+          }}
+          />
+          <Text style={styles.text}>Tasks</Text>
+          </View>
+      </VStack>
+      <VStack h={75} >
+        <View flex={1}>
+        <IconButton 
+          onPress={() => handleButton(4)}
+          width={50}
+          height={50}
+          borderWidth={2}
+          borderRadius="50"
+          justifyContent="center"
+          _icon={{
+            as: Feather,
+            name: 'help-circle',
+            size: 6,
+            alignSelf: "center",
+          }}
+          />
+          <Text style={styles.text}>About</Text>
+          </View>
+      </VStack>
+
     </HStack>
   )
 }
 
 const styles = StyleSheet.create({
   text: {
-
+    alignSelf: "center"
   },
   buttonOuter: {
     borderRadius: 25,

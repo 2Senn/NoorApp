@@ -29,9 +29,14 @@ export type RootDrawerParamList = {
   HDetail: { item: any };
 };
 
-export default function HadithScreen(){
+export default function HadithScreen({navigation}: any){
 
-  const navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>()
+  navigation = useNavigation<DrawerNavigationProp<RootDrawerParamList>>()
+  
+  const handleBackbutton = useCallback(() => {
+    navigation.navigate("Pray")
+  }, [navigation])
+
 
   const [hadithJSON, setHadithJSON] = useState<any>([])
   const [loading, setLoading] = useState(true)
@@ -203,34 +208,46 @@ export default function HadithScreen(){
       width="full"
       height={height}
     >
-      <AnimatedColorBox width={"full"} bg={useColorModeValue('primary.100', 'blueGray.900')} flex={1}>
+      <AnimatedColorBox width={"full"} h="full" bg={useColorModeValue('primary.25', 'blueGray.900')} flex={1}>
       <SafeAreaView style={{flex: 1}}>
       <StatusBar hidden />
-        <View pt={5} flex={1} flexDir="row" width={width * 0.95} height={100} position="absolute">
-          <View style={{bottom: 50}}>
-            <BarNav />
-          </View>
-          <Input 
-              placeholder="Search"
-              variant="filled" 
-              backgroundColor={sbg}
-              width={width}
-              height={50}
-              borderRadius="10" 
-              color={sbg}
-              onSubmitEditing={(text) => 
-                {
-                  setSearch(text.nativeEvent.text)
-                  setLoading(true)
-                }}
-              py="1" 
-              px="2" 
-              placeholderTextColor={inverse}
-              borderWidth="0" 
-              InputLeftElement={<Icon ml="2" size="4" color={inverse} as={ Feather } name="cloud" />} 
+        <View p={4} mt={10} width={"full"} height={"20%"} >
+          <View flex={1} flexDir="row">
+            <View width={50} height={50} alignItems="flex-start">
+              <IconButton 
+                onPress={handleBackbutton}
+                width={50}
+                height={50}
+                borderRadius={50}
+                _icon={{
+                  as: Feather,
+                  name: 'arrow-left-circle',
+                  size: 6,
+                  }}
               />
+            </View>
+            <View flex={1} width={250} height={50}>
+              <Input 
+                placeholder="Search"
+                variant="filled" 
+                flex={1}
+                backgroundColor={sbg}
+                width={250}
+                height={50}
+                borderRadius="10" 
+                color={inverse}
+                onSubmitEditing={(text) => 
+                  {
+                    setSearch(text.nativeEvent.text)
+                    setLoading(true)
+                  }}
+                placeholderTextColor={inverse}
+                InputLeftElement={<Icon ml="2" size="4" color={inverse} as={ Feather } name="cloud" />} 
+                />
+            </View>
+          </View>
         </View>
-      <View flex={1} pt={SPACING}>
+      <View flex={1}>
       {(loading) ? 
               <View alignSelf="center" justifyContent="center" height="full" > 
                 <LoadingIndicator size={150}/>
