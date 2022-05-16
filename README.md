@@ -15,6 +15,7 @@ https://user-images.githubusercontent.com/59489465/168587710-dbdfa2c3-55a5-4dfc-
 - [NativeBase(v3)](https://nativebase.io/) - Themable component library
 - [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) - Animations
 - [Moti](https://moti.fyi/) - Helper module for Reanimated 2
+- check package.json for all libraries used
 
 ## Project structure
 
