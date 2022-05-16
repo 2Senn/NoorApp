@@ -1,3 +1,9 @@
+## Sneak Peak
+
+https://user-images.githubusercontent.com/59489465/168534158-89b869f2-d313-499e-88d4-b16c04190574.mov
+
+
+
 ## Stack
 
 - [React Native](https://reactnative.dev/) - ReactJS-based framework that can use native platform capabilities
